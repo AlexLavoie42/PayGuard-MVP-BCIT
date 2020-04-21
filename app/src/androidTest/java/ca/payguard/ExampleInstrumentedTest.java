@@ -1,4 +1,4 @@
-package com.main;
+package ca.payguard;
 
 import android.content.Context;
 
