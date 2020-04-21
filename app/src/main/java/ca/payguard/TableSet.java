@@ -74,7 +74,7 @@ public class TableSet extends ArrayList<Table> {
 
         t = new Table();
         t.setLabel("9");
-        t.setCoords(centerX / 3 * 5, centerY / 5);
+        t.setCoords(centerX / 3 * 5, centerY);
         t.setDimensions(Table.STD_DIMENSION, centerY);
         add(t);
     }
