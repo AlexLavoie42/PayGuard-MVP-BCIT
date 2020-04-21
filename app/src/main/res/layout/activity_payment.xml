@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:text="@string/dollarAmount1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.306" />
+        app:layout_constraintEnd_toEndOf="@+id/currentAmount"
+        app:layout_constraintStart_toStartOf="@+id/currentAmount"
+        app:layout_constraintTop_toBottomOf="@+id/currentAmount"
+        app:layout_constraintVertical_bias="0.058" />
 
     <Button
         android:id="@+id/dollarAmount2"
@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/dollarAmount2"
-        app:layout_constraintTop_toBottomOf="@+id/dollarAmount1"
-        tools:layout_editor_absoluteX="436dp" />
+        app:layout_constraintStart_toStartOf="@+id/dollarAmount1"
+        app:layout_constraintTop_toBottomOf="@+id/dollarAmount1" />
 
     <Button
         android:id="@+id/dollarAmount3"
@@ -32,8 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/dollarAmount3"
-        app:layout_constraintTop_toBottomOf="@+id/dollarAmount2"
-        tools:layout_editor_absoluteX="436dp" />
+        app:layout_constraintStart_toStartOf="@+id/dollarAmount2"
+        app:layout_constraintTop_toBottomOf="@+id/dollarAmount2" />
 
     <Button
         android:id="@+id/customAmount"
@@ -41,6 +41,30 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/customAmount"
-        app:layout_constraintTop_toBottomOf="@+id/dollarAmount3"
-        tools:layout_editor_absoluteX="436dp" />
+        app:layout_constraintStart_toStartOf="@+id/dollarAmount3"
+        app:layout_constraintTop_toBottomOf="@+id/dollarAmount3" />
+
+    <EditText
+        android:id="@+id/paymentType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/payment_type"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.155" />
+
+    <EditText
+        android:id="@+id/currentAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/current_auth"
+        app:layout_constraintStart_toStartOf="@+id/paymentType"
+        app:layout_constraintTop_toBottomOf="@+id/paymentType" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

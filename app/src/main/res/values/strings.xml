@@ -4,4 +4,6 @@
     <string name="dollarAmount2">$75</string>
     <string name="dollarAmount3">$100</string>
     <string name="customAmount">Custom</string>
+    <string name="payment_type">Add pre-authorization</string>
+    <string name="current_auth" />
 </resources>
