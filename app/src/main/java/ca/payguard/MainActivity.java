@@ -1,4 +1,4 @@
-package com.payguard;
+package ca.payguard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -7,6 +7,9 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 import android.widget.Button;
+
+import com.payguard.R;
+
 import java.util.ArrayList;
 
 /**

@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.payguard.LoginActivity"></activity>
-        <activity android:name="com.payguard.MainActivity">
+        <activity android:name="com.payguard.ca.payguard.LoginActivity"></activity>
+        <activity android:name="com.payguard.ca.payguard.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

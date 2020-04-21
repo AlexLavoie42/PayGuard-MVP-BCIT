@@ -1,8 +1,10 @@
-package com.payguard;
+package ca.payguard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.payguard.R;
 
 public class LoginActivity extends AppCompatActivity {
 
