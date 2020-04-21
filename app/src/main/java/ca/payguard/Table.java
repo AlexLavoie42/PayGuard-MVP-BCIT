@@ -1,4 +1,4 @@
-package com.main;
+package ca.payguard;
 
 /**
  * The Table class stores all preauth/payment
