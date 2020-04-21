@@ -1,4 +1,4 @@
-package com.main;
+package com.payguard;
 
 import org.junit.Test;
 

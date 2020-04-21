@@ -1,4 +1,4 @@
-package com.main;
+package com.payguard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
