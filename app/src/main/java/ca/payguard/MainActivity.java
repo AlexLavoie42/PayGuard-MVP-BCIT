@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.widget.Button;
 
@@ -18,21 +19,25 @@ import java.util.ArrayList;
  */
 public class MainActivity extends AppCompatActivity {
     private TableSet tableGui;
-    private ArrayList<Button> tblBtns = new ArrayList<>();
+    private ArrayList<Button> tblBtns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tableGui = new TableSet(getScreenWidth() / 2, getScreenHeight() / 2);
-        tableGui.load();
-
         displayTables();
     }
 
     /** Loads the table set onto the screen. */
     private void displayTables(){
+        //loads the table objects
+        tableGui = new TableSet(getScreenWidth() / 2, getScreenHeight() / 2);
+        tableGui.load();
+
+        //sets a list for the table xml buttons
+        tblBtns = new ArrayList<>();
+
         //gets the layout tag from xml
         ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
 
@@ -40,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
         for(Table t : tableGui){
             Button b = new Button(this);
             b.setText(t.getLabel());
-            b.setX(t.getX());
-            b.setY(t.getY());
+            b.setX(t.getX() - t.getWidth() / 2);
+            b.setY(t.getY() - t.getHeight() / 2);
+            b.setWidth(t.getWidth());
+            b.setHeight(t.getHeight());
 
             tblBtns.add(b);
             layout.addView(b);
@@ -49,16 +56,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int getScreenWidth(){
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.x;
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics.widthPixels;
     }
 
     private int getScreenHeight(){
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.y;
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics.heightPixels;
     }
 }

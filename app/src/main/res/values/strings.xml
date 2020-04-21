@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">PayGuard</string>
     <string name="login">Login</string>
+    <string name="dollarAmount1">$50</string>
+    <string name="dollarAmount2">$75</string>
+    <string name="dollarAmount3">$100</string>
+    <string name="customAmount">Custom</string>
+    <string name="payment_type">Add pre-authorization</string>
+    <string name="current_auth" />
 </resources>
