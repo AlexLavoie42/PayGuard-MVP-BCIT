@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PayGuard</string>
+    <string name="dollarAmount1">$50</string>
+    <string name="dollarAmount2">$75</string>
+    <string name="dollarAmount3">$100</string>
+    <string name="customAmount">Custom</string>
 </resources>

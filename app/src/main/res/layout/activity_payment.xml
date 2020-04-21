@@ -7,10 +7,10 @@
     tools:context=".payment">
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/dollarAmount1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="@string/dollarAmount1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,29 +18,29 @@
         app:layout_constraintVertical_bias="0.306" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/dollarAmount2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Button"
-        app:layout_constraintTop_toBottomOf="@+id/button5"
+        android:text="@string/dollarAmount2"
+        app:layout_constraintTop_toBottomOf="@+id/dollarAmount1"
         tools:layout_editor_absoluteX="436dp" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/dollarAmount3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Button"
-        app:layout_constraintTop_toBottomOf="@+id/button6"
+        android:text="@string/dollarAmount3"
+        app:layout_constraintTop_toBottomOf="@+id/dollarAmount2"
         tools:layout_editor_absoluteX="436dp" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/customAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Button"
-        app:layout_constraintTop_toBottomOf="@+id/button7"
+        android:text="@string/customAmount"
+        app:layout_constraintTop_toBottomOf="@+id/dollarAmount3"
         tools:layout_editor_absoluteX="436dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
