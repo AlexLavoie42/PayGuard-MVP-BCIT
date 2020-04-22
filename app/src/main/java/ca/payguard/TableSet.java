@@ -60,7 +60,7 @@ class TableSet extends ArrayList<Table> {
         t = get(7);
         t.setCoords(6 * segmentX, 14 * segmentY);
         t = get(8);
-        t.setCoords(17 * segmentX, 10 * segmentY);
+        t.setCoords(15 * segmentX, 10 * segmentY);
         t.setDimensions(t.getWidth(), sizes[2]);
     }
 
