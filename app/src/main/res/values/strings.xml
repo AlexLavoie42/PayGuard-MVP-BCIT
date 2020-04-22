@@ -6,4 +6,19 @@
     <string name="customAmount">Custom</string>
     <string name="payment_type">Add pre-authorization</string>
     <string name="current_auth" />
+    <string name="tap_card">Tap or insert card</string>
+    <string name="pin_1">1</string>
+    <string name="pin_2">2</string>
+    <string name="pin_3">3</string>
+    <string name="pin_3">3</string>
+    <string name="pin_4">4</string>
+    <string name="pin_5">5</string>
+    <string name="pin_6">6</string>
+    <string name="pin_7">7</string>
+    <string name="pin_8">8</string>
+    <string name="pin_9">9</string>
+    <string name="pin_back">#BACK#</string>
+    <string name="pin_0">0</string>
+    <string name="pin_go">#NEXT#</string>
+    <string name="pin_total">####</string>
 </resources>

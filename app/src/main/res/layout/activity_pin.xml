@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ca.payguard.pin">
+
+    <Button
+        android:id="@+id/pin_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pin_5" />
+
+    <Button
+        android:id="@+id/pin_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pin_8" />
+
+    <Button
+        android:id="@+id/pin_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/pin_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pin_total" />
+
+    <Button
+        android:id="@+id/pin_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_1"
+        app:layout_constraintEnd_toStartOf="@+id/pin_2"
+        app:layout_constraintTop_toTopOf="@+id/pin_2" />
+
+    <Button
+        android:id="@+id/pin_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_4"
+        app:layout_constraintEnd_toStartOf="@+id/pin_5"
+        app:layout_constraintTop_toTopOf="@+id/pin_5" />
+
+    <Button
+        android:id="@+id/pin_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_back"
+        app:layout_constraintEnd_toStartOf="@+id/pin_0"
+        app:layout_constraintTop_toBottomOf="@+id/pin_8" />
+
+    <Button
+        android:id="@+id/pin_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_7"
+        app:layout_constraintEnd_toStartOf="@+id/pin_8"
+        app:layout_constraintTop_toTopOf="@+id/pin_8" />
+
+    <Button
+        android:id="@+id/pin_9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_9"
+        app:layout_constraintStart_toEndOf="@+id/pin_8"
+        app:layout_constraintTop_toTopOf="@+id/pin_8" />
+
+    <Button
+        android:id="@+id/pin_go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_go"
+        app:layout_constraintStart_toEndOf="@+id/pin_0"
+        app:layout_constraintTop_toBottomOf="@+id/pin_8" />
+
+    <Button
+        android:id="@+id/pin_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_6"
+        app:layout_constraintStart_toEndOf="@+id/pin_5"
+        app:layout_constraintTop_toTopOf="@+id/pin_5" />
+
+    <Button
+        android:id="@+id/pin_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_3"
+        app:layout_constraintStart_toEndOf="@+id/pin_2"
+        app:layout_constraintTop_toTopOf="@+id/pin_2" />
+
+    <Button
+        android:id="@+id/pin_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pin_2" />
+
+    <TextView
+        android:id="@+id/pin_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin_total"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.249" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
