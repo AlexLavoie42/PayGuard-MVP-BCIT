@@ -9,16 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="ca.payguard.pin" />
-        <activity android:name="ca.payguard.tap_card" />
-        <activity android:name="ca.payguard.LoginActivity" />
-        <activity android:name="ca.payguard.MainActivity">
+        <activity android:name="ca.payguard.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="ca.payguard.pin" />
+        <activity android:name="ca.payguard.tap_card" />
+        <activity android:name="ca.payguard.LoginActivity" />
+        <activity android:name="ca.payguard.MainActivity"></activity>
+        <activity android:name="ca.payguard.MainActivity"></activity>
         <activity android:name="ca.payguard.Payment" />
     </application>
 
