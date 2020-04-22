@@ -8,26 +8,29 @@ import java.util.ArrayList;
  */
 class TableSet extends ArrayList<Table> {
     int[] sizes = new int[3];//S M L
+    static final int STD_WIDTH = 1440, STD_HEIGHT = 2560;//standard android screen size
 
     /**
      * Loads the table set setting from the app. If the user
      * doesn't have settings stored, the tables are arranged
      * to the standard layout.
      */
-    public void load(int width, int height){
+    public void load(){
         //TODO load table settings from back-end
 
         //arrange standard layout if data can't be loaded
         if(size() == 0)
-            loadStandard(width, height);
+            loadStandard();
     }
 
     /**
-     * Loads the set of tables to the
-     * standard arrangement.
+     * Loads the set of tables to the standard arrangement using
+     * the standard android screen size. No matter the screen size,
+     * the tables' coordinates remain the same.
      */
-    private void loadStandard(int width, int height){
-        int segmentX = width / 20, segmentY = height / 20;
+    private void loadStandard(){
+        int segmentX = STD_WIDTH / 20, segmentY = STD_HEIGHT / 20;
+        //standard table size is equal to the greater segment
         int size = Math.max(segmentX, segmentY);
         sizes[0] = size;
         sizes[1] = size * 4;
@@ -57,7 +60,14 @@ class TableSet extends ArrayList<Table> {
         t = get(7);
         t.setCoords(6 * segmentX, 14 * segmentY);
         t = get(8);
-        t.setCoords(16 * segmentX, 10 * segmentY);
+        t.setCoords(17 * segmentX, 10 * segmentY);
         t.setDimensions(t.getWidth(), sizes[2]);
+    }
+
+    /**
+     * Reloads the screen
+     */
+    public void reload(int width, int height){
+
     }
 }
