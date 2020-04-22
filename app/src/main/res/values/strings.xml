@@ -21,4 +21,8 @@
     <string name="pin_0">0</string>
     <string name="pin_go">#NEXT#</string>
     <string name="pin_total">####</string>
+    <string name="confirmation_message">Thank you, you have been pre-approved for</string>
+    <string name="confirm_total">$XX</string>
+    <string name="done">Done</string>
+    <string name="email_hint">Enter E-mail for bill</string>
 </resources>

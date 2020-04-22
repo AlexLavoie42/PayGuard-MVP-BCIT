@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.payguard.tap_card">
+    tools:context="ca.payguard.TapCard">
 
     <TextView
         android:id="@+id/tapCard"

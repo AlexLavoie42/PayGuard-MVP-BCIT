@@ -16,8 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ca.payguard.pin" />
-        <activity android:name="ca.payguard.tap_card" />
+        <activity android:name="ca.payguard.Pin" />
+        <activity android:name="ca.payguard.TapCard" />
         <activity android:name="ca.payguard.MainActivity" />
         <activity android:name="ca.payguard.Payment" />
     </application>
