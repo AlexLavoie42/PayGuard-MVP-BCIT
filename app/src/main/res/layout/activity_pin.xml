@@ -78,6 +78,7 @@
         android:id="@+id/pin_go"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onButtonClick"
         android:text="@string/pin_go"
         app:layout_constraintStart_toEndOf="@+id/pin_0"
         app:layout_constraintTop_toBottomOf="@+id/pin_8" />
