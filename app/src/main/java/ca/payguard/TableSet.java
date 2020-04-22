@@ -46,28 +46,21 @@ class TableSet extends ArrayList<Table> {
         Table t = get(0);
         t.setCoords(2 * segmentX, 6 * segmentY);
         t = get(1);
-        t.setCoords(6 * segmentX, 6 * segmentY);
+        t.setCoords(7 * segmentX, 6 * segmentY);
         t = get(2);
-        t.setCoords(10 * segmentX, 8 * segmentY);
+        t.setCoords(11 * segmentX, 8 * segmentY);
         t = get(3);
         t.setCoords(2 * segmentX, 10 * segmentY);
         t = get(4);
-        t.setCoords(6 * segmentX, 10 * segmentY);
+        t.setCoords(7 * segmentX, 10 * segmentY);
         t = get(5);
-        t.setCoords(10 * segmentX, 12 * segmentY);
+        t.setCoords(11 * segmentX, 12 * segmentY);
         t = get(6);
         t.setCoords(2 * segmentX, 14 * segmentY);
         t = get(7);
-        t.setCoords(6 * segmentX, 14 * segmentY);
+        t.setCoords(7 * segmentX, 14 * segmentY);
         t = get(8);
-        t.setCoords(15 * segmentX, 10 * segmentY);
+        t.setCoords(16 * segmentX, 10 * segmentY);
         t.setDimensions(t.getWidth(), sizes[2]);
-    }
-
-    /**
-     * Reloads the screen
-     */
-    public void reload(int width, int height){
-
     }
 }
