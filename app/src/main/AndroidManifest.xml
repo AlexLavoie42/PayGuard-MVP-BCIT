@@ -18,9 +18,7 @@
         </activity>
         <activity android:name="ca.payguard.pin" />
         <activity android:name="ca.payguard.tap_card" />
-        <activity android:name="ca.payguard.LoginActivity" />
-        <activity android:name="ca.payguard.MainActivity"></activity>
-        <activity android:name="ca.payguard.MainActivity"></activity>
+        <activity android:name="ca.payguard.MainActivity"/>
         <activity android:name="ca.payguard.Payment" />
     </application>
 
