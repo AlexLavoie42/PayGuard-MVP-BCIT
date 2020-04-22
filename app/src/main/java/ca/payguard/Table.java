@@ -4,7 +4,7 @@ package ca.payguard;
  * The Table class stores all preauth/payment
  * data for one table.
  */
-public class Table {
+class Table {
     //data pertaining to bill/preauth info
     private double preauthAmt;
 

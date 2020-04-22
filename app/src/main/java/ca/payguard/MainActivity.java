@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
     /** Loads the table set onto the screen. */
     private void displayTables(){
         //loads the table objects
-        tableGui = new TableSet(getScreenWidth() / 2, getScreenHeight() / 2);
-        tableGui.load();
+        tableGui = new TableSet();
+        tableGui.load(getScreenWidth(), getScreenHeight());
 
         //sets a list for the table xml buttons
         tblBtns = new ArrayList<>();
