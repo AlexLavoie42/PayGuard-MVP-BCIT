@@ -87,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
             final Table t = tableGui.get(i);
 
             Button b = new Button(this);
-            b.setText("W:" + t.getWidth() + "\nNW:" + (int)((float) t.getWidth() * wRatio));
+            b.setText(t.getLabel());
             //adjust the button's dimensions to screen size
-            b.setWidth((int)((float) t.getWidth() * wRatio));
-            b.setHeight((int)((float) t.getHeight() * hRatio));
+            b.setWidth((int)((float)t.getWidth() * wRatio));
+            b.setHeight((int)((float)t.getHeight() * hRatio));
             b.setId(i+1);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,8 +101,10 @@ public class MainActivity extends AppCompatActivity {
 
             /* t.getWidth()/2 & t.getHeight()/2 centers the table at it's coordinate
             rather than starting at the specified coordinate. */
-            b.setX((float) t.getX() * wRatio - t.getWidth() / 2);
-            b.setY((float) t.getY() * hRatio - t.getHeight() / 2);
+            b.setX((float) t.getX() * wRatio
+                - (int)((float)t.getWidth() * wRatio) / 2);//b.getWidth() returns 0?
+            b.setY((float) t.getY() * hRatio
+                - (int)((float)t.getHeight() * hRatio) / 2);//b.getHeight returns 0?
 
             addButton(b);
         }
