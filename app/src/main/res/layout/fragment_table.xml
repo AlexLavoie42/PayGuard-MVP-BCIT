@@ -4,8 +4,7 @@
     android:layout_width="400dp"
     android:layout_height="match_parent"
     android:layout_gravity="right"
-    android:background="@color/colorLightAccent"
-    tools:context=".TableFragment">
+    android:background="@color/colorLightAccent" >
 
     <RelativeLayout
         android:id="@+id/tableHeader"
