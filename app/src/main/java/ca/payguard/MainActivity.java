@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
-        ft.replace(R.id.mainLayout, TableFragment.newInstance(label));
+        TableFragment popup = TableFragment.newInstance(label);
+        ft.replace(R.id.popupLayout, popup);
         //Complete changes
         ft.commit();
     }
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     /** Adjusts the buttons onto the screen. */
     private void displayTables(){
         //gets the layout tag from xml
-        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
+        ConstraintLayout layout = findViewById(R.id.buttonLayout);
 
         /*
         Create a button for each table and use it's coordinates
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     /** Verifies if the button is already in layout view or not. */
     private void addButton(Button b){
         //gets the layout tag from xml
-        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
+        ConstraintLayout layout = findViewById(R.id.buttonLayout);
 
         for(final Button layoutBtn : tblBtns){
             //if button is already in layout, match layout button to specified button
