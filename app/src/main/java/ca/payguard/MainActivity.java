@@ -4,16 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
-
-import com.payguard.R;
 
 import java.util.ArrayList;
 
@@ -25,10 +25,14 @@ public class MainActivity extends AppCompatActivity {
     private TableSet tableGui;
     private ArrayList<Button> tblBtns = new ArrayList<>();
 
+    public static boolean editMode = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //put settings in top right
 
         //loads the table objects
         tableGui = new TableSet();
@@ -49,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
 
         }*/
+    }
+
+    public void launchSettings(View v){
+        Intent myIntent = new Intent(getBaseContext(), SettingsActivity.class);
+        startActivity(myIntent);
     }
 
     /** Creates new TableFragment as overlay */
