@@ -1,93 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="400dp"
+    android:id="@+id/fl_tablePopup"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="right"
-    android:background="@color/colorLightAccent" >
+    tools:context="ca.payguard.TableFragment" >
 
-    <RelativeLayout
-        android:id="@+id/tableHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
-
-        <TextView
-            android:id="@+id/tableHeaderText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="25dp"
-            android:textSize="30dp"
-            android:text="@string/tableHeader" />
-
-        <Button
-            android:id="@+id/closeTableButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_margin="25dp"
-            android:backgroundTint="@color/colorButton"
-            android:text="@string/closeTableButton"
-            android:onClick="onCloseTableButtonClick" />
-
-    </RelativeLayout>
-
-    <GridLayout
-        android:columnCount="1"
-        android:layout_below="@+id/tableHeader"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:background="@color/colorBackground">
-
-        <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_row="0">
-
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_margin="25dp"
-                android:textSize="20sp"
-                android:text="@string/seatInfoText"
-                />
-
-            <Button
-                android:id="@+id/seat1InfoButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/colorButton"
-                android:text="Add $"
-                android:layout_margin="25dp"
-                />
-
-            <Button
-                android:id="@+id/seat1CloseButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/seat1InfoButton"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/colorButton"
-                android:text="Bill"
-                android:layout_margin="25dp"
-                />
-
-        </RelativeLayout>
-
-    </GridLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="25dp"
-        android:backgroundTint="@color/colorButton"
-        android:text="@string/addSeatButton" />
-
-</RelativeLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="272dp"
+        android:layout_height="133dp"
+        android:text="Testing popup 123"
+        android:textSize="36sp" />
+</FrameLayout>

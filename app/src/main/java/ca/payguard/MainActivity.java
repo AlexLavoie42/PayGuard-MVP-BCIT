@@ -2,16 +2,18 @@ package ca.payguard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
-
-import com.payguard.R;
 
 import java.util.ArrayList;
 
@@ -23,10 +25,14 @@ public class MainActivity extends AppCompatActivity {
     private TableSet tableGui;
     private ArrayList<Button> tblBtns = new ArrayList<>();
 
+    public static boolean editMode = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //put settings in top right
 
         //loads the table objects
         tableGui = new TableSet();
@@ -49,6 +55,21 @@ public class MainActivity extends AppCompatActivity {
         }*/
     }
 
+    public void launchSettings(View v){
+        Intent myIntent = new Intent(getBaseContext(), SettingsActivity.class);
+        startActivity(myIntent);
+    }
+
+    /** Creates new TableFragment as overlay */
+    private void tablePopup(String label){
+        //Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //Add TableFragment to layout
+        ft.replace(R.id.mainLayout, TableFragment.newInstance(label));
+        //Complete changes
+        ft.commit();
+    }
+
     /** Adjusts the buttons onto the screen. */
     private void displayTables(){
         //gets the layout tag from xml
@@ -61,13 +82,19 @@ public class MainActivity extends AppCompatActivity {
         float wRatio = (float) getScreenWidth() / (float) TableSet.STD_WIDTH;
         float hRatio = (float) getScreenHeight() / (float) TableSet.STD_HEIGHT;
         for(int i = 0; i < tableGui.size(); i++){
-            Table t = tableGui.get(i);
+            final Table t = tableGui.get(i);
 
             Button b = new Button(this);
             b.setText(t.getLabel());
             b.setWidth(t.getWidth());
             b.setHeight(t.getHeight());
             b.setId(i+1);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tablePopup(t.getLabel());
+                }
+            });
 
             /* t.getWidth()/2 & t.getHeight()/2 centers the table at it's coordinate
             rather than starting at the specified coordinate. */
@@ -83,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         //gets the layout tag from xml
         ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
 
-        for(Button layoutBtn : tblBtns){
+        for(final Button layoutBtn : tblBtns){
             //if button is already in layout, match layout button to specified button
             if(b.getId() == layoutBtn.getId()){
                 layoutBtn.setX(b.getX());

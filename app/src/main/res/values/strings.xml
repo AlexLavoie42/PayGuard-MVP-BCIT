@@ -25,6 +25,23 @@
     <string name="confirm_total">$XX</string>
     <string name="done">Done</string>
     <string name="email_hint">Enter E-mail for bill</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="settings_edit_mode">Edit Mode</string>
+    <string name="settings_section_header">Options</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="tableHeader">Table X</string>
     <string name="closeTableButton">Process Table</string>
     <string name="addSeatButton">Add Seat</string>
