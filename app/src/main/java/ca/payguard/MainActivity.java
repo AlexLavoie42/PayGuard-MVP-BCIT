@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         displayTables();
     }
 
+    //TODO doesn't seem to activate? supposed to function on orientation change
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

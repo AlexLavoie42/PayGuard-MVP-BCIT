@@ -34,7 +34,7 @@ class TableSet extends ArrayList<Table> {
         int size = Math.max(segmentX, segmentY);
         sizes[0] = size;
         sizes[1] = size * 4;
-        sizes[2] = size * 8;
+        sizes[2] = size * 6;
 
         for(int i = 0; i < 9; i++){
             Table t = new Table();
@@ -60,7 +60,8 @@ class TableSet extends ArrayList<Table> {
         t = get(7);
         t.setCoords(7 * segmentX, 14 * segmentY);
         t = get(8);
-        t.setCoords(16 * segmentX, 10 * segmentY);
+        //direct approach for y coordinate because otherwise it goes off screen for some users
+        t.setCoords(16 * segmentX, (int)(0.5 * (double)STD_HEIGHT));
         t.setDimensions(t.getWidth(), sizes[2]);
     }
 }
