@@ -30,12 +30,12 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void goBack(){
-        MainActivity.editMode = false;
+        MainActivity.disableEditMode();
         finish();
     }
 
     public void editMode(){
-        MainActivity.editMode = true;
+        MainActivity.enableEditMode();
         finish();
     }
 }

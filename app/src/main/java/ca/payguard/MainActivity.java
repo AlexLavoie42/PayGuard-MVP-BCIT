@@ -19,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private TableSet tableGui;
     private ArrayList<Button> tblBtns = new ArrayList<>();
 
-    public static boolean editMode = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +122,14 @@ public class MainActivity extends AppCompatActivity {
         //if not found, add the button to layout
         tblBtns.add(b);
         layout.addView(b);
+    }
+
+    public static void enableEditMode(){
+
+    }
+
+    public static void disableEditMode(){
+
     }
 
     private int getScreenWidth(){
