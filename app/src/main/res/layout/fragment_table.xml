@@ -1,0 +1,14 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_tablePopup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ca.payguard.TableFragment" >
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="272dp"
+        android:layout_height="133dp"
+        android:text="Testing popup 123"
+        android:textSize="36sp" />
+</FrameLayout>
