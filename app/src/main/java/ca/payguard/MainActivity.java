@@ -87,9 +87,10 @@ public class MainActivity extends AppCompatActivity {
             final Table t = tableGui.get(i);
 
             Button b = new Button(this);
-            b.setText(t.getLabel());
-            b.setWidth(t.getWidth());
-            b.setHeight(t.getHeight());
+            b.setText("W:" + t.getWidth() + "\nNW:" + (int)((float) t.getWidth() * wRatio));
+            //adjust the button's dimensions to screen size
+            b.setWidth((int)((float) t.getWidth() * wRatio));
+            b.setHeight((int)((float) t.getHeight() * hRatio));
             b.setId(i+1);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
