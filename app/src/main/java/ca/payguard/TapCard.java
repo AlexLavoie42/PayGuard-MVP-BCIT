@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.payguard.R;
+import ca.payguard.R;
 
 public class TapCard extends AppCompatActivity {
 
