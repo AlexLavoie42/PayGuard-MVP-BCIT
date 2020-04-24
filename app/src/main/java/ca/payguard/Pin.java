@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import ca.payguard.R;
@@ -14,6 +14,7 @@ import ca.payguard.R;
 public class Pin extends AppCompatActivity {
 
     private ArrayList<Integer> pin;
+    private TextView pin_code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,57 +23,83 @@ public class Pin extends AppCompatActivity {
         pin = new ArrayList<Integer>();
     }
 
+    private void pinScreenUpdate(){
+        pin_code = (TextView) findViewById(R.id.pin_total);
+        String pin_pounds = "";
+        for(int i = 0; i < pin.size(); i++){
+            pin_pounds += "#";
+        }
+        pin_code.setText(pin_pounds);
+    }
+
+    private void pinUpdate(int number){
+        pin.add(number);
+        pinScreenUpdate();
+    }
+
+    //TODO: Refactor name to be more descriptive.
+    //TODO: Pass pin data to next intent.
+
+    /**
+     * Goes to the next Intent (EmailConfirmation).
+     */
     public void onButtonClick(View v){
         Intent myIntent = new Intent(getBaseContext(),   EmailConfirmation.class);
         startActivity(myIntent);
     }
 
+    //Might refactor this into a switch function pending member review.
     public void onButton1(View v){
-        pin.add(1);
+        pinUpdate(1);
     }
 
     public void onButton2(View v){
-        pin.add(2);
+        pinUpdate(2);
     }
 
     public void onButton3(View v){
-        pin.add(3);
+        pinUpdate(3);
     }
 
     public void onButton4(View v){
-        pin.add(4);
+        pinUpdate(4);
     }
 
     public void onButton5(View v){
-        pin.add(5);
+        pinUpdate(5);
     }
 
     public void onButton6(View v){
-        pin.add(6);
+        pinUpdate(6);
     }
 
     public void onButton7(View v){
-        pin.add(7);
+        pinUpdate(7);
     }
 
     public void onButton8(View v){
-        pin.add(8);
+        pinUpdate(8);
     }
 
     public void onButton9(View v){
-        pin.add(9);
+        pinUpdate(9);
     }
 
     public void onButton0(View v){
-        pin.add(0);
+        pinUpdate(0);
     }
 
+    /**
+     * If the pin is empty, go back to previous intent. If pin is not empty, delete last
+     * entry.
+     */
     public void onButtonBack(View v){
         if(pin.isEmpty()){
             Intent myIntent = new Intent(getBaseContext(),   Payment.class);
             startActivity(myIntent);
         }else{
             pin.remove(pin.size() - 1);
+            pinScreenUpdate();
         }
     }
 
