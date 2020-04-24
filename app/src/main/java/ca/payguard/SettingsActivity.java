@@ -1,5 +1,6 @@
 package ca.payguard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -28,12 +29,11 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void goBack() {
-        MainActivity.disableEditMode();
         finish();
     }
 
     public void editMode(){
-        MainActivity.enableEditMode();
+        //MainActivity.enableEditMode();
         finish();
     }
 
@@ -41,6 +41,15 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        }
+
+        @Override
+        public boolean onPreferenceTreeClick(Preference preference) {
+            if(preference.getKey().equals("edit_mode")) {
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+            }
+            return super.onPreferenceTreeClick(preference);
         }
     }
 

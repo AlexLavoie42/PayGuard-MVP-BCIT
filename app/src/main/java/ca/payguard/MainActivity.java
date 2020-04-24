@@ -1,5 +1,6 @@
 package ca.payguard;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -11,7 +12,10 @@ import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 
@@ -24,12 +28,15 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Button> tblBtns = new ArrayList<>();
     private Fragment popup;
 
+    //edit mode info
+    GridLayout EMToolbar;
+    Button garbage;
+    boolean editMode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //put settings in top right
 
         //loads the table objects
         tableGui = new TableSet();
@@ -45,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         displayTables();
+
+        enableEditMode();//TODO delete
     }
 
     //TODO doesn't seem to activate? supposed to function on orientation change
@@ -85,14 +94,13 @@ public class MainActivity extends AppCompatActivity {
 
     /** Closes any open popups */
     private void closePopup(){
-        //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Detach current popup if it exists
         if(popup != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
             ft.detach(popup);
+            ft.commit();
         }
-        //Complete changes
-        ft.commit();
     }
 
     /** Adjusts the buttons onto the screen. */
@@ -112,8 +120,10 @@ public class MainActivity extends AppCompatActivity {
             Button b = new Button(this);
             b.setText(t.getLabel());
             //adjust the button's dimensions to screen size
-            b.setWidth((int)((float)t.getWidth() * wRatio));
-            b.setHeight((int)((float)t.getHeight() * hRatio));
+            int width = (int)((float)t.getWidth() * wRatio),
+                    height = (int)((float)t.getHeight() * hRatio);
+            b.setWidth(width);
+            b.setHeight(height);
             b.setId(i+1);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,10 +134,8 @@ public class MainActivity extends AppCompatActivity {
 
             /* t.getWidth()/2 & t.getHeight()/2 centers the table at it's coordinate
             rather than starting at the specified coordinate. */
-            b.setX((float) t.getX() * wRatio
-                - (int)((float)t.getWidth() * wRatio) / 2);//b.getWidth() returns 0?
-            b.setY((float) t.getY() * hRatio
-                - (int)((float)t.getHeight() * hRatio) / 2);//b.getHeight returns 0?
+            b.setX((float) t.getX() * wRatio - width / 2);//b.getWidth() returns 0?
+            b.setY((float) t.getY() * hRatio - height / 2);//b.getHeight() returns 0?
 
             addButton(b);
         }
@@ -155,12 +163,51 @@ public class MainActivity extends AppCompatActivity {
         layout.addView(b);
     }
 
-    public static void enableEditMode(){
+    public void enableEditMode(){
+        if(editMode)
+            return;
 
+        getSupportActionBar().hide();
+
+        EMToolbar = new GridLayout(this);
+        EMToolbar.setBackgroundColor(getResources().getColor(R.color.brightGreen));
+        EMToolbar.setRowCount(1);
+        EMToolbar.setColumnCount(4);
+
+        Button addBtn = new Button(this);
+        EditText nameInput = new EditText(this);
+        Spinner shapeSelect = new Spinner(this);
+        Button exitBtn = new Button(this);
+
+        addBtn.setText("+");
+        nameInput.setText("Table Name");
+        exitBtn.setText("X");
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableEditMode();
+            }
+        });
+
+        EMToolbar.addView(addBtn);
+        EMToolbar.addView(nameInput);
+        EMToolbar.addView(shapeSelect);
+        EMToolbar.addView(exitBtn);
+
+        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
+        layout.addView(EMToolbar);
+        editMode = true;
     }
 
-    public static void disableEditMode(){
+    public void disableEditMode(){
+        if(!editMode)
+            return;
 
+        getSupportActionBar().show();
+
+        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
+        layout.removeView(EMToolbar);
+        editMode = false;
     }
 
     private int getScreenWidth(){
