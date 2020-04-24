@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         displayTables();
 
-        enableEditMode();//TODO delete
+        //enableEditMode();//TODO delete
     }
 
     //TODO doesn't seem to activate? supposed to function on orientation change
@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         EMToolbar = new GridLayout(this);
+        EMToolbar.setBackgroundColor(getResources().getColor(R.color.brightGreen));
         EMToolbar.setRowCount(1);
         EMToolbar.setColumnCount(4);
 

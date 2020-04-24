@@ -7,5 +7,10 @@
     <color name="colorLightAccent">#CDBFB3</color>
     <color name="colorButton">#CCF0A1</color>
 
-
+    <!--PayGuard color palette-->
+    <color name="darkGreen">#45592D</color>
+    <color name="brightGreen">#CBDFB3</color>
+    <color name="lightGreen">#A7D86D</color>
+    <color name="green">#80A653</color>
+    <color name="blackGreen">#515947</color>
 </resources>
