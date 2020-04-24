@@ -13,7 +13,9 @@ import ca.payguard.R;
 
 public class Pin extends AppCompatActivity {
 
+    // The pin-code for the authorized card.
     private ArrayList<Integer> pin;
+    // The TextView to show the # symbols in.
     private TextView pin_code;
 
     @Override
@@ -23,6 +25,7 @@ public class Pin extends AppCompatActivity {
         pin = new ArrayList<Integer>();
     }
 
+    /** Updates the pin_code variable with the amount of #'s that is appropriate. */
     private void pinScreenUpdate(){
         pin_code = (TextView) findViewById(R.id.pin_total);
         String pin_pounds = "";
@@ -32,6 +35,7 @@ public class Pin extends AppCompatActivity {
         pin_code.setText(pin_pounds);
     }
 
+    /** Appends number to the end of the current pin. */
     private void pinUpdate(int number){
         pin.add(number);
         pinScreenUpdate();
