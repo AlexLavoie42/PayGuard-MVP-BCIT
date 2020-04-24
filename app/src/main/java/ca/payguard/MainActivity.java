@@ -65,9 +65,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         Intent i = getIntent();
-        Bundle b = i.getExtras();
 
-        if(b.get("edit_mode").equals("e"))
+        if(i.getStringExtra("edit_mode").equals("e"))
             enableEditMode();
         else
             disableEditMode();
