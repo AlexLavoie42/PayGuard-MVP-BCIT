@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
         }*/
     }
 
+    @Override
+    public void onBackPressed() {
+        closePopup();
+    }
+
     public void launchSettings(View v){
         Intent myIntent = new Intent(getBaseContext(), SettingsActivity.class);
         startActivity(myIntent);
