@@ -2,13 +2,17 @@ package ca.payguard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+
 import java.util.ArrayList;
 
 /**
@@ -18,6 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private TableSet tableGui;
     private ArrayList<Button> tblBtns = new ArrayList<>();
+    private Fragment popup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         //loads the table objects
         tableGui = new TableSet();
         tableGui.load();
+
+        //Set the main layout on click to close any open popups.
+        View layout = findViewById(R.id.mainLayout);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closePopup();
+            }
+        });
 
         displayTables();
     }
@@ -58,8 +72,20 @@ public class MainActivity extends AppCompatActivity {
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
-        TableFragment popup = TableFragment.newInstance(label);
+        popup = TableFragment.newInstance(label);
         ft.replace(R.id.popupLayout, popup);
+        //Complete changes
+        ft.commit();
+    }
+
+    /** Closes any open popups */
+    private void closePopup(){
+        //Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //Detach current popup if it exists
+        if(popup != null) {
+            ft.detach(popup);
+        }
         //Complete changes
         ft.commit();
     }
