@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         displayTables();
 
-        //enableEditMode();//TODO delete
+        enableEditMode();//TODO delete
     }
 
     //TODO doesn't seem to activate? supposed to function on orientation change
@@ -120,8 +120,10 @@ public class MainActivity extends AppCompatActivity {
             Button b = new Button(this);
             b.setText(t.getLabel());
             //adjust the button's dimensions to screen size
-            b.setWidth((int)((float)t.getWidth() * wRatio));
-            b.setHeight((int)((float)t.getHeight() * hRatio));
+            int width = (int)((float)t.getWidth() * wRatio),
+                    height = (int)((float)t.getHeight() * hRatio);
+            b.setWidth(width);
+            b.setHeight(height);
             b.setId(i+1);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -132,10 +134,8 @@ public class MainActivity extends AppCompatActivity {
 
             /* t.getWidth()/2 & t.getHeight()/2 centers the table at it's coordinate
             rather than starting at the specified coordinate. */
-            b.setX((float) t.getX() * wRatio
-                - (int)((float)t.getWidth() * wRatio) / 2);//b.getWidth() returns 0?
-            b.setY((float) t.getY() * hRatio
-                - (int)((float)t.getHeight() * hRatio) / 2);//b.getHeight returns 0?
+            b.setX((float) t.getX() * wRatio - width / 2);//b.getWidth() returns 0?
+            b.setY((float) t.getY() * hRatio - height / 2);//b.getHeight() returns 0?
 
             addButton(b);
         }
@@ -179,6 +179,16 @@ public class MainActivity extends AppCompatActivity {
         Spinner shapeSelect = new Spinner(this);
         Button exitBtn = new Button(this);
 
+        addBtn.setText("+");
+        nameInput.setText("Table Name");
+        exitBtn.setText("X");
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableEditMode();
+            }
+        });
+
         EMToolbar.addView(addBtn);
         EMToolbar.addView(nameInput);
         EMToolbar.addView(shapeSelect);
@@ -195,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().show();
 
+        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
+        layout.removeView(EMToolbar);
         editMode = false;
     }
 
