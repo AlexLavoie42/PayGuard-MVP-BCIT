@@ -30,6 +30,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_settings">Settings</string>
     <string name="settings_edit_mode">Edit Mode</string>
+    <string name="settings_edit_mode_summary">Change the table layout</string>
     <string name="settings_section_header">Options</string>
 
     <!-- Messages Preferences -->

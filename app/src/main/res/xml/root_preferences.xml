@@ -6,7 +6,8 @@
 
         <Preference
             app:key="edit_mode"
-            app:title="@string/settings_edit_mode" />
+            app:title="@string/settings_edit_mode"
+            app:summary="@string/settings_edit_mode_summary" />
 
     </PreferenceCategory>
 
