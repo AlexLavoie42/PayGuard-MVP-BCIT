@@ -10,6 +10,7 @@
         android:id="@+id/pin_8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onButton8"
         android:text="@string/pin_8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +20,7 @@
         android:id="@+id/pin_0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onButton0"
         android:text="@string/pin_0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:onClick="onButton2"
         android:text="@string/pin_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +41,7 @@
         android:id="@+id/pin_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onButton1"
         android:text="@string/pin_1"
         app:layout_constraintEnd_toStartOf="@+id/pin_2"
         app:layout_constraintTop_toTopOf="@+id/pin_2" />
@@ -46,6 +50,7 @@
         android:id="@+id/pin_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onButton4"
         android:text="@string/pin_4"
         app:layout_constraintEnd_toStartOf="@+id/pin_5"
         app:layout_constraintTop_toTopOf="@+id/pin_5" />
@@ -54,6 +59,7 @@
         android:id="@+id/pin_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onButtonBack"
         android:text="@string/pin_back"
         app:layout_constraintEnd_toStartOf="@+id/pin_0"
         app:layout_constraintTop_toBottomOf="@+id/pin_8" />
@@ -62,6 +68,7 @@
         android:id="@+id/pin_7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onButton7"
         android:text="@string/pin_7"
         app:layout_constraintEnd_toStartOf="@+id/pin_8"
         app:layout_constraintTop_toTopOf="@+id/pin_8" />
@@ -70,6 +77,7 @@
         android:id="@+id/pin_9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onButton9"
         android:text="@string/pin_9"
         app:layout_constraintStart_toEndOf="@+id/pin_8"
         app:layout_constraintTop_toTopOf="@+id/pin_8" />
@@ -87,6 +95,7 @@
         android:id="@+id/pin_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onButton6"
         android:text="@string/pin_6"
         app:layout_constraintStart_toEndOf="@+id/pin_5"
         app:layout_constraintTop_toTopOf="@+id/pin_5" />
@@ -95,6 +104,7 @@
         android:id="@+id/pin_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onButton3"
         android:text="@string/pin_3"
         app:layout_constraintStart_toEndOf="@+id/pin_2"
         app:layout_constraintTop_toTopOf="@+id/pin_2" />
@@ -103,6 +113,7 @@
         android:id="@+id/pin_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onButton5"
         android:text="@string/pin_5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
