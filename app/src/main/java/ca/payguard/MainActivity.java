@@ -85,14 +85,13 @@ public class MainActivity extends AppCompatActivity {
 
     /** Closes any open popups */
     private void closePopup(){
-        //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Detach current popup if it exists
         if(popup != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
             ft.detach(popup);
+            ft.commit();
         }
-        //Complete changes
-        ft.commit();
     }
 
     /** Adjusts the buttons onto the screen. */
