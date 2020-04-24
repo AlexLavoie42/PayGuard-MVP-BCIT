@@ -44,6 +44,10 @@ public class SettingsActivity extends AppCompatActivity {
                 /* TODO find out how to receive intent in MainActivity
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivityForResult(intent, 0); */
+
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.putExtra("edit_mode", "e");
+                startActivity(intent);
             }
             return super.onPreferenceTreeClick(preference);
         }

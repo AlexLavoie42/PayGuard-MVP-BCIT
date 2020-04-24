@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     GridLayout EMToolbar;
     Button garbage;
     boolean editMode;
+    boolean paused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,22 @@ public class MainActivity extends AppCompatActivity {
 
         displayTables();
 
-        enableEditMode();//TODO delete
+        //enableEditMode();
     }
+
+    /* Crashes app
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        Intent i = getIntent();
+        Bundle b = i.getExtras();
+
+        if(b.get("edit_mode").equals("e"))
+            enableEditMode();
+        else
+            disableEditMode();
+    } */
 
     //TODO doesn't seem to activate? supposed to function on orientation change
     @Override
