@@ -1,5 +1,6 @@
 package ca.payguard;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -11,7 +12,10 @@ import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 
@@ -24,12 +28,15 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Button> tblBtns = new ArrayList<>();
     private Fragment popup;
 
+    //edit mode info
+    GridLayout EMToolbar;
+    Button garbage;
+    boolean editMode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //put settings in top right
 
         //loads the table objects
         tableGui = new TableSet();
@@ -45,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         displayTables();
+
+        enableEditMode();//TODO delete
     }
 
     //TODO doesn't seem to activate? supposed to function on orientation change
@@ -154,12 +163,38 @@ public class MainActivity extends AppCompatActivity {
         layout.addView(b);
     }
 
-    public static void enableEditMode(){
+    public void enableEditMode(){
+        if(editMode)
+            return;
 
+        getSupportActionBar().hide();
+
+        EMToolbar = new GridLayout(this);
+        EMToolbar.setRowCount(1);
+        EMToolbar.setColumnCount(4);
+
+        Button addBtn = new Button(this);
+        EditText nameInput = new EditText(this);
+        Spinner shapeSelect = new Spinner(this);
+        Button exitBtn = new Button(this);
+
+        EMToolbar.addView(addBtn);
+        EMToolbar.addView(nameInput);
+        EMToolbar.addView(shapeSelect);
+        EMToolbar.addView(exitBtn);
+
+        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
+        layout.addView(EMToolbar);
+        editMode = true;
     }
 
-    public static void disableEditMode(){
+    public void disableEditMode(){
+        if(!editMode)
+            return;
 
+        getSupportActionBar().show();
+
+        editMode = false;
     }
 
     private int getScreenWidth(){
