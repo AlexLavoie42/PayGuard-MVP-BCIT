@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         displayTables();
 
-        //enableEditMode();
+        enableEditMode();
     }
 
     /* Crashes app
