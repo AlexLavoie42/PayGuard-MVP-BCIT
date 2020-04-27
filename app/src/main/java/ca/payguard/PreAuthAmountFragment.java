@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +36,13 @@ public class PreAuthAmountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().findViewById(R.id.btn_submitCustom).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Payment paymentView = (Payment)getActivity();
+                paymentView.forwardAmount(((EditText)paymentView.findViewById(R.id.et_customAmount)).getText().toString());
+            }
+        });
     }
 
     @Override
