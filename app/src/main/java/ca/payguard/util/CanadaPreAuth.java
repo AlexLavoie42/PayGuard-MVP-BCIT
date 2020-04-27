@@ -2,7 +2,7 @@ package ca.payguard.util;
 
 import JavaAPI.*;
 
-public class CanadaPreAuth
+public class CanadaPreAuth implements TransactionHandler
 {
     public static void main(String[] args)
     {
