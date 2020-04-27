@@ -43,24 +43,31 @@ public class LoginActivity extends AppCompatActivity {
 
     /** Logs in user through firebase and opens MainActivity on success. */
     public void login(View view){
-        EditText username = findViewById(R.id.et_username);
-        EditText password = findViewById(R.id.et_password);
+        String username = ((EditText)findViewById(R.id.et_username)).getText().toString();
+        String password = ((EditText)findViewById(R.id.et_password)).getText().toString();
 
-        //Sign in through Firebase Auth
-        mAuth.signInWithEmailAndPassword(username.getText().toString(),
-                password.getText().toString())
-        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    openMainActivity();
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        if(!username.equals("") && !password.equals("")) {
+            //Sign in through Firebase Auth
+            mAuth.signInWithEmailAndPassword(username.toString(),
+                    password.toString())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                openMainActivity();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        } else {
+            // If there are no credentials, display a message to the user.
+            Toast.makeText(LoginActivity.this, "Please enter login credentials.",
+                    Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     /** Starts MainActivity */

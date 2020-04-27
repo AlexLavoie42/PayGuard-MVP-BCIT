@@ -47,4 +47,6 @@
     <string name="closeTableButton">Process Table</string>
     <string name="addSeatButton">Add Seat</string>
     <string name="seatInfoText">Seat #\nLimit: $X\nBill: $X</string>
+    <string name="settings_logout">Logout</string>
+    <string name="settings_edit_logout">Logout from PayGuard</string>
 </resources>

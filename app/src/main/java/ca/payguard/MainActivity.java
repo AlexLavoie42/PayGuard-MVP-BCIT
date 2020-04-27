@@ -185,8 +185,6 @@ public class MainActivity extends AppCompatActivity {
         if(editMode)
             return;
 
-        getSupportActionBar().hide();
-
         EMToolbar = new GridLayout(this);
         EMToolbar.setBackgroundColor(getResources().getColor(R.color.brightGreen));
         EMToolbar.setRowCount(1);

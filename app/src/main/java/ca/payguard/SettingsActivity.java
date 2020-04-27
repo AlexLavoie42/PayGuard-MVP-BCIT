@@ -12,6 +12,8 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
@@ -47,6 +49,11 @@ public class SettingsActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 intent.putExtra("edit_mode", "e");
+                startActivity(intent);
+            }
+            else if(preference.getKey().equals("logout")) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
             }
             return super.onPreferenceTreeClick(preference);

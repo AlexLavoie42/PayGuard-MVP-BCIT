@@ -9,6 +9,11 @@
             app:title="@string/settings_edit_mode"
             app:summary="@string/settings_edit_mode_summary" />
 
+        <Preference
+            app:key="logout"
+            app:title="@string/settings_logout"
+            app:summary="@string/settings_edit_logout" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
