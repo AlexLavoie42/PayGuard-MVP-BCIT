@@ -12,12 +12,14 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         displayTables();
 
-        enableEditMode();
+        //enableEditMode();
     }
 
     /* Crashes app
@@ -191,13 +193,12 @@ public class MainActivity extends AppCompatActivity {
         EMToolbar.setColumnCount(4);
 
         EditText nameInput = new EditText(this);
-        LinearLayout shapeSelect = new LinearLayout(this);
-        LinearLayout sizeSelect = new LinearLayout(this);
+        ShapeSelect shapeSelect = new ShapeSelect(this);
+        SizeSelect sizeSelect = new SizeSelect(this);
         Button exitBtn = new Button(this);
 
         nameInput.setText("Table Name");
-        shapeSelect.setOrientation(LinearLayout.HORIZONTAL);
-        sizeSelect.setOrientation(LinearLayout.VERTICAL);
+        nameInput.setSingleLine(true);
         exitBtn.setText("X");
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,13 +220,13 @@ public class MainActivity extends AppCompatActivity {
         exitBtn - 12.5%
          */
         nameInput.setMinimumWidth((int)(widthDis * 0.4));
-        shapeSelect.setMinimumWidth((int)(widthDis * 0.35));
-        sizeSelect.setMinimumWidth((int)(widthDis * 0.125));
-        exitBtn.setMinimumWidth((int)(widthDis * 0.125));
         nameInput.setMinimumHeight(heightDis);
-        shapeSelect.setMinimumHeight(heightDis);
-        sizeSelect.setMinimumHeight(heightDis);
+        nameInput.setGravity(Gravity.CENTER);
+        shapeSelect.load(widthDis, heightDis, this);
+        sizeSelect.load(widthDis, heightDis, this);
+        exitBtn.setMinimumWidth((int)(widthDis * 0.125));
         exitBtn.setMinimumHeight(heightDis);
+        exitBtn.setGravity(Gravity.CENTER);
 
         EMToolbar.addView(nameInput);
         EMToolbar.addView(shapeSelect);
