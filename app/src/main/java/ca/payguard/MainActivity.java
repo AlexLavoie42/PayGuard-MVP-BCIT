@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
 
         displayTables();
 
-        //enableEditMode();
+        enableEditMode();
     }
 
     /* Crashes app
     @Override
-    protected void onStart(){
+    protected void onResume(){
         super.onStart();
 
         Intent i = getIntent();
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout layout = findViewById(R.id.buttonLayout);
 
         for(final Button layoutBtn : tblBtns){
-            //if button is already in layout, match layout button to specified button
+            //if button is already in layout, update said button
             if(b.getId() == layoutBtn.getId()){
                 layoutBtn.setX(b.getX());
                 layoutBtn.setY(b.getY());
@@ -190,13 +190,14 @@ public class MainActivity extends AppCompatActivity {
         EMToolbar.setRowCount(1);
         EMToolbar.setColumnCount(4);
 
-        Button addBtn = new Button(this);
         EditText nameInput = new EditText(this);
-        Spinner shapeSelect = new Spinner(this);
+        LinearLayout shapeSelect = new LinearLayout(this);
+        LinearLayout sizeSelect = new LinearLayout(this);
         Button exitBtn = new Button(this);
 
-        addBtn.setText("+");
         nameInput.setText("Table Name");
+        shapeSelect.setOrientation(LinearLayout.HORIZONTAL);
+        sizeSelect.setOrientation(LinearLayout.VERTICAL);
         exitBtn.setText("X");
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,9 +206,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        EMToolbar.addView(addBtn);
+        final float widthDis = (float) getScreenWidth();
+        final int heightDis = 250;
+        EMToolbar.setMinimumWidth((int) widthDis);
+        EMToolbar.setMinimumHeight(heightDis);
+
+        /*
+        Width distribution:
+        nameInput - 40%
+        shapeSelect - 35%
+        sizeSelect - 12.5%
+        exitBtn - 12.5%
+         */
+        nameInput.setMinimumWidth((int)(widthDis * 0.4));
+        shapeSelect.setMinimumWidth((int)(widthDis * 0.35));
+        sizeSelect.setMinimumWidth((int)(widthDis * 0.125));
+        exitBtn.setMinimumWidth((int)(widthDis * 0.125));
+        nameInput.setMinimumHeight(heightDis);
+        shapeSelect.setMinimumHeight(heightDis);
+        sizeSelect.setMinimumHeight(heightDis);
+        exitBtn.setMinimumHeight(heightDis);
+
         EMToolbar.addView(nameInput);
         EMToolbar.addView(shapeSelect);
+        EMToolbar.addView(sizeSelect);
         EMToolbar.addView(exitBtn);
 
         ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
