@@ -44,10 +44,10 @@
         android:id="@+id/logo"
         android:layout_width="307dp"
         android:layout_height="69dp"
-        app:layout_constraintBottom_toTopOf="@+id/et_username"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.374"
+        app:layout_constraintVertical_bias="0.05"
         app:srcCompat="@drawable/logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
