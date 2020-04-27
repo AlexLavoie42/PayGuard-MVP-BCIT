@@ -20,7 +20,7 @@
     <string name="pin_back">#BACK#</string>
     <string name="pin_0">0</string>
     <string name="pin_go">#NEXT#</string>
-    <string name="pin_total"/>
+    <string name="pin_total" />
     <string name="confirmation_message">Thank you, you have been pre-approved for</string>
     <string name="confirm_total">$XX</string>
     <string name="done">Done</string>
