@@ -2,9 +2,9 @@ package ca.payguard.util;
 
 import JavaAPI.*;
 
-public class CanadaPreAuth
+public class CanadaPreAuth implements TransactionHandler
 {
-    public static void main(String[] args)
+    public static void execute()
     {
         String store_id = "store5";
         String api_token = "yesguy";
