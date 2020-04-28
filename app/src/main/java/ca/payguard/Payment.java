@@ -1,6 +1,7 @@
 package ca.payguard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +32,11 @@ public class Payment extends AppCompatActivity{
 
     /** Method to handle entering a custom amount for a pre-auth. */
     public void onCustomAmount(View v){
-
+        //Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.popupLayout, PreAuthAmountFragment.newInstance());
+        //Complete changes
+        ft.commit();
     }
 
     /** Method for handling dollarAmount1 button's push. Will use button's text in forwardAmount. */
