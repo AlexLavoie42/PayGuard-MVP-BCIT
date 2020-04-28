@@ -5,10 +5,10 @@ public class Customer {
     //Customer data
     private int id;
     private float billTotal;
+    private float preAuthTotal;
+    private float tipAmount;
     private Table table;
     private int phoneNum;
-
-    //TODO: Add pre-auth token
 
     public Customer(int id, Table table, int phoneNum) {
         this.id = id;
@@ -16,7 +16,6 @@ public class Customer {
         this.table = table;
         this.phoneNum = phoneNum;
     }
-
 
     public int getId() {
         return id;
@@ -37,5 +36,13 @@ public class Customer {
 
     public int getPhoneNum() {
         return phoneNum;
+    }
+
+    public float getPreAuthTotal() {
+        return preAuthTotal;
+    }
+
+    public void setPreAuthTotal(float preAuthTotal) {
+        this.preAuthTotal = preAuthTotal;
     }
 }
