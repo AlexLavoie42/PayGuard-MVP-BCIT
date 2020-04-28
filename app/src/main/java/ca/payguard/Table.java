@@ -14,6 +14,9 @@ class Table {
     private int width = STD_DIMENSION, height = STD_DIMENSION;
     private int x, y;
 
+    //Array of Customers at Table.
+    private Customer[] customers;
+
     /*
     Table shape:
     0 - Circle/Oval
