@@ -1,27 +1,17 @@
 package ca.payguard;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridLayout;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-
 import java.util.ArrayList;
+import ca.payguard.editMode.EditMode;
 
 /**
  * MainActivity is the main controller class
@@ -32,11 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Button> tblBtns = new ArrayList<>();
     private Fragment popup;
 
-    //edit mode info
-    GridLayout EMToolbar;
-    Button garbage;
-    boolean editMode;
-    boolean paused;
+    EditMode editMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         displayTables();
+
+        //init edit mode toolbar and add it to view
+        editMode = new EditMode(this);
+        ConstraintLayout constraintLayout = (ConstraintLayout) layout;
+        constraintLayout.addView(editMode);
 
         enableEditMode();
     }
@@ -182,71 +173,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enableEditMode(){
-        if(editMode)
-            return;
-
-        getSupportActionBar().hide();
-
-        EMToolbar = new GridLayout(this);
-        EMToolbar.setBackgroundColor(getResources().getColor(R.color.brightGreen));
-        EMToolbar.setRowCount(1);
-        EMToolbar.setColumnCount(4);
-
-        EditText nameInput = new EditText(this);
-        ShapeSelect shapeSelect = new ShapeSelect(this);
-        SizeSelect sizeSelect = new SizeSelect(this);
-        Button exitBtn = new Button(this);
-
-        nameInput.setText("Table Name");
-        nameInput.setSingleLine(true);
-        exitBtn.setText("X");
-        exitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                disableEditMode();
-            }
-        });
-
-        final float widthDis = (float) getScreenWidth();
-        final int heightDis = 250;
-        EMToolbar.setMinimumWidth((int) widthDis);
-        EMToolbar.setMinimumHeight(heightDis);
-
-        /*
-        Width distribution:
-        nameInput - 40%
-        shapeSelect - 35%
-        sizeSelect - 12.5%
-        exitBtn - 12.5%
-         */
-        nameInput.setMinimumWidth((int)(widthDis * 0.4));
-        nameInput.setMinimumHeight(heightDis);
-        nameInput.setGravity(Gravity.CENTER);
-        shapeSelect.load(widthDis, heightDis, this);
-        sizeSelect.load(widthDis, heightDis, this);
-        exitBtn.setMinimumWidth((int)(widthDis * 0.125));
-        exitBtn.setMinimumHeight(heightDis);
-        exitBtn.setGravity(Gravity.CENTER);
-
-        EMToolbar.addView(nameInput);
-        EMToolbar.addView(shapeSelect);
-        EMToolbar.addView(sizeSelect);
-        EMToolbar.addView(exitBtn);
-
-        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
-        layout.addView(EMToolbar);
-        editMode = true;
-    }
-
-    public void disableEditMode(){
-        if(!editMode)
-            return;
-
-        getSupportActionBar().show();
-
-        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
-        layout.removeView(EMToolbar);
-        editMode = false;
+        editMode.enable((float) getScreenWidth(), 250);
     }
 
     private int getScreenWidth(){
