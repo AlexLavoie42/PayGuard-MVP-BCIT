@@ -6,8 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
-
+import java.util.ArrayList;
 import ca.payguard.R;
+import ca.payguard.Table;
 
 public class EditMode extends GridLayout {
     Button garbage;
@@ -18,6 +19,8 @@ public class EditMode extends GridLayout {
     ShapeSelect shapeSelect;
     SizeSelect sizeSelect;
     Button exitBtn;
+
+    ArrayList<Table> tables;
 
     public EditMode(Context context) {
         super(context);
@@ -45,13 +48,9 @@ public class EditMode extends GridLayout {
         addView(shapeSelect);
         addView(sizeSelect);
         addView(exitBtn);
-
-        /*ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.mainLayout);
-        layout.addView(this);
-        setVisibility(View.GONE);*/
     }
 
-    public void enable(float width, int height){
+    public void enable(float width, int height, ArrayList<Table> tables){
         if(active)
             return;
 
@@ -78,6 +77,10 @@ public class EditMode extends GridLayout {
 
         setVisibility(View.VISIBLE);
         active = true;
+
+        this.tables = tables;
+        nameInput.setEnabled(false);
+        
     }
 
     public void disable(){

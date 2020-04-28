@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+
 import java.util.ArrayList;
 import ca.payguard.editMode.EditMode;
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         //init edit mode toolbar and add it to view
         editMode = new EditMode(this);
+        editMode.setVisibility(View.GONE);
         ConstraintLayout constraintLayout = (ConstraintLayout) layout;
         constraintLayout.addView(editMode);
 
@@ -173,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enableEditMode(){
-        editMode.enable((float) getScreenWidth(), 250);
+        editMode.enable((float) getScreenWidth(), 250, tableGui);
     }
 
     private int getScreenWidth(){
