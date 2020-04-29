@@ -13,6 +13,7 @@ public class Customer {
     public Customer(int id, Table table, int phoneNum) {
         this.id = id;
         this.billTotal = 0;
+        this.tipAmount = 0;
         this.table = table;
         this.phoneNum = phoneNum;
     }
@@ -44,5 +45,13 @@ public class Customer {
 
     public void setPreAuthTotal(float preAuthTotal) {
         this.preAuthTotal = preAuthTotal;
+    }
+
+    public float getTipAmount() {
+        return tipAmount;
+    }
+
+    public void setTipAmount(float tipAmount) {
+        this.tipAmount = tipAmount;
     }
 }
