@@ -22,9 +22,9 @@ import ca.payguard.R;
  * create an instance of this fragment.
  */
 public class TableFragment extends Fragment {
-    private static final String ARG_TABLE = "tableID";
+    private static final String ARG_TABLE = "table";
 
-    private String tableNum;
+    private Table table;
 
     public TableFragment() {
         // Required empty public constructor
@@ -34,13 +34,13 @@ public class TableFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param tableNum Table Number.
+     * @param table Table Object.
      * @return A new instance of fragment TableFragment.
      */
-    public static TableFragment newInstance(String tableNum) {
+    public static TableFragment newInstance(Table table) {
         TableFragment fragment = new TableFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_TABLE, tableNum);
+        args.putParcelable(ARG_TABLE, table);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,7 +49,7 @@ public class TableFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tableNum = getArguments().getString(ARG_TABLE);
+            table = getArguments().getParcelable(ARG_TABLE);
         }
     }
 

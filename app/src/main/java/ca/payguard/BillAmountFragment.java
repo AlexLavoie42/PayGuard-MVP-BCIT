@@ -18,10 +18,10 @@ import ca.payguard.R;
 public class BillAmountFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_customerID = "customerID";
+    private static final String ARG_customer = "customer";
 
     // TODO: Rename and change types of parameters
-    private String custID;
+    private Customer cust;
 
     public BillAmountFragment() {
         // Required empty public constructor
@@ -31,14 +31,14 @@ public class BillAmountFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param customerID Customer number for bill.
+     * @param customer Customer object.
      * @return A new instance of fragment BillAmountFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BillAmountFragment newInstance(String customerID) {
+    public static BillAmountFragment newInstance(Customer customer) {
         BillAmountFragment fragment = new BillAmountFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_customerID, customerID);
+        args.putParcelable(ARG_customer, customer);
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,7 +47,7 @@ public class BillAmountFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            custID = getArguments().getString(ARG_customerID);
+            cust = getArguments().getParcelable(ARG_customer);
         }
     }
 
