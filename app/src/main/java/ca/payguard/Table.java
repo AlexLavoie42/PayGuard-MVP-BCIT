@@ -1,10 +1,13 @@
 package ca.payguard;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * The Table class stores all preauth/payment
  * data for one table.
  */
-class Table {
+class Table implements Parcelable {
     //data pertaining to bill/preauth info
     private double preauthAmt;
 
@@ -27,6 +30,29 @@ class Table {
      */
     private int shape;
     private final int[] shapes = {0, 1, 2, 3, 4};
+
+    protected Table(Parcel in) {
+        preauthAmt = in.readDouble();
+        label = in.readString();
+        width = in.readInt();
+        height = in.readInt();
+        x = in.readInt();
+        y = in.readInt();
+        customers = in.createTypedArray(Customer.CREATOR);
+        shape = in.readInt();
+    }
+
+    public static final Creator<Table> CREATOR = new Creator<Table>() {
+        @Override
+        public Table createFromParcel(Parcel in) {
+            return new Table(in);
+        }
+
+        @Override
+        public Table[] newArray(int size) {
+            return new Table[size];
+        }
+    };
 
     public void setPreauthAmt(double preauthAmt){
         this.preauthAmt = preauthAmt;
@@ -79,5 +105,22 @@ class Table {
 
     public int getY(){
         return y;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(preauthAmt);
+        dest.writeString(label);
+        dest.writeInt(width);
+        dest.writeInt(height);
+        dest.writeInt(x);
+        dest.writeInt(y);
+        dest.writeTypedArray(customers, flags);
+        dest.writeInt(shape);
     }
 }

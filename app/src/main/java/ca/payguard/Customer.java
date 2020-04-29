@@ -1,6 +1,9 @@
 package ca.payguard;
 
-public class Customer {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Customer implements Parcelable {
 
     //Customer data
     private int id;
@@ -17,6 +20,26 @@ public class Customer {
         this.table = table;
         this.phoneNum = phoneNum;
     }
+
+    protected Customer(Parcel in) {
+        id = in.readInt();
+        billTotal = in.readFloat();
+        preAuthTotal = in.readFloat();
+        tipAmount = in.readFloat();
+        phoneNum = in.readInt();
+    }
+
+    public static final Creator<Customer> CREATOR = new Creator<Customer>() {
+        @Override
+        public Customer createFromParcel(Parcel in) {
+            return new Customer(in);
+        }
+
+        @Override
+        public Customer[] newArray(int size) {
+            return new Customer[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -53,5 +76,19 @@ public class Customer {
 
     public void setTipAmount(float tipAmount) {
         this.tipAmount = tipAmount;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeFloat(billTotal);
+        dest.writeFloat(preAuthTotal);
+        dest.writeFloat(tipAmount);
+        dest.writeInt(phoneNum);
     }
 }
