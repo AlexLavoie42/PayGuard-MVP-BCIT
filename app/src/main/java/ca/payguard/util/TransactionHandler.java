@@ -14,7 +14,4 @@ public interface TransactionHandler {
 
     /** Executes the initial transaction. Takes the pre-auth $ amount and returns an AuthToken. */
     public AuthToken executeTransaction(String dollars);
-
-    /** Completes the Pre-auth transaction. Takes the final total $ amount. */
-    public boolean completeTransaction(String dollars);
 }

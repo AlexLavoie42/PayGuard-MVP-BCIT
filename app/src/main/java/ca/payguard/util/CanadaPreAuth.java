@@ -7,9 +7,10 @@ public class CanadaPreAuth implements TransactionHandler
 
     private PreAuth preAuth;
     private HttpsPostRequest mpgReq;
+    private String orderId;
 
     public CanadaPreAuth(){
-        String crypt = "7";
+        String crypt = "7"; //TODO: Check if this is the right crypt to be using.
         preAuth = new PreAuth();
         mpgReq = new HttpsPostRequest();
         mpgReq.setTestMode(true); //false or comment out this line for production transactions
@@ -17,8 +18,8 @@ public class CanadaPreAuth implements TransactionHandler
         mpgReq.setProcCountryCode("CA");
     }
 
-    public static void execute()
-    {
+//    public static void execute()
+//    {
 //        String store_id = "store5";
 //        String api_token = "yesguy";
 //        java.util.Date createDate = new java.util.Date();
@@ -91,7 +92,7 @@ public class CanadaPreAuth implements TransactionHandler
 //        {
 //            e.printStackTrace();
 //        }
-    }
+//    }
 
     @Override
     public void setStoreId(String id) {
@@ -106,6 +107,7 @@ public class CanadaPreAuth implements TransactionHandler
     @Override
     public void setOrderId(String id) {
         preAuth.setOrderId(id);
+        orderId = id;
     }
 
     @Override
@@ -120,8 +122,8 @@ public class CanadaPreAuth implements TransactionHandler
 
     @Override
     public AuthToken executeTransaction(String dollars) {
-        String api_token = "yesguy";
-        boolean status_check = false;
+        String api_token = "yesguy"; //TODO: Get an actual api_token.
+        boolean status_check = false; //TODO: Should change this to true and test.
         mpgReq.setApiToken(api_token);
         mpgReq.setTransaction(preAuth);
         mpgReq.setStatusCheck(status_check);
@@ -152,18 +154,13 @@ public class CanadaPreAuth implements TransactionHandler
 //            System.out.println("MCPAmount = " + receipt.getMCPAmount());
 //            System.out.println("MCPCurrencyCode = " + receipt.getMCPCurrencyCode());
             System.out.println("IssuerId = " + receipt.getIssuerId());
+            return new AuthToken(receipt, orderId);
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            throw new IllegalArgumentException("Token Failed to be created.");
         }
-        //TODO: Return AuthToken object here.
-        return null;
-    }
-
-    @Override
-    public boolean completeTransaction(String dollars) {
-        return false;
     }
 }
 
