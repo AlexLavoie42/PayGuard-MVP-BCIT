@@ -86,6 +86,8 @@ public class EditMode extends GridLayout {
 
         this.tables = tables;
         nameInput.setEnabled(false);
+        sizeSelect.addSize.setEnabled(false);
+        sizeSelect.subSize.setEnabled(false);
     }
 
     public void disable(){
@@ -111,6 +113,8 @@ public class EditMode extends GridLayout {
         if(selected != null){
             nameInput.setText(selected.getLabel());
             nameInput.setEnabled(true);
+            sizeSelect.addSize.setEnabled(true);
+            sizeSelect.subSize.setEnabled(true);
             nameInput.setOnKeyListener(new OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
