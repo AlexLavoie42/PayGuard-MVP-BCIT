@@ -79,6 +79,41 @@ public class CanadaPreAuth implements TransactionHandler
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean setStoreId(String id) {
+        return false;
+    }
+
+    @Override
+    public boolean setDate(String date) {
+        return false;
+    }
+
+    @Override
+    public boolean setOrderId(String id) {
+        return false;
+    }
+
+    @Override
+    public boolean setPan(String pan) {
+        return false;
+    }
+
+    @Override
+    public boolean setExpDate(String date) {
+        return false;
+    }
+
+    @Override
+    public AuthToken executeTransaction(String dollars) {
+        return null;
+    }
+
+    @Override
+    public boolean completeTransaction(String dollars) {
+        return false;
+    }
 }
 
                 
