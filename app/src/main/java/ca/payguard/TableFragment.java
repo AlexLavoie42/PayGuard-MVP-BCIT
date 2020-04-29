@@ -22,7 +22,7 @@ import ca.payguard.R;
  * create an instance of this fragment.
  */
 public class TableFragment extends Fragment {
-    private static final String ARG_TABLE = "table";
+    private static final String ARG_TABLE = "tableID";
 
     private String tableNum;
 
