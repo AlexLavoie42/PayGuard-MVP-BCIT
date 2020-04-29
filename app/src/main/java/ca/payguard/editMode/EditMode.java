@@ -2,17 +2,21 @@ package ca.payguard.editMode;
 
 import android.content.Context;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import java.util.ArrayList;
 import ca.payguard.R;
 import ca.payguard.Table;
 
 public class EditMode extends GridLayout {
     Button garbage;
-    boolean active;
+    private boolean active;
 
     //access bar tools
     EditText nameInput;
@@ -80,7 +84,6 @@ public class EditMode extends GridLayout {
 
         this.tables = tables;
         nameInput.setEnabled(false);
-        
     }
 
     public void disable(){
@@ -91,5 +94,41 @@ public class EditMode extends GridLayout {
 
         setVisibility(View.GONE);
         active = false;
+    }
+
+    public void select(final Button b){
+        Table selected = null;
+
+        for(Table t : tables){
+            if(t.getLabel().equals(b.getText())){
+                selected = t;
+                break;
+            }
+        }
+
+        if(selected != null){
+            nameInput.setText(selected.getLabel());
+            nameInput.setEnabled(true);
+            nameInput.setOnKeyListener(new OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    switch(keyCode){
+                        //backspace if the key is illegal
+                        case KeyEvent.KEYCODE_PLUS:
+                            nameInput.setText(nameInput.getText().toString().substring(0,
+                                    nameInput.getText().length() - 1));
+                            break;
+                        default:
+                            b.setText(nameInput.getText());
+                    }
+
+                    return false;
+                }
+            });
+        }
+    }
+
+    public boolean isActive(){
+        return active;
     }
 }

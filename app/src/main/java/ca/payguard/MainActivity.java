@@ -117,9 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
     /** Adjusts the buttons onto the screen. */
     private void displayTables(){
-        //gets the layout tag from xml
-        ConstraintLayout layout = findViewById(R.id.buttonLayout);
-
         /*
         Create a button for each table and use it's coordinates
         to adjust it to the tablet's screen size.
@@ -129,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < tableGui.size(); i++){
             final Table t = tableGui.get(i);
 
-            Button b = new Button(this);
+            final Button b = new Button(this);
             b.setText(t.getLabel());
             //adjust the button's dimensions to screen size
             int width = (int)((float)t.getWidth() * wRatio),
@@ -140,7 +137,10 @@ public class MainActivity extends AppCompatActivity {
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    tablePopup(t.getLabel());
+                    if(!editMode.isActive())
+                        tablePopup(t.getLabel());
+                    else
+                        editMode.select(b);
                 }
             });
 
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     /** Verifies if the button is already in layout view or not. */
     private void addButton(Button b){
         //gets the layout tag from xml
-        ConstraintLayout layout = findViewById(R.id.buttonLayout);
+        ConstraintLayout layout = findViewById(R.id.tableLayout);
 
         for(final Button layoutBtn : tblBtns){
             //if button is already in layout, update said button
