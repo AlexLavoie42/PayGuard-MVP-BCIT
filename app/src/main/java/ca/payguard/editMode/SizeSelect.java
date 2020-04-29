@@ -10,8 +10,11 @@ public class SizeSelect extends LinearLayout {
     Button addSize, subSize;
     TextView sizeDisplay;
 
-    public SizeSelect(Context context) {
+    EditMode EMToolbar;
+
+    public SizeSelect(Context context, EditMode em) {
         super(context);
+        EMToolbar = em;
         setOrientation(LinearLayout.VERTICAL);
 
         addSize = new Button(context);

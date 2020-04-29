@@ -25,6 +25,8 @@ public class EditMode extends GridLayout {
     Button exitBtn;
 
     ArrayList<Table> tables;
+    private Button selected;
+    private int size;
 
     public EditMode(Context context) {
         super(context);
@@ -34,8 +36,8 @@ public class EditMode extends GridLayout {
         setColumnCount(4);
 
         nameInput = new EditText(context);
-        shapeSelect = new ShapeSelect(context);
-        sizeSelect = new SizeSelect(context);
+        shapeSelect = new ShapeSelect(context, this);
+        sizeSelect = new SizeSelect(context, this);
         exitBtn = new Button(context);
 
         nameInput.setText("Table Name");
@@ -125,7 +127,21 @@ public class EditMode extends GridLayout {
                     return false;
                 }
             });
+
+            this.selected = b;
         }
+    }
+
+    public void setSize(int size){
+        this.size = size;
+    }
+
+    public int getSize(){
+        return size;
+    }
+
+    public Button getSelected(){
+        return selected;
     }
 
     public boolean isActive(){

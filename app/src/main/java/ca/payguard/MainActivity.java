@@ -44,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        displayTables();
-
         //init edit mode toolbar and add it to view
         editMode = new EditMode(this);
         editMode.setVisibility(View.GONE);
         ConstraintLayout constraintLayout = (ConstraintLayout) layout;
         constraintLayout.addView(editMode);
+
+        displayTables();
 
         enableEditMode();
     }
@@ -128,11 +128,14 @@ public class MainActivity extends AppCompatActivity {
 
             final Button b = new Button(this);
             b.setText(t.getLabel());
+            b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
             //adjust the button's dimensions to screen size
             int width = (int)((float)t.getWidth() * wRatio),
                     height = (int)((float)t.getHeight() * hRatio);
-            b.setWidth(width);
-            b.setHeight(height);
+            //set basic size to greater dimension
+            editMode.setSize(Math.max(width, height) / 4);
+            b.setMinimumWidth(width);
+            b.setMinimumHeight(height);
             b.setId(i+1);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
