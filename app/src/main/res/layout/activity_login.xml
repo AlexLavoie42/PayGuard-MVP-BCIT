@@ -8,8 +8,8 @@
 
     <EditText
         android:id="@+id/et_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="230dp"
+        android:layout_height="35dp"
         android:layout_marginTop="248dp"
         android:ems="10"
         android:hint="Email"
@@ -22,17 +22,19 @@
         android:id="@+id/btn_login"
         android:layout_width="202dp"
         android:layout_height="43dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="20dp"
         android:onClick="login"
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
     <EditText
         android:id="@+id/et_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="230dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"

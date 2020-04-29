@@ -31,6 +31,10 @@ class Table implements Parcelable {
     private int shape;
     private final int[] shapes = {0, 1, 2, 3, 4};
 
+    public Table(){
+
+    }
+
     protected Table(Parcel in) {
         preauthAmt = in.readDouble();
         label = in.readString();
