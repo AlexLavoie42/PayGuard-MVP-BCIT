@@ -7,16 +7,17 @@ public class AuthToken {
     private Receipt token;
     private String orderId;
 
-    public AuthToken(Receipt receipt, String orderId){
+    AuthToken(Receipt receipt, String orderId){
         token = receipt;
         this.orderId = orderId;
     }
 
     public void completeTransaction(String amount){
-        String store_id = "store5";
-        String api_token = "yesguy";//TODO: Get an actual api_token.
+        //TODO: Get Production keys & id
+        String store_id = "monca04523"; // YOU FUCKERS BETTER NOT ABUSE THIS
+        String api_token = "q5ev3FRYYDxKpFbfMK5a";// YOU FUCKERS BETTER NOT ABUSE THIS
         String crypt = "7"; //TODO: Check if right crypt to be using.
-        String storeName = "Store's Name"; // Must be <= 13 char.
+        String storeName = "PayGuard"; // Must be <= 13 char.
         String processing_country_code = "CA";
         boolean status_check = false; //TODO: Should change this to true and test.
 
