@@ -3,6 +3,7 @@ package ca.payguard.editMode;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,9 @@ public class EditMode extends GridLayout {
     private Button selected;
     private Table selectedTbl;
     private int size;
+
+    //screen ratios
+    float wRatio, hRatio;
 
     public EditMode(Context context) {
         super(context);
@@ -141,8 +145,38 @@ public class EditMode extends GridLayout {
         }
     }
 
+    float btnX, btnY;
+
+    public void buttonTouched(Button b, MotionEvent event){
+        switch(event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                if(getSelected() == b){
+                    btnX = event.getRawX() - getSize();
+                    btnY = event.getRawY() - getSize();
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if(getSelected() == b){
+                    float x = event.getRawX() - getSize(), y = event.getRawY() - getSize();
+                    float distanceX = (btnX - x) * -1, distanceY = (btnY - y) * -1;
+
+                    float nx = btnX + distanceX, ny = btnY + distanceY;
+                    b.setX(nx);
+                    b.setY(ny);
+                    btnX = nx;
+                    btnY = ny;
+                }
+                break;
+        }
+    }
+
     public void setSize(int size){
         this.size = size;
+    }
+
+    public void setRatios(float wRatio, float hRatio){
+        this.wRatio = wRatio;
+        this.hRatio = hRatio;
     }
 
     public int getSize(){

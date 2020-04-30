@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         displayTables();
 
         enableEditMode();
+        editMode.setRatios(getWidthRatio(), getHeightRatio());
     }
 
     /* Crashes app
@@ -131,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
             b.setText(t.getLabel());
             b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
             b.setId(i+1);
+
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -138,6 +142,14 @@ public class MainActivity extends AppCompatActivity {
                         tablePopup(t.getLabel());
                     else
                         editMode.select(b);
+                }
+            });
+
+            b.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    editMode.buttonTouched(b, event);
+                    return false;
                 }
             });
 
