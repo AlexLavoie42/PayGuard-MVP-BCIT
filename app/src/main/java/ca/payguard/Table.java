@@ -14,16 +14,8 @@ public class Table {
     private int width = STD_DIMENSION, height = STD_DIMENSION;
     private int x, y;
 
-    /*
-    Table shape:
-    0 - Circle/Oval
-    1 - Square/Rectangle
-    2 - Diamond
-    3 - Triangle
-    4 - Polygon (maybe?)
-     */
-    private int shape;
-    private final int[] shapes = {0, 1, 2, 3, 4};
+    private final int[] sizeMods = {1, 2, 3};//float? would allow for 1.5x modifier, etc.
+    private int sizeMod = sizeMods[0];
 
     public void setPreauthAmt(double preauthAmt){
         this.preauthAmt = preauthAmt;
@@ -38,16 +30,30 @@ public class Table {
         this.height = height;
     }
 
-    public void setShape(int shapeNo) throws IllegalArgumentException {
-        if(shapeNo < shapes[0] || shapeNo > shapes[shapes.length - 1])
-            throw new IllegalArgumentException("Error: shapeNo is not in range of table shapes");
-
-        this.shape = shapeNo;
-    }
-
     public void setCoords(int x, int y){
         this.x = x;
         this.y = y;
+    }
+
+    public void setSizeMod(char c) throws IllegalArgumentException {
+        if(c != 'S' && c != 'M' && c != 'L')
+            throw new IllegalArgumentException("Error: size mod must be S, M, or L.");
+
+        if(c == 'S')
+            sizeMod = sizeMods[0];
+        else if(c == 'M')
+            sizeMod = sizeMods[1];
+        else
+            sizeMod = sizeMods[2];
+    }
+
+    public char getSizeChar(){
+        if(sizeMod == sizeMods[0])
+            return 'S';
+        else if(sizeMod == sizeMods[1])
+            return 'M';
+        else
+            return 'L';
     }
 
     public double getPreauthAmt(){
@@ -64,10 +70,6 @@ public class Table {
 
     public int getHeight(){
         return height;
-    }
-
-    public int getShape(){
-        return shape;
     }
 
     public int getX(){

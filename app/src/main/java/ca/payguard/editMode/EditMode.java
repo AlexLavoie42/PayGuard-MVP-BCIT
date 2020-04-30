@@ -26,6 +26,7 @@ public class EditMode extends GridLayout {
 
     ArrayList<Table> tables;
     private Button selected;
+    private Table selectedTbl;
     private int size;
 
     public EditMode(Context context) {
@@ -117,8 +118,7 @@ public class EditMode extends GridLayout {
         if(selected != null){
             nameInput.setText(selected.getLabel());
             nameInput.setEnabled(true);
-            sizeSelect.addSize.setEnabled(true);
-            sizeSelect.subSize.setEnabled(true);
+            sizeSelect.selectTable(selected);
             nameInput.setOnKeyListener(new OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -136,6 +136,7 @@ public class EditMode extends GridLayout {
                 }
             });
 
+            selectedTbl = selected;
             this.selected = b;
         }
     }
@@ -150,6 +151,10 @@ public class EditMode extends GridLayout {
 
     public Button getSelected(){
         return selected;
+    }
+
+    public Table getSelectedTbl(){
+        return selectedTbl;
     }
 
     public boolean isActive(){

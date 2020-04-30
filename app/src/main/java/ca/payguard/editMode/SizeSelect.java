@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import ca.payguard.Table;
 
 public class SizeSelect extends LinearLayout {
     Button addSize, subSize;
@@ -52,17 +53,38 @@ public class SizeSelect extends LinearLayout {
         setGravity(Gravity.CENTER);
     }
 
+    /** Loads the size when a table is selected. */
+    public void selectTable(Table t){
+        size = "" + t.getSizeChar();
+        if(size.equals("S")){
+            subSize.setEnabled(false);
+            addSize.setEnabled(true);
+        } else if(size.equals("M")){
+            subSize.setEnabled(true);
+            addSize.setEnabled(true);
+        } else{
+            subSize.setEnabled(true);
+            addSize.setEnabled(false);
+        }
+
+        sizeDisplay.setText("" + size);
+    }
+
     private void addSize(){
         if(EMToolbar.getSelected() != null){
             if(size.equals("S")){
                 size = "M";
+                EMToolbar.getSelectedTbl().setSizeMod('M');
                 sizeDisplay.setText(size);
                 subSize.setEnabled(true);
             } else if(size.equals("M")){
                 size = "L";
+                EMToolbar.getSelectedTbl().setSizeMod('L');
                 sizeDisplay.setText(size);
                 addSize.setEnabled(false);
             }
+
+
         }
     }
 
@@ -70,10 +92,12 @@ public class SizeSelect extends LinearLayout {
         if(EMToolbar.getSelected() != null){
             if(size.equals("L")){
                 size = "M";
+                EMToolbar.getSelectedTbl().setSizeMod('M');
                 sizeDisplay.setText(size);
                 addSize.setEnabled(true);
             } else if(size.equals("M")){
                 size = "S";
+                EMToolbar.getSelectedTbl().setSizeMod('S');
                 sizeDisplay.setText(size);
                 subSize.setEnabled(false);
             }
