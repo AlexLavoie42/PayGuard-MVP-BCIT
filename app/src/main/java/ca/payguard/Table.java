@@ -111,6 +111,14 @@ class Table implements Parcelable {
         return y;
     }
 
+    public Customer[] getAllCustomers(){
+        return customers;
+    }
+
+    public Customer getCustomerByID(int id){
+        return customers[id];
+    }
+
     @Override
     public int describeContents() {
         return 0;
