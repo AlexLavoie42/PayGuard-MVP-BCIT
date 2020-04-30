@@ -31,6 +31,10 @@ class Table implements Parcelable {
     private int shape;
     private final int[] shapes = {0, 1, 2, 3, 4};
 
+    public Table(){
+
+    }
+
     protected Table(Parcel in) {
         preauthAmt = in.readDouble();
         label = in.readString();
@@ -105,6 +109,14 @@ class Table implements Parcelable {
 
     public int getY(){
         return y;
+    }
+
+    public Customer[] getAllCustomers(){
+        return customers;
+    }
+
+    public Customer getCustomerByID(int id){
+        return customers[id];
     }
 
     @Override

@@ -9,7 +9,7 @@
         <item name="background">@color/colorBackground</item>
         <item name="fontFamily">@font/muli_regular</item>
         <item name="buttonStyle">@style/ButtonStyle</item>
-        <!--<item name="editTextStyle">@style/InputStyle</item>-->
+        <item name="editTextStyle">@style/InputStyle</item>
     </style>
     <!-- Button Style -->
     <style name="ButtonStyle" parent="Widget.AppCompat.Button">
@@ -18,5 +18,6 @@
     <!-- Input Style -->
     <style name="InputStyle" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/input</item>
+        <item name="android:paddingLeft">5dp</item>
     </style>
 </resources>

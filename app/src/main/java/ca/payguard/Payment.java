@@ -12,6 +12,8 @@ import ca.payguard.R;
 
 public class Payment extends AppCompatActivity{
 
+    private Customer newCustomer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

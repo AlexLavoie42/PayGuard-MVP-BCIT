@@ -100,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** Creates new TableFragment as overlay */
-    private void tablePopup(String label){
+    private void tablePopup(Table table){
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
-        popup = TableFragment.newInstance(label);
+        popup = TableFragment.newInstance(table);
         ft.replace(R.id.popupLayout, popup);
         //Complete changes
         ft.commit();
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    tablePopup(t.getLabel());
+                    tablePopup(t);
                 }
             });
 

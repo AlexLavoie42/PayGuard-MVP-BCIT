@@ -41,53 +41,12 @@
     </RelativeLayout>
 
     <GridLayout
+        android:id="@+id/layout_seats"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_below="@+id/tableHeader"
         android:background="@color/colorBackground"
         android:columnCount="1">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_row="0">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginStart="25dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginBottom="25dp"
-                android:fontFamily="@font/muli_semibold"
-                android:text="@string/seatInfoText"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/seat1InfoButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="25dp"
-                android:backgroundTint="@color/colorButton"
-                android:text="Add $" />
-
-            <Button
-                android:id="@+id/seat1CloseButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_margin="25dp"
-                android:layout_toRightOf="@+id/seat1InfoButton"
-                android:backgroundTint="@color/colorButton"
-                android:text="Bill" />
-
-        </RelativeLayout>
 
     </GridLayout>
 
@@ -95,14 +54,15 @@
         android:id="@+id/btn_addCustomer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btn_addCustomer"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="34dp"
         android:backgroundTint="@color/colorButton"
         android:text="@string/addSeatButton" />
 
