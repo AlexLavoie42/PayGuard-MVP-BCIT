@@ -103,6 +103,10 @@ public class EditMode extends GridLayout {
     public void select(final Button b){
         Table selected = null;
 
+        if(this.selected != null)
+            this.selected.setBackgroundColor(getResources().getColor(R.color.brightGreen));
+        b.setBackground(getResources().getDrawable(R.drawable.table_selector));
+
         for(Table t : tables){
             if(t.getLabel().equals(b.getText())){
                 selected = t;
