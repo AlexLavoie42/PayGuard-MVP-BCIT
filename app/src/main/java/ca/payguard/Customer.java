@@ -13,12 +13,12 @@ public class Customer implements Parcelable {
     private Table table;
     private int phoneNum;
 
-    public Customer(int id, Table table, int phoneNum) {
+    public Customer(int id, Table table) {
         this.id = id;
         this.billTotal = 0;
         this.tipAmount = 0;
         this.table = table;
-        this.phoneNum = phoneNum;
+        this.phoneNum = 0;
     }
 
     protected Customer(Parcel in) {

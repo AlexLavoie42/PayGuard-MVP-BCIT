@@ -66,17 +66,20 @@ public class TableFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        displayCustomers(root);
         return root;
     }
 
     private void displayCustomers(View root) {
         View layout = root.findViewById(R.id.layout_seats);
-        for(Customer c : table.getAllCustomers()){
-            View custView = LayoutInflater.from(getContext()).inflate(R.layout.layout_customer,
-                    (ViewGroup)layout);
-            TextView custText = custView.findViewById(R.id.tv_seatLabel);
-            custText.setText(getResources().getString(R.string.seatInfoText, c.getId(),
-                    c.getBillTotal(), c.getPreAuthTotal()));
+        if(table.getAllCustomers() != null) {
+            for (Customer c : table.getAllCustomers()) {
+                View custView = LayoutInflater.from(getContext()).inflate(R.layout.layout_customer,
+                        (ViewGroup) layout);
+                TextView custText = custView.findViewById(R.id.tv_seatLabel);
+                custText.setText(getResources().getString(R.string.seatInfoText, c.getId(),
+                        c.getBillTotal(), c.getPreAuthTotal()));
+            }
         }
     }
 }

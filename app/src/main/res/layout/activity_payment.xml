@@ -11,7 +11,7 @@
         android:id="@+id/dollarAmount1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick=""
+        android:onClick="onAmount1"
         android:text="@string/dollarAmount1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/currentAmount"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:onClick=""
+        android:onClick="onAmount2"
         android:text="@string/dollarAmount2"
         app:layout_constraintStart_toStartOf="@+id/dollarAmount1"
         app:layout_constraintTop_toBottomOf="@+id/dollarAmount1" />
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:onClick=""
+        android:onClick="onAmount3"
         android:text="@string/dollarAmount3"
         app:layout_constraintStart_toStartOf="@+id/dollarAmount2"
         app:layout_constraintTop_toBottomOf="@+id/dollarAmount2" />
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:onClick=""
+        android:onClick="onCustomAmount"
         android:text="@string/customAmount"
         app:layout_constraintStart_toStartOf="@+id/dollarAmount3"
         app:layout_constraintTop_toBottomOf="@+id/dollarAmount3" />
