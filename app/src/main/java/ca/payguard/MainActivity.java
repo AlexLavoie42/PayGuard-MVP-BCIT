@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
         Create a button for each table and use it's coordinates
         to adjust it to the tablet's screen size.
          */
-        float wRatio = (float) getScreenWidth() / (float) TableSet.STD_WIDTH;
-        float hRatio = (float) getScreenHeight() / (float) TableSet.STD_HEIGHT;
+        float wRatio = getWidthRatio();
+        float hRatio = getHeightRatio();
         editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
         for(int i = 0; i < tableGui.size(); i++){
             final Table t = tableGui.get(i);
@@ -130,11 +130,6 @@ public class MainActivity extends AppCompatActivity {
             final Button b = new Button(this);
             b.setText(t.getLabel());
             b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
-            //adjust the button's dimensions to screen size
-            int width = (int)((float)t.getWidth() * wRatio),
-                    height = (int)((float)t.getHeight() * hRatio);
-            b.setMinimumWidth(width);
-            b.setMinimumHeight(height);
             b.setId(i+1);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -147,12 +142,12 @@ public class MainActivity extends AppCompatActivity {
             });
 
             b.setX((float) t.getX() * wRatio);
-            b.setY((float) t.getY() * hRatio
-                - ((i == tableGui.size() - 1) ? height / 3 : 0));
+            b.setY((float) t.getY() * hRatio);
 
-            //TODO replace setMinimum dimensions
-            if(i < tableGui.size() - 1)
-                editMode.shapeSelect.applyRectangle(b);
+            editMode.shapeSelect.applyRectangle(b);
+            if(i == tableGui.size() - 1){
+                //resize and rotate bar table
+            }
 
             addButton(b);
         }
@@ -194,5 +189,13 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.heightPixels;
+    }
+
+    public float getWidthRatio(){
+        return (float) getScreenWidth() / (float) TableSet.STD_WIDTH;
+    }
+
+    public float getHeightRatio(){
+        return (float) getScreenHeight() / (float) TableSet.STD_HEIGHT;
     }
 }

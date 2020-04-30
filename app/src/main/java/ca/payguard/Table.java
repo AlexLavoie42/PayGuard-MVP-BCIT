@@ -10,12 +10,12 @@ public class Table {
 
     //customizeable table gui info
     private String label;
-    static final int STD_DIMENSION = 100;
-    private int width = STD_DIMENSION, height = STD_DIMENSION;
     private int x, y;
 
     private final int[] sizeMods = {1, 2, 3};//float? would allow for 1.5x modifier, etc.
     private int sizeMod = sizeMods[0];
+    public static final char[] shapes = {'S', 'C', 'R'};
+    private char shape = shapes[2];//default shape is rectangle
 
     public void setPreauthAmt(double preauthAmt){
         this.preauthAmt = preauthAmt;
@@ -23,11 +23,6 @@ public class Table {
 
     public void setLabel(String label){
         this.label = label;
-    }
-
-    public void setDimensions(int width, int height){
-        this.width = width;
-        this.height = height;
     }
 
     public void setCoords(int x, int y){
@@ -47,6 +42,13 @@ public class Table {
             sizeMod = sizeMods[2];
     }
 
+    public void setShape(char c) throws IllegalArgumentException {
+        if(c != shapes[0] && c != shapes[1] && c != shapes[2])
+            throw new IllegalArgumentException("Error: shape character must be an allowed shape.");
+
+        shape = c;
+    }
+
     public char getSizeChar(){
         if(sizeMod == sizeMods[0])
             return 'S';
@@ -64,12 +66,12 @@ public class Table {
         return label;
     }
 
-    public int getWidth(){
-        return width;
+    public int getSizeMod(){
+        return sizeMod;
     }
 
-    public int getHeight(){
-        return height;
+    public char getShape(){
+        return shape;
     }
 
     public int getX(){

@@ -71,6 +71,7 @@ public class SizeSelect extends LinearLayout {
     }
 
     private void addSize(){
+        //if(EMToolbar.getSelected() != null), then EMToolbar.getSelectedTbl() also != null
         if(EMToolbar.getSelected() != null){
             if(size.equals("S")){
                 size = "M";
@@ -84,7 +85,7 @@ public class SizeSelect extends LinearLayout {
                 addSize.setEnabled(false);
             }
 
-
+            EMToolbar.shapeSelect.transform();
         }
     }
 
@@ -101,6 +102,8 @@ public class SizeSelect extends LinearLayout {
                 sizeDisplay.setText(size);
                 subSize.setEnabled(false);
             }
+
+            EMToolbar.shapeSelect.transform();
         }
     }
 }
