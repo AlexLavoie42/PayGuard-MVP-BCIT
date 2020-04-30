@@ -30,8 +30,9 @@ public class EditMode extends GridLayout {
     private Table selectedTbl;
     private int size;
 
-    //screen ratios
+    //used for buttonTouched()
     float wRatio, hRatio;
+    float btnX, btnY;
 
     public EditMode(Context context) {
         super(context);
@@ -145,8 +146,8 @@ public class EditMode extends GridLayout {
         }
     }
 
-    float btnX, btnY;
-
+    /** This method moves the button if the user attempts to drag
+     * a button once selected. */
     public void buttonTouched(Button b, MotionEvent event){
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
