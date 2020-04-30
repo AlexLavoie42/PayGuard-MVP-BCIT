@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
          */
         float wRatio = (float) getScreenWidth() / (float) TableSet.STD_WIDTH;
         float hRatio = (float) getScreenHeight() / (float) TableSet.STD_HEIGHT;
+        editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
         for(int i = 0; i < tableGui.size(); i++){
             final Table t = tableGui.get(i);
 
@@ -132,8 +133,6 @@ public class MainActivity extends AppCompatActivity {
             //adjust the button's dimensions to screen size
             int width = (int)((float)t.getWidth() * wRatio),
                     height = (int)((float)t.getHeight() * hRatio);
-            //set basic size to greater dimension
-            editMode.setSize(Math.max(width, height) / 4);
             b.setMinimumWidth(width);
             b.setMinimumHeight(height);
             b.setId(i+1);
@@ -147,10 +146,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            /* t.getWidth()/2 & t.getHeight()/2 centers the table at it's coordinate
-            rather than starting at the specified coordinate. */
-            b.setX((float) t.getX() * wRatio - width / 2);//b.getWidth() returns 0?
-            b.setY((float) t.getY() * hRatio - height / 2);//b.getHeight() returns 0?
+            b.setX((float) t.getX() * wRatio);
+            b.setY((float) t.getY() * hRatio
+                - ((i == tableGui.size() - 1) ? height / 3 : 0));
+
+            //TODO replace setMinimum dimensions
+            if(i < tableGui.size() - 1)
+                editMode.shapeSelect.applyRectangle(b);
 
             addButton(b);
         }

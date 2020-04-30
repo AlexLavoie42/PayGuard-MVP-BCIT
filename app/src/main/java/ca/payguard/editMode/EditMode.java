@@ -20,7 +20,7 @@ public class EditMode extends GridLayout {
 
     //access bar tools
     EditText nameInput;
-    ShapeSelect shapeSelect;
+    public ShapeSelect shapeSelect;
     SizeSelect sizeSelect;
     Button exitBtn;
 

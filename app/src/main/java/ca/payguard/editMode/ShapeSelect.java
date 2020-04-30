@@ -34,14 +34,7 @@ public class ShapeSelect extends LinearLayout {
                 if(EMToolbar.getSelected() == null){
                     //create new table
                 } else {
-                    Button b = EMToolbar.getSelected();
-                    int dim = EMToolbar.getSize();
-                    b.setWidth(dim);
-                    b.setHeight(dim);
-                    b.setMinimumWidth(dim);
-                    b.setMinimumHeight(dim);
-                    b.setBackgroundResource(0);
-                    b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
+                    applySquare(EMToolbar.getSelected());
                 }
             }
         });
@@ -52,13 +45,7 @@ public class ShapeSelect extends LinearLayout {
                 if(EMToolbar.getSelected() == null){
                     //create new table
                 } else {
-                    Button b = EMToolbar.getSelected();
-                    int dim = EMToolbar.getSize();
-                    b.setWidth(dim);
-                    b.setHeight(dim);
-                    b.setMinimumWidth(dim);
-                    b.setMinimumHeight(dim);
-                    b.setBackground(getResources().getDrawable(R.drawable.btn_rounded));
+                    applyCircle(EMToolbar.getSelected());
                 }
             }
         });
@@ -69,14 +56,7 @@ public class ShapeSelect extends LinearLayout {
                 if(EMToolbar.getSelected() == null){
                     //create new table
                 } else {
-                    Button b = EMToolbar.getSelected();
-                    int dim = EMToolbar.getSize();
-                    b.setWidth(dim * 2);
-                    b.setHeight(dim);
-                    b.setMinimumWidth(dim * 2);
-                    b.setMinimumHeight(dim);
-                    b.setBackgroundResource(0);
-                    b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
+                    applyRectangle(EMToolbar.getSelected());
                 }
             }
         });
@@ -90,5 +70,34 @@ public class ShapeSelect extends LinearLayout {
         setMinimumWidth((int)(width * 0.35));
         setMinimumHeight(height);
         setGravity(Gravity.CENTER);
+    }
+
+    public void applySquare(Button b){
+        int dim = EMToolbar.getSize();
+        b.setWidth(dim);
+        b.setHeight(dim);
+        b.setMinimumWidth(dim);
+        b.setMinimumHeight(dim);
+        b.setBackgroundResource(0);
+        b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
+    }
+
+    public void applyCircle(Button b){
+        int dim = EMToolbar.getSize();
+        b.setWidth(dim);
+        b.setHeight(dim);
+        b.setMinimumWidth(dim);
+        b.setMinimumHeight(dim);
+        b.setBackground(getResources().getDrawable(R.drawable.btn_rounded));
+    }
+
+    public void applyRectangle(Button b){
+        int dim = EMToolbar.getSize();
+        b.setWidth(dim * 2);
+        b.setHeight(dim);
+        b.setMinimumWidth(dim * 2);
+        b.setMinimumHeight(dim);
+        b.setBackgroundResource(0);
+        b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
     }
 }
