@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         enableEditMode();
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
+        editMode.applyStdTransformation(tblBtns);
     }
 
     /* Crashes app
@@ -158,9 +159,6 @@ public class MainActivity extends AppCompatActivity {
             b.setY((float) t.getY() * hRatio);
 
             editMode.shapeSelect.applyRectangle(b);
-            if(i == tableGui.size() - 1){
-                //resize and rotate bar table
-            }
 
             addButton(b);
         }

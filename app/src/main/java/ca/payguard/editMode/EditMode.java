@@ -8,12 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import java.util.ArrayList;
 import ca.payguard.R;
 import ca.payguard.Table;
+import ca.payguard.TableSet;
 
 public class EditMode extends GridLayout {
     private boolean active;
@@ -24,7 +23,7 @@ public class EditMode extends GridLayout {
     SizeSelect sizeSelect;
     Button exitBtn;
 
-    ArrayList<Table> tables;
+    TableSet tables;
     private Button selected;
     private Table selectedTbl;
     private int size;
@@ -65,7 +64,7 @@ public class EditMode extends GridLayout {
         addView(exitBtn);
     }
 
-    public void enable(float width, int height, ArrayList<Table> tables){
+    public void enable(float width, int height, TableSet tables){
         if(active)
             return;
 
@@ -210,24 +209,16 @@ public class EditMode extends GridLayout {
         rotLeft.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button b = getSelected();
-                if(b != null){
-                    int nRotation = Table.verifyAngle(getSelectedTbl().getAngle() - 30);
-                    getSelectedTbl().setAngle(nRotation);
-                    b.setRotation(nRotation);
-                }
+                if(getSelected() != null)
+                    rotLeft();
             }
         });
 
         rotRight.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button b = getSelected();
-                if(b != null){
-                    int nRotation = Table.verifyAngle(getSelectedTbl().getAngle() + 30);
-                    getSelectedTbl().setAngle(nRotation);
-                    b.setRotation(nRotation);
-                }
+                if(getSelected() != null)
+                    rotRight();
             }
         });
 
@@ -238,6 +229,37 @@ public class EditMode extends GridLayout {
         mainLayout.addView(rotLeft);
         mainLayout.addView(rotRight);
         mainLayout.addView(garbage);
+    }
+
+    public void rotLeft() throws UnsupportedOperationException {
+        if(getSelectedTbl() == null)
+            throw new UnsupportedOperationException("Error: a shape must be selected to " +
+                    "apply rotation.");
+
+        int nRotation = Table.verifyAngle(getSelectedTbl().getAngle() - 30);
+        getSelectedTbl().setAngle(nRotation);
+        getSelected().setRotation(nRotation);
+    }
+
+    public void rotRight() throws UnsupportedOperationException {
+        if(getSelectedTbl() == null)
+            throw new UnsupportedOperationException("Error: a shape must be selected to " +
+                    "apply rotation.");
+
+        int nRotation = Table.verifyAngle(getSelectedTbl().getAngle() + 30);
+        getSelectedTbl().setAngle(nRotation);
+        getSelected().setRotation(nRotation);
+    }
+
+    /** Transforms the last table to a bar table if standard
+     * table arrangement is used. */
+    public void applyStdTransformation(ArrayList<Button> tblBtns){
+        if(tables.isStdFormation()){
+            select(tblBtns.get(tblBtns.size() - 1));
+            sizeSelect.addSize();
+            for(int i = 0; i < 3; i++)
+                rotRight();
+        }
     }
 
     public void setSize(int size){

@@ -70,7 +70,7 @@ public class SizeSelect extends LinearLayout {
         sizeDisplay.setText("" + size);
     }
 
-    private void addSize(){
+    public void addSize(){
         //if(EMToolbar.getSelected() != null), then EMToolbar.getSelectedTbl() also != null
         if(EMToolbar.getSelected() != null){
             if(size.equals("S")){
@@ -90,7 +90,7 @@ public class SizeSelect extends LinearLayout {
         }
     }
 
-    private void subSize(){
+    public void subSize(){
         if(EMToolbar.getSelected() != null){
             if(size.equals("L")){
                 size = "M";

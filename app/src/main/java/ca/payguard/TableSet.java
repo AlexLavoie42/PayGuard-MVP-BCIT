@@ -6,8 +6,9 @@ import java.util.ArrayList;
  * TableSet contains the tables used within the GUI.
  * It uses the screen size to arrange the tables.
  */
-class TableSet extends ArrayList<Table> {
+public class TableSet extends ArrayList<Table> {
     static final int STD_WIDTH = 1440, STD_HEIGHT = 2560;//standard android screen size
+    private boolean stdFormation;
 
     /**
      * Loads the table set setting from the app. If the user
@@ -28,6 +29,7 @@ class TableSet extends ArrayList<Table> {
      * the tables' coordinates remain the same.
      */
     private void loadStandard(){
+        stdFormation = true;
         int segmentX = STD_WIDTH / 20, segmentY = STD_HEIGHT / 20;
 
         for(int i = 0; i < 9; i++){
@@ -54,5 +56,9 @@ class TableSet extends ArrayList<Table> {
         t.setCoords(7 * segmentX, 14 * segmentY);
         t = get(8);
         t.setCoords(16 * segmentX, 10 * segmentY);
+    }
+
+    public boolean isStdFormation(){
+        return stdFormation;
     }
 }
