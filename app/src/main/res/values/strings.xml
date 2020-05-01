@@ -49,4 +49,7 @@
     <string name="seatInfoText">Seat #%d\nLimit:%d $X\nBill: $%d</string>
     <string name="settings_logout">Logout</string>
     <string name="settings_edit_logout">Logout from PayGuard</string>
+    <string name="EditValue1">+$25</string>
+    <string name="editAmount2">+$50</string>
+    <string name="editAmount3">+$100</string>
 </resources>

@@ -27,6 +27,7 @@
             android:name="ca.payguard.MainActivity"
             android:configChanges="orientation|keyboardHidden" />
         <activity android:name="ca.payguard.Payment" />
+        <activity android:name="ca.payguard.EditPaymentActivity" />
         <activity android:name="ca.payguard.EmailConfirmation" />
     </application>
 

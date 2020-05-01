@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="ca.payguard.Payment">
+
+    <Button
+        android:id="@+id/dollarAmount1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onAmount1"
+        android:text="@string/EditValue1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/currentAmount"
+        app:layout_constraintStart_toStartOf="@+id/currentAmount"
+        app:layout_constraintTop_toBottomOf="@+id/currentAmount"
+        app:layout_constraintVertical_bias="0.058" />
+
+    <Button
+        android:id="@+id/dollarAmount2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="onAmount2"
+        android:text="@string/editAmount2"
+        app:layout_constraintStart_toStartOf="@+id/dollarAmount1"
+        app:layout_constraintTop_toBottomOf="@+id/dollarAmount1" />
+
+    <Button
+        android:id="@+id/dollarAmount3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="onAmount3"
+        android:text="@string/editAmount3"
+        app:layout_constraintStart_toStartOf="@+id/dollarAmount2"
+        app:layout_constraintTop_toBottomOf="@+id/dollarAmount2" />
+
+    <Button
+        android:id="@+id/customAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="onCustomAmount"
+        android:text="@string/customAmount"
+        app:layout_constraintStart_toStartOf="@+id/dollarAmount3"
+        app:layout_constraintTop_toBottomOf="@+id/dollarAmount3" />
+
+    <TextView
+        android:id="@+id/paymentType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="@string/payment_type"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.247" />
+
+    <TextView
+        android:id="@+id/currentAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="@string/current_auth"
+        app:layout_constraintStart_toStartOf="@+id/paymentType"
+        app:layout_constraintTop_toBottomOf="@+id/paymentType" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="307dp"
+        android:layout_height="69dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:srcCompat="@drawable/logo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
