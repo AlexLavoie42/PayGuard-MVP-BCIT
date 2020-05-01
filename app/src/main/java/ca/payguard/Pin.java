@@ -49,6 +49,7 @@ public class Pin extends AppCompatActivity {
      */
     public void onButtonClick(View v){
         Intent myIntent = new Intent(getBaseContext(),   EmailConfirmation.class);
+        myIntent.putExtra("table", getIntent().getParcelableExtra("table"));
         startActivity(myIntent);
     }
 
