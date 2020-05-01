@@ -118,12 +118,17 @@ class Table implements Parcelable {
     }
 
     public void addCustomer(Customer customer){
-        Customer[] newArr = new Customer[customers.length+1];
-        for(int i = 0; i < customers.length; i++){
-            newArr[i] = customers[i];
+        if(customers != null) {
+            Customer[] newArr = new Customer[customers.length + 1];
+            for (int i = 0; i < customers.length; i++) {
+                newArr[i] = customers[i];
+            }
+            newArr[customers.length] = customer;
+            customers = newArr;
+        } else {
+            customers = new Customer[1];
+            customers[0] = customer;
         }
-        newArr[customers.length] = customer;
-        customers = newArr;
     }
 
     //TODO: Add error handling.

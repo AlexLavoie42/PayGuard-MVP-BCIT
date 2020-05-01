@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true">
 
         <TextView
-            android:id="@+id/tableHeaderText"
+            android:id="@+id/tv_tableHeaderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

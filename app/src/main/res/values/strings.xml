@@ -43,7 +43,7 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="tableHeader">Table X</string>
+    <string name="tableHeader">Table %s</string>
     <string name="closeTableButton">Process Table</string>
     <string name="addSeatButton">Add Seat</string>
     <string name="seatInfoText">Seat #%d\nLimit:%d $X\nBill: $%d</string>

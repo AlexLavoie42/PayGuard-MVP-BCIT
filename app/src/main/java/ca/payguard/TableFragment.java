@@ -67,6 +67,9 @@ public class TableFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        TextView header = root.findViewById(R.id.tv_tableHeaderText);
+        header.setText(root.getResources().getString(R.string.tableHeader,
+                table.getLabel()));
         displayCustomers(root);
         return root;
     }
