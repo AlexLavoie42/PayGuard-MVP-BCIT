@@ -3,10 +3,12 @@ package ca.payguard;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Layout;
@@ -108,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.popupLayout, popup);
         //Complete changes
         ft.commit();
+        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
+        blur.setBlurRadius(20);
+        blur.setAlpha(1);
     }
 
     /** Closes any open popups */
@@ -118,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
 
             ft.detach(popup);
             ft.commit();
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
+            blur.setBlurRadius(0);
+            blur.setAlpha(0);
         }
     }
 

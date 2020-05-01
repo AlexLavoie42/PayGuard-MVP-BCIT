@@ -81,4 +81,11 @@
         app:layout_constraintVertical_bias="0.05"
         app:srcCompat="@drawable/logo" />
 
+    <com.github.mmin18.widget.RealtimeBlurView
+        android:id="@+id/blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:realtimeBlurRadius="0dp"
+        app:realtimeOverlayColor="#8000" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

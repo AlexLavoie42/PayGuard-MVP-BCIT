@@ -45,6 +45,9 @@ public class Payment extends AppCompatActivity{
         ft.replace(R.id.popupLayout, PreAuthAmountFragment.newInstance());
         //Complete changes
         ft.commit();
+        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
+        blur.setBlurRadius(20);
+        blur.setAlpha(1);
     }
 
     /** Method for handling dollarAmount1 button's push. Will use button's text in forwardAmount. */
