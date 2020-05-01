@@ -96,7 +96,7 @@ public class CanadaPreAuth implements TransactionHandler
 
     @Override
     public void setStoreId(String id) {
-        mpgReq.setStoreId(id);
+        mpgReq.setStoreId("monca04523"); // TODO: Change this if needed
     }
 
     @Override
@@ -122,7 +122,7 @@ public class CanadaPreAuth implements TransactionHandler
 
     @Override
     public AuthToken executeTransaction(String dollars) {
-        String api_token = "yesguy"; //TODO: Get an actual api_token.
+        String api_token = "q5ev3FRYYDxKpFbfMK5a"; //TODO: Get a production api key.
         boolean status_check = false; //TODO: Should change this to true and test.
         mpgReq.setApiToken(api_token);
         mpgReq.setTransaction(preAuth);

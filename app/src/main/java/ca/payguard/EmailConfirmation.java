@@ -17,7 +17,7 @@ public class EmailConfirmation extends AppCompatActivity {
     }
 
     public void onButtonClick(View v){
-        Intent myIntent = new Intent(getBaseContext(),   Table.class);
+        Intent myIntent = new Intent(getBaseContext(),   MainActivity.class);
         startActivity(myIntent);
     }
 }
