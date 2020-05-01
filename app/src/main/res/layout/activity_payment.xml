@@ -10,20 +10,23 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-        android:id="@+id/dollarAmount1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onAmount1"
-        android:text="@string/dollarAmount1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/currentAmount"
-        app:layout_constraintStart_toStartOf="@+id/currentAmount"
-        app:layout_constraintTop_toBottomOf="@+id/currentAmount"
-        app:layout_constraintVertical_bias="0.058" />
+            <Button
+                android:id="@+id/dollarAmount1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onAmount1"
+                android:text="@string/dollarAmount1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.358" />
 
-    <Button
+            <Button
         android:id="@+id/dollarAmount2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,6 +55,7 @@
         android:text="@string/customAmount"
         app:layout_constraintStart_toStartOf="@+id/dollarAmount3"
         app:layout_constraintTop_toBottomOf="@+id/dollarAmount3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/paymentType"
