@@ -13,11 +13,14 @@ import ca.payguard.R;
 public class Payment extends AppCompatActivity{
 
     private Customer newCustomer;
+    private Table table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+        table = getIntent().getParcelableExtra("table");
+        newCustomer = new Customer(table.getAllCustomers().length, table);
     }
 
     /**
@@ -27,6 +30,9 @@ public class Payment extends AppCompatActivity{
      */
     protected void forwardAmount(String amount){
         int dollars = Integer.parseInt(amount.substring(1));
+        newCustomer.setPreAuthTotal(dollars);
+        //TODO: Move this to the end of the pre-auth to avoid exploiting.
+        table.addCustomer(newCustomer);
         Intent myIntent = new Intent(getBaseContext(),   TapCard.class);
         myIntent.putExtra("preAuthAmount", dollars);
         startActivity(myIntent);

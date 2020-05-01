@@ -63,6 +63,7 @@ public class TableFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), Payment.class);
+                intent.putExtra("table", table);
                 startActivity(intent);
             }
         });
