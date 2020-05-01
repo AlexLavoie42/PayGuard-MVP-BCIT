@@ -16,7 +16,6 @@ import ca.payguard.R;
 import ca.payguard.Table;
 
 public class EditMode extends GridLayout {
-    Button garbage;
     private boolean active;
 
     //access bar tools
@@ -33,6 +32,10 @@ public class EditMode extends GridLayout {
     //used for buttonTouched()
     float wRatio, hRatio;
     float btnX, btnY;
+
+    //external tools
+    Button rotLeft, rotRight;
+    Button garbage;
 
     public EditMode(Context context) {
         super(context);
@@ -141,6 +144,14 @@ public class EditMode extends GridLayout {
                 }
             });
 
+            //locate the rotation tools by the button
+            rotLeft.setVisibility(View.VISIBLE);
+            rotLeft.setX(b.getX() - 200);
+            rotLeft.setY(b.getY() + 25);
+            rotRight.setVisibility(View.VISIBLE);
+            rotRight.setX(b.getX() + 275);
+            rotRight.setY(b.getY() + 25);
+
             selectedTbl = selected;
             this.selected = b;
         }
@@ -169,6 +180,47 @@ public class EditMode extends GridLayout {
                 }
                 break;
         }
+    }
+
+    /**
+     * This method enables tools that are outside of Edit Mode's
+     * access bar such as the rotation and garbage tools.
+     */
+    public void enableExternalTools(ConstraintLayout mainLayout, Context c){
+        rotLeft = new Button(c);
+        rotRight = new Button(c);
+        rotLeft.setVisibility(View.GONE);
+        rotRight.setVisibility(View.GONE);
+        rotLeft.setText("rotL");//TODO replace with drawable
+        rotRight.setText("rotR");//TODO replace with drawable
+
+        rotLeft.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button b = getSelected();
+                if(b != null){
+                    b.setRotation(-60);
+                }
+            }
+        });
+
+        rotRight.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button b = getSelected();
+                if(b != null){
+                    b.setRotation(60);
+                }
+            }
+        });
+
+        garbage = new Button(c);
+        garbage.setText("Garb");//TODO replace with drawable
+        garbage.setEnabled(false);//disabled until table is selected
+
+        mainLayout.addView(rotLeft);
+        mainLayout.addView(rotRight);
+        mainLayout.addView(garbage);
     }
 
     public void setSize(int size){
