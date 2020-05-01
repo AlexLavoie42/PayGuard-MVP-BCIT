@@ -48,10 +48,7 @@ public class ShapeSelect extends LinearLayout {
                     //create new table
                 } else {
                     applyCircle(EMToolbar.getSelected());
-                    /*TODO delete getRot methods and replace this with select()
-                    once the selector works with circles. */
-                    EMToolbar.getRotLeft().setVisibility(View.GONE);
-                    EMToolbar.getRotRight().setVisibility(View.GONE);
+                    EMToolbar.select(EMToolbar.getSelected());
                 }
             }
         });

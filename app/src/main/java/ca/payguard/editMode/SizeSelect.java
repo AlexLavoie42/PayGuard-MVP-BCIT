@@ -86,6 +86,7 @@ public class SizeSelect extends LinearLayout {
             }
 
             EMToolbar.shapeSelect.transform();
+            EMToolbar.select(EMToolbar.getSelected());
         }
     }
 
@@ -104,6 +105,7 @@ public class SizeSelect extends LinearLayout {
             }
 
             EMToolbar.shapeSelect.transform();
+            EMToolbar.select(EMToolbar.getSelected());
         }
     }
 }

@@ -112,9 +112,12 @@ public class EditMode extends GridLayout {
     public void select(final Button b){
         Table selected = null;
 
-        if(this.selected != null)
-            this.selected.setBackgroundColor(getResources().getColor(R.color.brightGreen));
-        b.setBackground(getResources().getDrawable(R.drawable.table_selector));
+        if(this.selected != null) {
+            if(this.selectedTbl.getShape() != 'C')
+                this.selected.setBackgroundColor(getResources().getColor(R.color.brightGreen));
+            else
+                this.selected.setBackground(getResources().getDrawable(R.drawable.btn_rounded));
+        }
 
         for(Table t : tables){
             if(t.getLabel().equals(b.getText())){
@@ -122,6 +125,11 @@ public class EditMode extends GridLayout {
                 break;
             }
         }
+
+        if(selected.getShape() != 'C')
+            b.setBackground(getResources().getDrawable(R.drawable.table_selector));
+        else
+            b.setBackground(getResources().getDrawable(R.drawable.btn_rounded_selected));
 
         if(selected != null){
             nameInput.setText(selected.getLabel());
@@ -255,13 +263,5 @@ public class EditMode extends GridLayout {
 
     public boolean isActive(){
         return active;
-    }
-
-    public Button getRotLeft(){
-        return rotLeft;
-    }
-
-    public Button getRotRight(){
-        return rotRight;
     }
 }
