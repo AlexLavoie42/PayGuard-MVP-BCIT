@@ -144,13 +144,18 @@ public class EditMode extends GridLayout {
                 }
             });
 
-            //locate the rotation tools by the button
-            rotLeft.setVisibility(View.VISIBLE);
-            rotLeft.setX(b.getX() - 200);
-            rotLeft.setY(b.getY() + 25);
-            rotRight.setVisibility(View.VISIBLE);
-            rotRight.setX(b.getX() + 275);
-            rotRight.setY(b.getY() + 25);
+            //locate the rotation tools by the button (exclude circles)
+            if(selected.getShape() != 'C'){
+                rotLeft.setVisibility(View.VISIBLE);
+                rotLeft.setX(b.getX() - 200);
+                rotLeft.setY(b.getY() + 25);
+                rotRight.setVisibility(View.VISIBLE);
+                rotRight.setX(b.getX() + 275);
+                rotRight.setY(b.getY() + 25);
+            } else {
+                rotLeft.setVisibility(View.GONE);
+                rotRight.setVisibility(View.GONE);
+            }
 
             selectedTbl = selected;
             this.selected = b;
@@ -250,5 +255,13 @@ public class EditMode extends GridLayout {
 
     public boolean isActive(){
         return active;
+    }
+
+    public Button getRotLeft(){
+        return rotLeft;
+    }
+
+    public Button getRotRight(){
+        return rotRight;
     }
 }
