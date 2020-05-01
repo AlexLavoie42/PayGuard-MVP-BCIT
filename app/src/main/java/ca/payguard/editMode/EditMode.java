@@ -199,7 +199,9 @@ public class EditMode extends GridLayout {
             public void onClick(View v) {
                 Button b = getSelected();
                 if(b != null){
-                    b.setRotation(-60);
+                    int nRotation = Table.verifyAngle(getSelectedTbl().getAngle() - 30);
+                    getSelectedTbl().setAngle(nRotation);
+                    b.setRotation(nRotation);
                 }
             }
         });
@@ -209,7 +211,9 @@ public class EditMode extends GridLayout {
             public void onClick(View v) {
                 Button b = getSelected();
                 if(b != null){
-                    b.setRotation(60);
+                    int nRotation = Table.verifyAngle(getSelectedTbl().getAngle() + 30);
+                    getSelectedTbl().setAngle(nRotation);
+                    b.setRotation(nRotation);
                 }
             }
         });

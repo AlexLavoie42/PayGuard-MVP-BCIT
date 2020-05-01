@@ -16,6 +16,7 @@ public class Table {
     private int sizeMod = sizeMods[0];
     public static final char[] shapes = {'S', 'C', 'R'};
     private char shape = shapes[2];//default shape is rectangle
+    private int angle = 0;
 
     public void setPreauthAmt(double preauthAmt){
         this.preauthAmt = preauthAmt;
@@ -49,6 +50,25 @@ public class Table {
         shape = c;
     }
 
+    /** Ensures that the angle is between 0-359. */
+    public static int verifyAngle(int angle){
+        int vAngle = angle;
+
+        while(vAngle < 0)
+            vAngle += 360;
+        while(vAngle > 359)
+            vAngle -= 360;
+
+        return vAngle;
+    }
+
+    public void setAngle(int angle) throws IllegalArgumentException {
+        if(angle < 0 || angle > 359)
+            throw new IllegalArgumentException("Error: angle must be 0-359");
+
+        this.angle = angle;
+    }
+
     public char getSizeChar(){
         if(sizeMod == sizeMods[0])
             return 'S';
@@ -80,5 +100,9 @@ public class Table {
 
     public int getY(){
         return y;
+    }
+
+    public int getAngle(){
+        return angle;
     }
 }
