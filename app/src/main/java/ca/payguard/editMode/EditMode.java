@@ -169,6 +169,25 @@ public class EditMode extends GridLayout {
         }
     }
 
+    private void deselect(){
+        Button b = getSelected();
+        if(b != null){
+            Table t = getSelectedTbl();
+            if(t.getShape() == 'C')
+                b.setBackground(getResources().getDrawable(R.drawable.btn_rounded));
+            else
+                b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
+
+            selected = null;
+            selectedTbl = null;
+            nameInput.setText("Table Name");
+
+            //hide rotation tools
+            rotLeft.setVisibility(View.GONE);
+            rotRight.setVisibility(View.GONE);
+        }
+    }
+
     /** This method moves the button if the user attempts to drag
      * a button once selected. */
     public void buttonTouched(Button b, MotionEvent event){
@@ -199,6 +218,15 @@ public class EditMode extends GridLayout {
      * access bar such as the rotation and garbage tools.
      */
     public void enableExternalTools(ConstraintLayout mainLayout, Context c){
+        //make the screen if user taps away from a button
+        mainLayout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!(v instanceof Button))
+                    deselect();
+            }
+        });
+
         rotLeft = new Button(c);
         rotRight = new Button(c);
         rotLeft.setVisibility(View.GONE);
@@ -259,6 +287,7 @@ public class EditMode extends GridLayout {
             sizeSelect.addSize();
             for(int i = 0; i < 3; i++)
                 rotRight();
+            deselect();
         }
     }
 
