@@ -17,7 +17,7 @@ public class NumberList extends LinearLayout {
     NumberPicker p1, p2;
     Button cancelBtn, doneBtn;
 
-    public NumberList(Context c, EditMode EMToolbar){
+    public NumberList(Context c, final EditMode EMToolbar){
         super(c);
         this.EMToolbar = EMToolbar;
         setOrientation(LinearLayout.VERTICAL);
@@ -65,6 +65,10 @@ public class NumberList extends LinearLayout {
             @Override
             public void onClick(View v) {
                 setVisibility(View.GONE);
+                String nLabel = (p1.getValue() == 0) ? "" + p2.getValue() :
+                        "" + p1.getValue() + p2.getValue();
+                EMToolbar.getSelectedTbl().setLabel(nLabel);
+                EMToolbar.getSelected().setText(nLabel);
             }
         });
 
@@ -93,5 +97,17 @@ public class NumberList extends LinearLayout {
         p2.setX((float) TableSet.STD_WIDTH / 2 * wRatio);
         cancelBtn.setX((float) TableSet.STD_WIDTH / 2 * wRatio);
         doneBtn.setX((float) TableSet.STD_WIDTH / 2 * wRatio);
+    }
+
+    /** Updates the number pickers to display the parameter. */
+    public void selectLabel(String num){
+        char[] nums = num.toCharArray();
+
+        if(nums.length == 1)
+            p2.setValue(Character.getNumericValue(nums[0]));
+        else{
+            p1.setValue(Character.getNumericValue(nums[0]));
+            p2.setValue(Character.getNumericValue(nums[1]));
+        }
     }
 }

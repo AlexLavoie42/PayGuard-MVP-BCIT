@@ -60,8 +60,9 @@ public class EditMode extends GridLayout {
         nameInput.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(getSelected() != null)
+                if(getSelected() != null) {
                     numList.setVisibility(View.VISIBLE);
+                }
             }
         });
         exitBtn.setText("X");
@@ -162,6 +163,7 @@ public class EditMode extends GridLayout {
                 rotRight.setVisibility(View.GONE);
             }
 
+            numList.selectLabel(selected.getLabel());
             selectedTbl = selected;
             this.selected = b;
         }
