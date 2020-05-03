@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         enableEditMode();
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
-        editMode.applyStdTransformation(tblBtns);
+        editMode.applyStdTransformation(tblBtns);//transforms bar table if std transformation used
     }
 
     /* Crashes app

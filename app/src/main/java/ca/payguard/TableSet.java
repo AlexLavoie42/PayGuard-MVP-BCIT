@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * It uses the screen size to arrange the tables.
  */
 public class TableSet extends ArrayList<Table> {
-    static final int STD_WIDTH = 1440, STD_HEIGHT = 2560;//standard android screen size
+    public static final int STD_WIDTH = 1440, STD_HEIGHT = 2560;//standard android screen size
     private boolean stdFormation;
 
     /**

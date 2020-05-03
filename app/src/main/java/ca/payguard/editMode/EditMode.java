@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.NumberPicker;
+import android.widget.TextView;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
 import ca.payguard.R;
@@ -18,7 +21,8 @@ public class EditMode extends GridLayout {
     private boolean active;
 
     //access bar tools
-    EditText nameInput;
+    TextView nameInput;
+    static NumberList numList;
     public ShapeSelect shapeSelect;
     SizeSelect sizeSelect;
     Button exitBtn;
@@ -33,6 +37,7 @@ public class EditMode extends GridLayout {
     float btnX, btnY;
 
     //external tools
+    ConstraintLayout mainLayout;
     Button rotLeft, rotRight;
     Button garbage;
 
@@ -43,13 +48,22 @@ public class EditMode extends GridLayout {
         setRowCount(1);
         setColumnCount(4);
 
-        nameInput = new EditText(context);
+        nameInput = new TextView(context);
+        numList = new NumberList(context, this);
+        numList.setVisibility(View.GONE);
         shapeSelect = new ShapeSelect(context, this);
         sizeSelect = new SizeSelect(context, this);
         exitBtn = new Button(context);
 
         nameInput.setText("Table Name");
         nameInput.setSingleLine(true);
+        nameInput.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getSelected() != null)
+                    numList.setVisibility(View.VISIBLE);
+            }
+        });
         exitBtn.setText("X");
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,22 +148,6 @@ public class EditMode extends GridLayout {
             nameInput.setText(selected.getLabel());
             nameInput.setEnabled(true);
             sizeSelect.selectTable(selected);
-            nameInput.setOnKeyListener(new OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    switch(keyCode){
-                        //backspace if the key is illegal
-                        case KeyEvent.KEYCODE_PLUS:
-                            nameInput.setText(nameInput.getText().toString().substring(0,
-                                    nameInput.getText().length() - 1));
-                            break;
-                        default:
-                            b.setText(nameInput.getText());
-                    }
-
-                    return false;
-                }
-            });
 
             //locate the rotation tools by the button (exclude circles)
             if(selected.getShape() != 'C'){
@@ -218,12 +216,17 @@ public class EditMode extends GridLayout {
      * access bar such as the rotation and garbage tools.
      */
     public void enableExternalTools(ConstraintLayout mainLayout, Context c){
-        //make the screen if user taps away from a button
+        this.mainLayout = mainLayout;
+
         mainLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                //deselect if user taps away from a button
                 if(!(v instanceof Button))
                     deselect();
+
+                //deselect the number picker if tapped away
+                //TODO
             }
         });
 
@@ -253,10 +256,16 @@ public class EditMode extends GridLayout {
         garbage = new Button(c);
         garbage.setText("Garb");//TODO replace with drawable
         garbage.setEnabled(false);//disabled until table is selected
+        garbage.setX((TableSet.STD_WIDTH - 150) * wRatio);
+        garbage.setY((TableSet.STD_HEIGHT - 300) * hRatio);
 
         mainLayout.addView(rotLeft);
         mainLayout.addView(rotRight);
         mainLayout.addView(garbage);
+
+        //add the number list query to main layout
+        numList.enableExternalTools(wRatio, hRatio);
+        mainLayout.addView(numList);
     }
 
     public void rotLeft() throws UnsupportedOperationException {
@@ -289,6 +298,23 @@ public class EditMode extends GridLayout {
                 rotRight();
             deselect();
         }
+    }
+
+    //TODO
+    /** Adds a table to tableset and button to the screen. */
+    public void addTable(char shape) throws IllegalArgumentException {
+        if(shape != 'S' && shape != 'C' && shape != 'R')
+            throw new IllegalArgumentException("Error: table shape is not allowed.");
+
+        Table t = new Table();
+        t.setShape(shape);
+    }
+
+    //TODO
+    /** Deletes table from table set and deletes button from the screen. */
+    public void deleteTable(){
+        if(getSelectedTbl() == null)
+            return;
     }
 
     public void setSize(int size){
