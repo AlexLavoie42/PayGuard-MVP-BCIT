@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
+import ca.payguard.MainActivity;
 import ca.payguard.R;
 import ca.payguard.Table;
 import ca.payguard.TableSet;
@@ -49,8 +50,6 @@ public class EditMode extends GridLayout {
         setColumnCount(4);
 
         nameInput = new TextView(context);
-        numList = new NumberList(context, this);
-        numList.setVisibility(View.GONE);
         shapeSelect = new ShapeSelect(context, this);
         sizeSelect = new SizeSelect(context, this);
         exitBtn = new Button(context);
@@ -164,6 +163,7 @@ public class EditMode extends GridLayout {
             }
 
             numList.selectLabel(selected.getLabel());
+            garbage.setEnabled(true);
             selectedTbl = selected;
             this.selected = b;
         }
@@ -186,6 +186,8 @@ public class EditMode extends GridLayout {
             rotLeft.setVisibility(View.GONE);
             rotRight.setVisibility(View.GONE);
         }
+
+        garbage.setEnabled(false);
     }
 
     /** This method moves the button if the user attempts to drag
@@ -260,12 +262,20 @@ public class EditMode extends GridLayout {
         garbage.setEnabled(false);//disabled until table is selected
         garbage.setX((TableSet.STD_WIDTH - 150) * wRatio);
         garbage.setY((TableSet.STD_HEIGHT - 300) * hRatio);
+        garbage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteTable();
+            }
+        });
 
         mainLayout.addView(rotLeft);
         mainLayout.addView(rotRight);
         mainLayout.addView(garbage);
 
         //add the number list query to main layout
+        numList = new NumberList(getContext(), this);
+        numList.setVisibility(View.GONE);
         numList.enableExternalTools(wRatio, hRatio);
         mainLayout.addView(numList);
     }
@@ -302,21 +312,74 @@ public class EditMode extends GridLayout {
         }
     }
 
-    //TODO
     /** Adds a table to tableset and button to the screen. */
     public void addTable(char shape) throws IllegalArgumentException {
         if(shape != 'S' && shape != 'C' && shape != 'R')
             throw new IllegalArgumentException("Error: table shape is not allowed.");
 
-        Table t = new Table();
+        final Table t = new Table();
         t.setShape(shape);
+
+        tables.add(t);
+        t.setLabel("" + tables.size());
+
+        //add button to screen
+        final Button b = new Button(getContext());
+        b.setText("" + tables.size());
+        b.setX((float) TableSet.STD_WIDTH / 2 * wRatio - (float) size / 2);
+        b.setY((float) TableSet.STD_HEIGHT / 2 * hRatio - (float) size / 2);
+
+        MainActivity.tblBtns.add(b);
+        MainActivity.tableLayout.addView(b);
+
+        b.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isActive())
+                    ((MainActivity) getContext()).tablePopup(t.getLabel());
+                else
+                    select(b);
+            }
+        });
+
+        b.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                buttonTouched(b, event);
+                return false;
+            }
+        });
+
+        //transform to specified shape
+        switch(t.getShape()){
+            case 'S':
+                shapeSelect.applySquare(b);
+                break;
+            case 'C':
+                shapeSelect.applyCircle(b);
+                break;
+            case 'R':
+                shapeSelect.applyRectangle(b);
+                break;
+        }
+
+        select(b);
     }
 
-    //TODO
     /** Deletes table from table set and deletes button from the screen. */
     public void deleteTable(){
-        if(getSelectedTbl() == null)
+        Button b = getSelected();
+        if(b == null)
             return;
+
+        MainActivity.tblBtns.remove(b);
+        tables.remove(getSelectedTbl());
+        /*((ConstraintLayout) findViewById(R.id.tableLayout)).removeView(b) crashes app.
+        Since there seems to be no other way to remove button from layout, only remove button
+        from access lists and move off screen. */
+        b.setVisibility(View.GONE);
+
+        deselect();
     }
 
     public void setSize(int size){

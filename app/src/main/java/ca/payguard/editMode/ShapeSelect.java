@@ -33,7 +33,7 @@ public class ShapeSelect extends LinearLayout {
             @Override
             public void onClick(View v) {
                 if(EMToolbar.getSelected() == null){
-                    //create new table
+                    EMToolbar.addTable('S');
                 } else {
                     applySquare(EMToolbar.getSelected());
                     EMToolbar.select(EMToolbar.getSelected());
@@ -45,7 +45,7 @@ public class ShapeSelect extends LinearLayout {
             @Override
             public void onClick(View v) {
                 if(EMToolbar.getSelected() == null){
-                    //create new table
+                    EMToolbar.addTable('C');
                 } else {
                     applyCircle(EMToolbar.getSelected());
                     EMToolbar.select(EMToolbar.getSelected());
@@ -57,7 +57,7 @@ public class ShapeSelect extends LinearLayout {
             @Override
             public void onClick(View v) {
                 if(EMToolbar.getSelected() == null){
-                    //create new table
+                    EMToolbar.addTable('R');
                 } else {
                     applyRectangle(EMToolbar.getSelected());
                     EMToolbar.select(EMToolbar.getSelected());

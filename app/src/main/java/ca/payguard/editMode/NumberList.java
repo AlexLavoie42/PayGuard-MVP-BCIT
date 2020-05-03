@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-
 import ca.payguard.R;
 import ca.payguard.TableSet;
 

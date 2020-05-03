@@ -23,8 +23,10 @@ import ca.payguard.editMode.EditMode;
  */
 public class MainActivity extends AppCompatActivity {
     private TableSet tableGui;
-    private ArrayList<Button> tblBtns = new ArrayList<>();
+    public static ArrayList<Button> tblBtns = new ArrayList<>();
     private Fragment popup;
+
+    public static ConstraintLayout tableLayout;
 
     EditMode editMode;
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Set the main layout on click to close any open popups.
         View layout = findViewById(R.id.mainLayout);
+        tableLayout = findViewById(R.id.tableLayout);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** Creates new TableFragment as overlay */
-    private void tablePopup(String label){
+    public void tablePopup(String label){
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
@@ -162,6 +165,10 @@ public class MainActivity extends AppCompatActivity {
 
             addButton(b);
         }
+    }
+
+    static void setTblListeners(Button b){
+
     }
 
     /** Verifies if the button is already in layout view or not. */
