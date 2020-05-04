@@ -1,5 +1,6 @@
 package ca.payguard;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -63,18 +64,14 @@ public class MainActivity extends AppCompatActivity {
         editMode.applyStdTransformation(tblBtns);//transforms bar table if std transformation used
     }
 
-    /* Crashes app
     @Override
-    protected void onResume(){
-        super.onStart();
-
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Intent i = getIntent();
 
         if(i.getStringExtra("edit_mode").equals("e"))
             enableEditMode();
-        else
-            disableEditMode();
-    } */
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     //TODO doesn't seem to activate? supposed to function on orientation change
     @Override
