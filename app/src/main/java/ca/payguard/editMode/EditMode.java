@@ -20,6 +20,7 @@ import ca.payguard.TableSet;
 
 public class EditMode extends GridLayout {
     private boolean active;
+    final String ILLEGAL_ARGE = "Error: table shape is not allowed.";
 
     //access bar tools
     TextView nameInput;
@@ -300,14 +301,44 @@ public class EditMode extends GridLayout {
         getSelected().setRotation(nRotation);
     }
 
+    /** Allocates a table at the specified point. */
+    private void allocateTable(char shape, int pointX, int pointY)
+        throws IllegalArgumentException{
+        if(shape != 'S' && shape != 'C' && shape != 'R')
+            throw new IllegalArgumentException("Error: table shape is not allowed.");
+
+        int segmentX = TableSet.STD_WIDTH / 20, segmentY = TableSet.STD_HEIGHT / 20;
+        addTable(shape);
+        selectedTbl.setCoords(segmentX * pointX, segmentY * pointY);
+    }
+
     /** Transforms the last table to a bar table if standard
      * table arrangement is used. */
-    public void applyStdTransformation(ArrayList<Button> tblBtns){
+    public void applyStdArrangement(){
         if(tables.isStdFormation()){
-            select(tblBtns.get(tblBtns.size() - 1));
+            int segmentX = TableSet.STD_WIDTH / 20, segmentY = TableSet.STD_HEIGHT / 20;
+
+            allocateTable('R', 2, 6);
+            allocateTable('R', 7, 6);
+            allocateTable('R', 11, 8);
+            allocateTable('R', 2, 10);
+            allocateTable('R', 7, 10);
+            allocateTable('R', 11, 12);
+            allocateTable('R', 2, 14);
+            allocateTable('R', 7, 14);
+            allocateTable('R', 15, 9);
             sizeSelect.addSize();
+
             for(int i = 0; i < 3; i++)
                 rotRight();
+
+            for(View v : MainActivity.tableLayout.getTouchables()){
+                Button b = (Button) v;
+                select(b);
+                b.setX(selectedTbl.getX() * wRatio);
+                b.setY(selectedTbl.getY() * hRatio);
+            }
+
             deselect();
         }
     }
@@ -315,7 +346,7 @@ public class EditMode extends GridLayout {
     /** Adds a table to tableset and button to the screen. */
     public void addTable(char shape) throws IllegalArgumentException {
         if(shape != 'S' && shape != 'C' && shape != 'R')
-            throw new IllegalArgumentException("Error: table shape is not allowed.");
+            throw new IllegalArgumentException(ILLEGAL_ARGE);
 
         final Table t = new Table();
         t.setShape(shape);

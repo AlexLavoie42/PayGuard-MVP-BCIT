@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout constraintLayout = (ConstraintLayout) layout;
         constraintLayout.addView(editMode);
 
-        displayTables();
+        editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
 
         enableEditMode();
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
-        editMode.applyStdTransformation(tblBtns);//transforms bar table if std transformation used
+        editMode.applyStdArrangement();//creates std set of tables
     }
 
     @Override
@@ -77,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-        displayTables();
 
         /* Checks the orientation of the screen
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -117,50 +115,6 @@ public class MainActivity extends AppCompatActivity {
 
             ft.detach(popup);
             ft.commit();
-        }
-    }
-
-    /** Adjusts the buttons onto the screen. */
-    private void displayTables(){
-        /*
-        Create a button for each table and use it's coordinates
-        to adjust it to the tablet's screen size.
-         */
-        float wRatio = getWidthRatio();
-        float hRatio = getHeightRatio();
-        editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
-        for(int i = 0; i < tableGui.size(); i++){
-            final Table t = tableGui.get(i);
-
-            final Button b = new Button(this);
-            b.setText(t.getLabel());
-            b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
-            b.setId(i+1);
-
-            b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(!editMode.isActive())
-                        tablePopup(t.getLabel());
-                    else
-                        editMode.select(b);
-                }
-            });
-
-            b.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    editMode.buttonTouched(b, event);
-                    return false;
-                }
-            });
-
-            b.setX((float) t.getX() * wRatio);
-            b.setY((float) t.getY() * hRatio);
-
-            editMode.shapeSelect.applyRectangle(b);
-
-            addButton(b);
         }
     }
 
