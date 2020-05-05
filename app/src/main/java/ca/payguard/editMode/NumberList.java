@@ -33,11 +33,23 @@ public class NumberList extends LinearLayout {
         p1.setGravity(Gravity.CENTER);
         p1.setMinValue(0);
         p1.setMaxValue(9);
+        p1.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                pickerListener(picker, p2);
+            }
+        });
 
         p2 = new NumberPicker(c);
         p2.setGravity(Gravity.CENTER);
         p2.setMinValue(0);
         p2.setMaxValue(9);
+        p2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                pickerListener(p1, picker);
+            }
+        });
 
         LinearLayout r2 = new LinearLayout(c);
         r2.setOrientation(LinearLayout.HORIZONTAL);
@@ -108,5 +120,21 @@ public class NumberList extends LinearLayout {
             p1.setValue(Character.getNumericValue(nums[0]));
             p2.setValue(Character.getNumericValue(nums[1]));
         }
+    }
+
+    /** Highlights the value in red if the label isn't unique. */
+    public void pickerListener(NumberPicker p1, NumberPicker p2) {
+        int p1Val = p1.getValue(), p2Val = p2.getValue();
+        String label;
+
+        if(p1Val == 0)
+            label = "" + p2Val;
+        else
+            label = "" + p1Val + p2Val;
+
+        if(EMToolbar.tables.containsLabel(label)){
+            //TODO highlight in red and disable done btn if not unique.
+        }
+        //TODO highlight in black upon value change and enable done btn.
     }
 }

@@ -2,17 +2,12 @@ package ca.payguard.editMode;
 
 import android.content.Context;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.NumberPicker;
 import android.widget.TextView;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
-import java.util.ArrayList;
 import ca.payguard.MainActivity;
 import ca.payguard.R;
 import ca.payguard.Table;
