@@ -51,15 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO: Update tableset with new tables
 
-        //Set the main layout on click to close any open popups.
-        View layout = findViewById(R.id.mainLayout);
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closePopup();
-            }
-        });
-
         displayTables();
 
         //enableEditMode();
@@ -116,6 +107,12 @@ public class MainActivity extends AppCompatActivity {
         blur.setBlurRadius(6);
         blur.setAlpha(0.8f);
         blur.setOverlayColor(1);
+        blur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closePopup();
+            }
+        });
     }
 
     /** Closes any open popups */
@@ -129,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
             blur.setBlurRadius(0);
             blur.setAlpha(0);
+            blur.setClickable(false);
         }
     }
 
