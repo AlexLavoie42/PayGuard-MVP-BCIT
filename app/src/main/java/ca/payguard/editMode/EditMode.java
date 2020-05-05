@@ -40,7 +40,7 @@ public class EditMode extends GridLayout {
 
     //external tools
     ConstraintLayout mainLayout;
-    Button rotLeft, rotRight;
+    RotateTool rotateTool;
     Button garbage;
 
     public EditMode(Context context) {
@@ -150,18 +150,7 @@ public class EditMode extends GridLayout {
             nameInput.setEnabled(true);
             sizeSelect.selectTable(selected);
 
-            //locate the rotation tools by the button (exclude circles)
-            if(selected.getShape() != 'C'){
-                rotLeft.setVisibility(View.VISIBLE);
-                rotLeft.setX(b.getX() - 200);
-                rotLeft.setY(b.getY() + 25);
-                rotRight.setVisibility(View.VISIBLE);
-                rotRight.setX(b.getX() + 275);
-                rotRight.setY(b.getY() + 25);
-            } else {
-                rotLeft.setVisibility(View.GONE);
-                rotRight.setVisibility(View.GONE);
-            }
+            rotateTool.locateTools(selected, b);
 
             numList.selectLabel(selected.getLabel());
             garbage.setEnabled(true);
@@ -184,8 +173,7 @@ public class EditMode extends GridLayout {
             nameInput.setText("Table Name");
 
             //hide rotation tools
-            rotLeft.setVisibility(View.GONE);
-            rotRight.setVisibility(View.GONE);
+            rotateTool.hide();
         }
 
         garbage.setEnabled(false);
@@ -235,28 +223,10 @@ public class EditMode extends GridLayout {
             }
         });
 
-        rotLeft = new Button(c);
-        rotRight = new Button(c);
-        rotLeft.setVisibility(View.GONE);
-        rotRight.setVisibility(View.GONE);
-        rotLeft.setText("rotL");//TODO replace with drawable
-        rotRight.setText("rotR");//TODO replace with drawable
-
-        rotLeft.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(getSelected() != null)
-                    rotLeft();
-            }
-        });
-
-        rotRight.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(getSelected() != null)
-                    rotRight();
-            }
-        });
+        rotateTool = new RotateTool(c, this);
+        rotateTool.hide();
+        rotateTool.rotLeft.setText("rotL");//TODO replace with drawable
+        rotateTool.rotRight.setText("rotR");//TODO replace with drawable
 
         garbage = new Button(c);
         garbage.setText("Garb");//TODO replace with drawable
@@ -270,8 +240,8 @@ public class EditMode extends GridLayout {
             }
         });
 
-        mainLayout.addView(rotLeft);
-        mainLayout.addView(rotRight);
+        mainLayout.addView(rotateTool.rotLeft);
+        mainLayout.addView(rotateTool.rotRight);
         mainLayout.addView(garbage);
 
         //add the number list query to main layout
@@ -279,26 +249,6 @@ public class EditMode extends GridLayout {
         numList.setVisibility(View.GONE);
         numList.enableExternalTools(wRatio, hRatio);
         mainLayout.addView(numList);
-    }
-
-    public void rotLeft() throws UnsupportedOperationException {
-        if(getSelectedTbl() == null)
-            throw new UnsupportedOperationException("Error: a shape must be selected to " +
-                    "apply rotation.");
-
-        int nRotation = Table.verifyAngle(getSelectedTbl().getAngle() - 30);
-        getSelectedTbl().setAngle(nRotation);
-        getSelected().setRotation(nRotation);
-    }
-
-    public void rotRight() throws UnsupportedOperationException {
-        if(getSelectedTbl() == null)
-            throw new UnsupportedOperationException("Error: a shape must be selected to " +
-                    "apply rotation.");
-
-        int nRotation = Table.verifyAngle(getSelectedTbl().getAngle() + 30);
-        getSelectedTbl().setAngle(nRotation);
-        getSelected().setRotation(nRotation);
     }
 
     /** Allocates a table at the specified point. */
@@ -327,10 +277,10 @@ public class EditMode extends GridLayout {
             allocateTable('R', 2, 14);
             allocateTable('R', 7, 14);
             allocateTable('R', 15, 9);
-            sizeSelect.addSize();
 
+            sizeSelect.addSize();
             for(int i = 0; i < 3; i++)
-                rotRight();
+                rotateTool.rotRight(getSelectedTbl(), getSelected());
 
             for(View v : MainActivity.tableLayout.getTouchables()){
                 Button b = (Button) v;
