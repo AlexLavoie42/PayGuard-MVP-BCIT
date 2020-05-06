@@ -258,6 +258,8 @@ public class EditMode extends GridLayout {
         int segmentX = TableSet.STD_WIDTH / 20, segmentY = TableSet.STD_HEIGHT / 20;
         addTable(shape);
         selectedTbl.setCoords(segmentX * pointX, segmentY * pointY);
+        selected.setX(selectedTbl.getX() * wRatio);
+        selected.setY(selectedTbl.getY() * hRatio);
     }
 
     /** Transforms the last table to a bar table if standard
@@ -279,13 +281,6 @@ public class EditMode extends GridLayout {
             sizeSelect.addSize();
             for(int i = 0; i < 3; i++)
                 rotateTool.rotRight(getSelectedTbl(), getSelected());
-
-            for(View v : MainActivity.tableLayout.getTouchables()){
-                Button b = (Button) v;
-                select(b);
-                b.setX(selectedTbl.getX() * wRatio);
-                b.setY(selectedTbl.getY() * hRatio);
-            }
 
             deselect();
         }
