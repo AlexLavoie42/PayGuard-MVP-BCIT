@@ -3,13 +3,40 @@ package ca.payguard.util;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.Process;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 public class ControllerService extends Service {
 
-    private Transaction transaction = new Transaction();
+    private Transaction transaction;
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+
+        }
+    };
+
+    /**
+     * Runs only if this service isn't already running.
+     */
+    @Override
+    public void onCreate(){
+        transaction = new Transaction();
+        Thread workThread = new Thread(runnable);
+        workThread.start();
+    }
+
+    /** This is run whenever a startService() call is made. */
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //do something
+        return START_STICKY;
+    }
 
     /**
      * Return the communication channel to the service.  May return null if
@@ -37,5 +64,9 @@ public class ControllerService extends Service {
         return null;
     }
 
+    @Override
+    public void onDestroy() {
+        Toast.makeText(this, "ControllerService destroyed...", Toast.LENGTH_SHORT).show();
+    }
 
 }
