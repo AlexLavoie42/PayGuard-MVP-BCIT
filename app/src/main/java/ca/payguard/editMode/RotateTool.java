@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import ca.payguard.Table;
+import ca.payguard.TableSet;
 
 public class RotateTool {
     public Button rotLeft, rotRight;
@@ -30,18 +31,21 @@ public class RotateTool {
         });
     }
 
+    /** Locates the rotation tools by the button (excluding circles). */
     public void locateTools(Table t, Button b){
-        //locate the rotation tools by the button (exclude circles)
         if(t.getShape() != 'C'){
             rotLeft.setVisibility(View.VISIBLE);
-            rotLeft.setX(b.getX() - 200);
-            rotLeft.setY(b.getY() + 25);
             rotRight.setVisibility(View.VISIBLE);
-            rotRight.setX(b.getX() + 275);
-            rotRight.setY(b.getY() + 25);
-        } else {
+
+            float halfwayX = TableSet.STD_WIDTH * EMToolbar.wRatio / 2;
+            float halfwayY = EMToolbar.getHeight();
+
+            rotLeft.setX(halfwayX / 2);
+            rotLeft.setY(halfwayY / 8 * 1);
+            rotRight.setX(halfwayX / 2);
+            rotRight.setY(halfwayY / 8 * 5);
+        } else
             hide();
-        }
     }
 
     public void hide(){
