@@ -6,6 +6,7 @@
     <color name="colorBackground">#FBFFF5</color>
     <color name="colorLightAccent">#CDBFB3</color>
     <color name="colorButton">#CCF0A1</color>
+    <color name="red">#FF0000</color>
 
     <!--PayGuard color palette-->
     <color name="darkGreen">#45592D</color>

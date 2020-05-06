@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -36,7 +37,7 @@ public class NumberList extends LinearLayout {
         p1.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                pickerListener(picker, p2);
+                pickerListener(p1, p2);
             }
         });
 
@@ -47,7 +48,7 @@ public class NumberList extends LinearLayout {
         p2.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                pickerListener(p1, picker);
+                pickerListener(p1, p2);
             }
         });
 
@@ -76,8 +77,7 @@ public class NumberList extends LinearLayout {
             @Override
             public void onClick(View v) {
                 setVisibility(View.GONE);
-                String nLabel = (p1.getValue() == 0) ? "" + p2.getValue() :
-                        "" + p1.getValue() + p2.getValue();
+                String nLabel = getLabel();
                 EMToolbar.getSelectedTbl().setLabel(nLabel);
                 EMToolbar.getSelected().setText(nLabel);
             }
@@ -124,17 +124,16 @@ public class NumberList extends LinearLayout {
 
     /** Highlights the value in red if the label isn't unique. */
     public void pickerListener(NumberPicker p1, NumberPicker p2) {
-        int p1Val = p1.getValue(), p2Val = p2.getValue();
-        String label;
-
-        if(p1Val == 0)
-            label = "" + p2Val;
-        else
-            label = "" + p1Val + p2Val;
-
-        if(EMToolbar.tables.containsLabel(label)){
-            //TODO highlight in red and disable done btn if not unique.
+        if(EMToolbar.tables.containsLabel(getLabel())){
+            doneBtn.setEnabled(false);
+            doneBtn.setBackgroundColor(getResources().getColor(R.color.red));
+        } else {
+            doneBtn.setEnabled(true);
+            doneBtn.setBackgroundColor(getResources().getColor(R.color.brightGreen));
         }
-        //TODO highlight in black upon value change and enable done btn.
+    }
+
+    private String getLabel(){
+        return (p1.getValue() == 0) ? "" + p2.getValue() : "" + p1.getValue() + p2.getValue();
     }
 }
