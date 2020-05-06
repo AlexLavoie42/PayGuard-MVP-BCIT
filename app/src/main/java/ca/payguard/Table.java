@@ -7,29 +7,22 @@ import android.os.Parcelable;
  * The Table class stores all preauth/payment
  * data for one table.
  */
-class Table implements Parcelable {
+public class Table implements Parcelable {
     //data pertaining to bill/preauth info
     private double preauthAmt;
 
     //customizeable table gui info
     private String label;
-    static final int STD_DIMENSION = 100;
-    private int width = STD_DIMENSION, height = STD_DIMENSION;
     private int x, y;
+
+    private final int[] sizeMods = {1, 2, 3};//float? would allow for 1.5x modifier, etc.
+    private int sizeMod = sizeMods[0];
+    public static final char[] shapes = {'S', 'C', 'R'};
+    private char shape = shapes[2];//default shape is rectangle
+    private int angle = 0;
 
     //Array of Customers at Table.
     private Customer[] customers;
-
-    /*
-    Table shape:
-    0 - Circle/Oval
-    1 - Square/Rectangle
-    2 - Diamond
-    3 - Triangle
-    4 - Polygon (maybe?)
-     */
-    private int shape;
-    private final int[] shapes = {0, 1, 2, 3, 4};
 
     public Table(){
 
@@ -38,12 +31,10 @@ class Table implements Parcelable {
     protected Table(Parcel in) {
         preauthAmt = in.readDouble();
         label = in.readString();
-        width = in.readInt();
-        height = in.readInt();
         x = in.readInt();
         y = in.readInt();
         customers = in.createTypedArray(Customer.CREATOR);
-        shape = in.readInt();
+        //TODO read size, shape, and angle
     }
 
     public static final Creator<Table> CREATOR = new Creator<Table>() {
@@ -66,21 +57,56 @@ class Table implements Parcelable {
         this.label = label;
     }
 
-    public void setDimensions(int width, int height){
-        this.width = width;
-        this.height = height;
-    }
-
-    public void setShape(int shapeNo) throws IllegalArgumentException {
-        if(shapeNo < shapes[0] || shapeNo > shapes[shapes.length - 1])
-            throw new IllegalArgumentException("Error: shapeNo is not in range of table shapes");
-
-        this.shape = shapeNo;
-    }
-
     public void setCoords(int x, int y){
         this.x = x;
         this.y = y;
+    }
+
+    public void setSizeMod(char c) throws IllegalArgumentException {
+        if(c != 'S' && c != 'M' && c != 'L')
+            throw new IllegalArgumentException("Error: size mod must be S, M, or L.");
+
+        if(c == 'S')
+            sizeMod = sizeMods[0];
+        else if(c == 'M')
+            sizeMod = sizeMods[1];
+        else
+            sizeMod = sizeMods[2];
+    }
+
+    public void setShape(char c) throws IllegalArgumentException {
+        if(c != shapes[0] && c != shapes[1] && c != shapes[2])
+            throw new IllegalArgumentException("Error: shape character must be an allowed shape.");
+
+        shape = c;
+    }
+
+    /** Ensures that the angle is between 0-359. */
+    public static int verifyAngle(int angle){
+        int vAngle = angle;
+
+        while(vAngle < 0)
+            vAngle += 360;
+        while(vAngle > 359)
+            vAngle -= 360;
+
+        return vAngle;
+    }
+
+    public void setAngle(int angle) throws IllegalArgumentException {
+        if(angle < 0 || angle > 359)
+            throw new IllegalArgumentException("Error: angle must be 0-359");
+
+        this.angle = angle;
+    }
+
+    public char getSizeChar(){
+        if(sizeMod == sizeMods[0])
+            return 'S';
+        else if(sizeMod == sizeMods[1])
+            return 'M';
+        else
+            return 'L';
     }
 
     public double getPreauthAmt(){
@@ -91,15 +117,11 @@ class Table implements Parcelable {
         return label;
     }
 
-    public int getWidth(){
-        return width;
+    public int getSizeMod(){
+        return sizeMod;
     }
 
-    public int getHeight(){
-        return height;
-    }
-
-    public int getShape(){
+    public char getShape(){
         return shape;
     }
 
@@ -109,6 +131,10 @@ class Table implements Parcelable {
 
     public int getY(){
         return y;
+    }
+
+    public int getAngle(){
+        return angle;
     }
 
     public Customer[] getAllCustomers(){
@@ -145,11 +171,10 @@ class Table implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeDouble(preauthAmt);
         dest.writeString(label);
-        dest.writeInt(width);
-        dest.writeInt(height);
         dest.writeInt(x);
         dest.writeInt(y);
         dest.writeTypedArray(customers, flags);
         dest.writeInt(shape);
+        //TODO write size, shape, and angle
     }
 }
