@@ -80,6 +80,7 @@ public class NumberList extends LinearLayout {
                 String nLabel = getLabel();
                 EMToolbar.getSelectedTbl().setLabel(nLabel);
                 EMToolbar.getSelected().setText(nLabel);
+                EMToolbar.garbage.setVisibility(View.VISIBLE);
             }
         });
 

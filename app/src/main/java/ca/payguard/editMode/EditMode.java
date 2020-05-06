@@ -57,6 +57,7 @@ public class EditMode extends GridLayout {
             public void onClick(View v) {
                 if(getSelected() != null) {
                     numList.setVisibility(View.VISIBLE);
+                    garbage.setVisibility(View.GONE);
                 }
             }
         });
@@ -106,6 +107,7 @@ public class EditMode extends GridLayout {
         nameInput.setEnabled(false);
         sizeSelect.addSize.setEnabled(false);
         sizeSelect.subSize.setEnabled(false);
+        MainActivity.settingsBtn.setVisibility(View.GONE);
     }
 
     public void disable(){
@@ -116,6 +118,7 @@ public class EditMode extends GridLayout {
 
         setVisibility(View.GONE);
         active = false;
+        MainActivity.settingsBtn.setVisibility(View.VISIBLE);
     }
 
     public void select(final Button b){

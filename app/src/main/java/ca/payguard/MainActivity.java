@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public static ConstraintLayout tableLayout;
 
     EditMode editMode;
+    public static Button settingsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         constraintLayout.addView(editMode);
 
         editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
+        settingsBtn = findViewById(R.id.settings_btn);
 
         enableEditMode();
         editMode.setRatios(getWidthRatio(), getHeightRatio());
