@@ -1,13 +1,12 @@
 package ca.payguard.util;
 
-import android.media.session.MediaSession;
-
+import java.security.InvalidKeyException;
 import java.util.Hashtable;
 
 import ca.payguard.Customer;
 
 public class Transaction {
-    private Hashtable<Integer, AuthToken> tokenHash;
+    private Hashtable<String, AuthToken> tokenHash;
     private TransactionHandler transHandler;
 
     public Transaction(){
@@ -19,7 +18,58 @@ public class Transaction {
         return null;
     }
 
-    public Boolean executeTransaction(String id, String serverPin){
-        return null;
+    /**
+     * Executes the initial Pre-authorization. This will get the pre-auth token from Moneris.
+     * @param id Id of the customer
+     * @param serverPin Servers audit pin. If its invalid will throw NotAuthorized erro.
+     * @return If token is recieved will return true. If no token, then returns false.
+     */
+    public boolean executeTransaction(String id, String serverPin, String amount){
+        try{
+            audit(serverPin);
+            AuthToken token = transHandler.executeTransaction(amount); //Enter dollars here.
+            tokenHash.put(id, token);
+            return true;
+        }catch(NotAuthorized e){
+            System.out.println(e.toString());
+            return false;
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+
+    /**
+     * Completes the transaction. This will send the final bill total to Moneris.
+     * @param id Id of the customer
+     * @param serverPin Servers audit pin. If its invalid will throw NotAuthorized error.
+     * @param amount Total bill amount.
+     * @return If token is received will return true. If no token, then returns false.
+     */
+    public boolean completeTransaction(String id, String serverPin, String amount){
+        try{
+            audit(serverPin);
+            AuthToken token = tokenHash.get(id);
+            if(token == null) throw new InvalidKeyException();
+            token.completeTransaction(amount);
+            return true;
+        }catch(NotAuthorized e){
+            System.out.println(e.toString());
+            return false;
+        }catch(InvalidKeyException e){
+            System.out.println(e.toString());
+            return false;
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+
+    //TODO: Consider putting this into a seperate class for security reasons.
+    /** If invalid serverPin, throws NotAuthorized Exception. */
+    private void audit(String serverPin) throws NotAuthorized {
+        if(serverPin == null || serverPin.equals("")){
+            throw new NotAuthorized();
+        }
     }
 }

@@ -2,7 +2,7 @@ package ca.payguard.util;
 
 import JavaAPI.*;
 
-public class AuthToken {
+class AuthToken {
 
     private Receipt token;
     private String orderId;
@@ -12,7 +12,7 @@ public class AuthToken {
         this.orderId = orderId;
     }
 
-    public void completeTransaction(String amount){
+    void completeTransaction(String amount){
         //TODO: Get Production keys & id
         String store_id = "monca04523"; // YOU FUCKERS BETTER NOT ABUSE THIS
         String api_token = "q5ev3FRYYDxKpFbfMK5a";// YOU FUCKERS BETTER NOT ABUSE THIS
