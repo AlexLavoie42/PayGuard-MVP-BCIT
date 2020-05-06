@@ -46,8 +46,9 @@ public class Payment extends AppCompatActivity{
         //Complete changes
         ft.commit();
         com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-        blur.setBlurRadius(20);
-        blur.setAlpha(1);
+        blur.setBlurRadius(6);
+        blur.setAlpha(0.8f);
+        blur.setOverlayColor(1);
     }
 
     /** Method for handling dollarAmount1 button's push. Will use button's text in forwardAmount. */
