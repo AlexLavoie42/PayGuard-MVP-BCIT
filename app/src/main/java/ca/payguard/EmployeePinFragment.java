@@ -107,7 +107,9 @@ public class EmployeePinFragment extends Fragment {
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    startActivity(intent);
+                    if(!task.getResult().isEmpty()){
+                        startActivity(intent);
+                    }
                 }
             });
         }
