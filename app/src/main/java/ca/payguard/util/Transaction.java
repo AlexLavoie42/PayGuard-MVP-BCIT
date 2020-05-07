@@ -9,7 +9,7 @@ public class Transaction {
     private Hashtable<String, AuthToken> tokenHash;
     private TransactionHandler transHandler;
 
-    public Transaction(){
+    Transaction(){
         tokenHash = new Hashtable<>();
     }
 
@@ -24,7 +24,7 @@ public class Transaction {
      * @param serverPin Servers audit pin. If its invalid will throw NotAuthorized erro.
      * @return If token is recieved will return true. If no token, then returns false.
      */
-    public boolean executeTransaction(String id, String serverPin, String amount){
+    boolean executeTransaction(String id, String serverPin, String amount){
         try{
             Audit.audit(serverPin);
             AuthToken token = transHandler.executeTransaction(amount); //Enter dollars here.
@@ -46,7 +46,7 @@ public class Transaction {
      * @param amount Total bill amount.
      * @return If token is received will return true. If no token, then returns false.
      */
-    public boolean completeTransaction(String id, String serverPin, String amount){
+    boolean completeTransaction(String id, String serverPin, String amount){
         try{
             Audit.audit(serverPin);
             AuthToken token = tokenHash.get(id);
