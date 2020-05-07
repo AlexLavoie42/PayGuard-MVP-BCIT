@@ -26,7 +26,7 @@ public class Transaction {
      */
     public boolean executeTransaction(String id, String serverPin, String amount){
         try{
-            audit(serverPin);
+            Audit.audit(serverPin);
             AuthToken token = transHandler.executeTransaction(amount); //Enter dollars here.
             tokenHash.put(id, token);
             return true;
@@ -48,7 +48,7 @@ public class Transaction {
      */
     public boolean completeTransaction(String id, String serverPin, String amount){
         try{
-            audit(serverPin);
+            Audit.audit(serverPin);
             AuthToken token = tokenHash.get(id);
             if(token == null) throw new InvalidKeyException();
             token.completeTransaction(amount);
@@ -62,14 +62,6 @@ public class Transaction {
         }catch(Exception e){
             System.out.println(e.toString());
             return false;
-        }
-    }
-
-    //TODO: Consider putting this into a seperate class for security reasons.
-    /** If invalid serverPin, throws NotAuthorized Exception. */
-    private void audit(String serverPin) throws NotAuthorized {
-        if(serverPin == null || serverPin.equals("")){
-            throw new NotAuthorized();
         }
     }
 }
