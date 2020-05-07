@@ -4,12 +4,29 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 public class ControllerService extends Service {
 
-    private Transaction transaction = new Transaction();
+    private Transaction transaction;
+
+
+    /**
+     * Runs only if this service isn't already running.
+     */
+    @Override
+    public void onCreate(){
+        transaction = new Transaction();
+    }
+
+    /** This is run whenever a startService() call is made. */
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //do something
+        return START_STICKY;
+    }
 
     /**
      * Return the communication channel to the service.  May return null if
@@ -37,5 +54,47 @@ public class ControllerService extends Service {
         return null;
     }
 
+    @Override
+    public void onDestroy() {
+        Toast.makeText(this, "ControllerService destroyed...", Toast.LENGTH_SHORT).show();
+    }
 
+    /** Runs Transactions newCustomer method. */
+    public void newCustomer(String serverPin){
+        Thread thread = new Thread() {
+            public void run() {
+                // your code here
+            }
+        };
+        thread.start();
+    }
+
+    /** Runs Transactions executeTransaction method. */
+    public void executeTransaction(final String id, final String serverPin, final String amount){
+        Thread thread = new Thread() {
+            public void run() {
+                transaction.executeTransaction(id, serverPin, amount);
+            }
+        };
+        thread.start();
+    }
+
+    /** Runs Transactions completeTransaction method. */
+    public void completeTransaction(final String id, final String serverPin, final String amount){
+        Thread thread = new Thread() {
+            public void run() {
+                transaction.completeTransaction(id, serverPin, amount);
+            }
+        };
+        thread.start();
+    }
+
+//    public void exampleMethod(String someParam){
+//        Thread thread = new Thread() {
+//            public void run() {
+//                // your code here
+//            }
+//        };
+//        thread.start();
+//    }
 }

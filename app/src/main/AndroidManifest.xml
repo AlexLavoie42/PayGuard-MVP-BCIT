@@ -29,6 +29,7 @@
         <activity android:name="ca.payguard.Payment" />
         <activity android:name="ca.payguard.EditPaymentActivity" />
         <activity android:name="ca.payguard.EmailConfirmation" />
+        <service android:enabled="true" android:name="ca.payguard.util.ControllerService"/>
     </application>
 
 </manifest>
