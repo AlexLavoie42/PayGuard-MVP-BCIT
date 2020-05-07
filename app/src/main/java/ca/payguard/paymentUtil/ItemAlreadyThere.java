@@ -1,4 +1,4 @@
-package ca.payguard.util;
+package ca.payguard.paymentUtil;
 
 public class ItemAlreadyThere extends Exception {
     public ItemAlreadyThere(String errorMessage, Throwable err){

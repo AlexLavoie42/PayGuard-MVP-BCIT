@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import ca.payguard.R;
+import ca.payguard.dbUtil.DatabaseController;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,8 +39,12 @@ public class EmployeePinFragment extends Fragment {
 
     /**
      * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * this fragment and send a table in the intent.
      *
+     * TODO: Make parameters to accept any kind and number of parcelables.
+     *
+     * @param activity Activity Class that will be opened after pin.
+     * @param table Table object to be sent to activity.
      * @return A new instance of fragment EmployeePinFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -53,6 +58,13 @@ public class EmployeePinFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment with a target activity.
+     *
+     * @param activity Activity Class that will be opened after pin.
+     * @return A new instance of fragment EmployeePinFragment.
+     */
     public static EmployeePinFragment newInstance(Class<? extends AppCompatActivity> activity) {
         EmployeePinFragment fragment = new EmployeePinFragment();
         Bundle args = new Bundle();
@@ -85,33 +97,25 @@ public class EmployeePinFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(table != null){
-                    Intent intent = new Intent(getContext(), activity);
-                    intent.putExtra("table", table);
-                    checkPin(pin, intent);
+                    new DatabaseController().checkPin((EditText) pin, new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(getContext(), activity);
+                            intent.putExtra("table", table);
+                            startActivity(intent);
+                        }
+                    });
                 } else {
-                    checkPin(pin, new Intent(getContext(), activity));
+                    new DatabaseController().checkPin((EditText) pin, new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(getContext(), activity));
+                        }
+                    });
                 }
             }
         });
         return view;
     }
 
-    private void checkPin(View pin, final Intent intent){
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        if(email != null) {
-            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-            CollectionReference users = firestore.collection(email)
-                    .document("data").collection("users");
-            users.whereEqualTo("id", ((EditText)pin).getText().toString())
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if(!task.getResult().isEmpty()){
-                        startActivity(intent);
-                    }
-                }
-            });
-        }
-    }
 }

@@ -1,4 +1,4 @@
-package ca.payguard.util;
+package ca.payguard.paymentUtil;
 
 import android.app.Service;
 import android.content.Context;

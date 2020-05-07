@@ -1,4 +1,4 @@
-package ca.payguard.util;
+package ca.payguard.paymentUtil;
 
 import java.security.InvalidKeyException;
 import java.util.Hashtable;

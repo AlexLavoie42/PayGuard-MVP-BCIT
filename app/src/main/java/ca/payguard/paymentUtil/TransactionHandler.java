@@ -1,4 +1,4 @@
-package ca.payguard.util;
+package ca.payguard.paymentUtil;
 
 public interface TransactionHandler {
     public void setStoreId(String id);
