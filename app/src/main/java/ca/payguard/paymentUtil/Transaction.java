@@ -9,12 +9,12 @@ public class Transaction {
     private Hashtable<String, AuthToken> tokenHash;
     private TransactionHandler transHandler;
 
-    Transaction(){
+    public Transaction(){
         tokenHash = new Hashtable<>();
     }
 
-    public Customer newCustomer(String serverPin){
-        transHandler = new CanadaPreAuth();
+    public Customer newCustomer(String serverPin, TransactionHandler preAuthUnit){
+        transHandler = preAuthUnit;
         return null;
     }
 
@@ -24,9 +24,10 @@ public class Transaction {
      * @param serverPin Servers audit pin. If its invalid will throw NotAuthorized erro.
      * @return If token is recieved will return true. If no token, then returns false.
      */
-    boolean executeTransaction(String id, String serverPin, String amount){
+    public boolean executeTransaction(String id, String serverPin, String amount){
         try{
-            Audit.audit(serverPin);
+            Audit.audit(serverPin, "Pre-authorizing " + amount + " to " + id);
+            //TODO: Build the transaction.
             AuthToken token = transHandler.executeTransaction(amount); //Enter dollars here.
             tokenHash.put(id, token);
             return true;
@@ -46,12 +47,13 @@ public class Transaction {
      * @param amount Total bill amount.
      * @return If token is received will return true. If no token, then returns false.
      */
-    boolean completeTransaction(String id, String serverPin, String amount){
+    public boolean completeTransaction(String id, String serverPin, String amount){
         try{
-            Audit.audit(serverPin);
+            Audit.audit(serverPin, "Completing " + amount + " to " + id);
             AuthToken token = tokenHash.get(id);
             if(token == null) throw new InvalidKeyException();
             token.completeTransaction(amount);
+            //TODO: Delete transaction.
             return true;
         }catch(NotAuthorized e){
             System.out.println(e.toString());

@@ -9,6 +9,8 @@ public class CanadaPreAuth implements TransactionHandler
     private HttpsPostRequest mpgReq;
     private String orderId;
 
+    //TODO: CHANGE API CODE AND STORE FOR
+
     public CanadaPreAuth(){
         String crypt = "7"; //TODO: Check if this is the right crypt to be using.
         preAuth = new PreAuth();
@@ -96,7 +98,7 @@ public class CanadaPreAuth implements TransactionHandler
 
     @Override
     public void setStoreId(String id) {
-        mpgReq.setStoreId("monca04523"); // TODO: Change this if needed
+        mpgReq.setStoreId(id); // TODO: Change this for production
     }
 
     @Override
@@ -122,7 +124,7 @@ public class CanadaPreAuth implements TransactionHandler
 
     @Override
     public AuthToken executeTransaction(String dollars) {
-        String api_token = "q5ev3FRYYDxKpFbfMK5a"; //TODO: Get a production api key.
+        String api_token = "yesguy"; //TODO: Get a production api key.
         boolean status_check = false; //TODO: Should change this to true and test.
         mpgReq.setApiToken(api_token);
         mpgReq.setTransaction(preAuth);
