@@ -1,4 +1,4 @@
-package ca.payguard.util;
+package ca.payguard.paymentUtil;
 
 public class NotAuthorized extends Exception {
     public NotAuthorized(String errorMessage, Throwable err){

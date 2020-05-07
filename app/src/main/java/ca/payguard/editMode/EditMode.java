@@ -1,6 +1,7 @@
 package ca.payguard.editMode;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -8,13 +9,22 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import ca.payguard.LoginActivity;
 import ca.payguard.MainActivity;
 import ca.payguard.R;
 import ca.payguard.Table;
 import ca.payguard.TableSet;
+import ca.payguard.dbUtil.DatabaseController;
 
 public class EditMode extends GridLayout {
     private boolean active;
+    private DatabaseController db;
     final String ILLEGAL_ARGE = "Error: table shape is not allowed.";
 
     //access bar tools
@@ -40,6 +50,12 @@ public class EditMode extends GridLayout {
 
     public EditMode(Context context) {
         super(context);
+
+        try{
+            db = new DatabaseController();
+        } catch (RuntimeException e) {
+            context.startActivity(new Intent(context, LoginActivity.class));
+        }
 
         setBackgroundColor(getResources().getColor(R.color.brightGreen));
         setRowCount(1);
@@ -354,6 +370,21 @@ public class EditMode extends GridLayout {
         b.setVisibility(View.GONE);
 
         deselect();
+    }
+
+    /** Stores tableset data in DB */
+    public void saveTableData(){
+        db.addTableSet(tables);
+    }
+
+    /** Loads tableset from DB */
+    public void loadTableData(){
+        db.getTableSet(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                tables = documentSnapshot.toObject(TableSet.class);
+            }
+        });
     }
 
     public void setSize(int size){
