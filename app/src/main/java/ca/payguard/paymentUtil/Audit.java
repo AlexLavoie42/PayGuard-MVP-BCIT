@@ -1,18 +1,22 @@
 package ca.payguard.paymentUtil;
 
+import ca.payguard.dbUtil.DatabaseController;
+
 class Audit {
 
-    /** If invalid serverPin, throws NotAuthorized Exception. */
-    static void audit(String pin) throws NotAuthorized{
-        if(pin == null || pin.equals("")){
-            throw new NotAuthorized();
-        }
-    }
+    private static Runnable dummyRunnable = new Runnable() {
+        @Override
+        public void run() {}
+    };
 
-    /** If invalid serverPin, throws NotAuthorized Exception. This one is prefered as it has a reason. */
+    /** If invalid serverPin, throws NotAuthorized Exception. */
     static void audit(String pin, String reason) throws NotAuthorized{
         if(pin == null || pin.equals("")){
             throw new NotAuthorized();
+        }else{
+            DatabaseController dbc = new DatabaseController();
+            dbc.checkPin(pin, dummyRunnable); //TODO: Refactor this as this is bad code.
+            sendToDb(reason);
         }
     }
 
@@ -20,7 +24,7 @@ class Audit {
         return null;
     }
 
-    private void sendToDb(){
-
+    private static void sendToDb(String reason){
+        //TODO: Send the log to Db.
     }
 }
