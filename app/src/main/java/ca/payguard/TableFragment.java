@@ -59,14 +59,6 @@ public class TableFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_table, container, false);
-        root.findViewById(R.id.btn_addCustomer).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Payment.class);
-                intent.putExtra("table", table);
-                startActivity(intent);
-            }
-        });
         TextView header = root.findViewById(R.id.tv_tableHeaderText);
         header.setText(root.getResources().getString(R.string.tableHeader,
                 table.getLabel()));

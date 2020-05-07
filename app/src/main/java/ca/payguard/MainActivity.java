@@ -11,6 +11,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -106,11 +107,62 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** Creates new TableFragment as overlay */
-    public void tablePopup(Table table){
+    public void tablePopup(final Table table){
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
         popup = TableFragment.newInstance(table);
+        ft.replace(R.id.popupLayout, popup);
+        //Complete changes
+        ft.commit();
+        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
+        blur.setBlurRadius(6);
+        blur.setAlpha(0.8f);
+        blur.setOverlayColor(1);
+        blur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closePopup();
+            }
+        });
+        ft.runOnCommit(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.btn_addCustomer).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        pinPopup(Payment.class, table);
+                    }
+                });
+            }
+        });
+    }
+
+    public void pinPopup(Class<? extends AppCompatActivity> activity, Table table){
+        //Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //Add TableFragment to layout
+        popup = EmployeePinFragment.newInstance(activity, table);
+        ft.replace(R.id.popupLayout, popup);
+        //Complete changes
+        ft.commit();
+        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
+        blur.setBlurRadius(6);
+        blur.setAlpha(0.8f);
+        blur.setOverlayColor(1);
+        blur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closePopup();
+            }
+        });
+    }
+
+    public void pinPopup(Class<? extends AppCompatActivity> activity){
+        //Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //Add TableFragment to layout
+        popup = EmployeePinFragment.newInstance(activity);
         ft.replace(R.id.popupLayout, popup);
         //Complete changes
         ft.commit();
