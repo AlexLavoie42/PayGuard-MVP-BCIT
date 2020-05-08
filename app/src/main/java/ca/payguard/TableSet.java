@@ -1,6 +1,7 @@
 package ca.payguard;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * TableSet contains the tables used within the GUI.
@@ -9,6 +10,16 @@ import java.util.ArrayList;
 public class TableSet extends ArrayList<Table> {
     public static final int STD_WIDTH = 1440, STD_HEIGHT = 2560;//standard android screen size
     private boolean stdFormation;
+
+    public TableSet(ArrayList<Map> list){
+        for(Map m : list){
+            add(new Table(m));
+        }
+    }
+
+    public TableSet(){
+
+    }
 
     /**
      * Loads the table set setting from the app. If the user

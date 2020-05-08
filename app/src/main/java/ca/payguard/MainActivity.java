@@ -25,9 +25,14 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.editMode.EditMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * MainActivity is the main controller class
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TableSet tableGui;
     public static ArrayList<Button> tblBtns = new ArrayList<>();
     private Fragment popup;
+    private DatabaseController db;
 
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
@@ -48,9 +54,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //loads the table objects
-        tableGui = new TableSet();
-        tableGui.load();
+        try{
+            db = new DatabaseController();
+        } catch (DatabaseController.AuthNotFoundError e) {
+            startActivity(new Intent(getBaseContext(), LoginActivity.class));
+        }
 
         //Set the main layout on click to close any open popups.
         tableLayout = findViewById(R.id.tableLayout);
@@ -64,12 +72,18 @@ public class MainActivity extends AppCompatActivity {
         editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
         settingsBtn = findViewById(R.id.settings_btn);
 
-        enableEditMode();
+        db.getTableSet(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                tableGui = new TableSet((ArrayList)documentSnapshot.getData().get("tableset"));
+                System.out.println(tableGui);
+                enableEditMode();
+                editMode.applyStdArrangement();
+                disableEditMode();
+            }
+        });
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
-        editMode.applyStdArrangement();//creates std set of tables
-        disableEditMode();
-        editMode.garbage.setVisibility(View.GONE);
     }
 
     /* Crashes app
@@ -90,11 +104,8 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         if(editMode.getActive()) {
             enableEditMode();
-            editMode.setVisibility(View.VISIBLE);
-            editMode.garbage.setVisibility(View.VISIBLE);
         } else {
             disableEditMode();
-            editMode.garbage.setVisibility(View.GONE);
         }
     }
 
@@ -232,10 +243,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void enableEditMode(){
         editMode.enable((float) getScreenWidth(), 250, tableGui);
+        editMode.setVisibility(View.VISIBLE);
+        editMode.garbage.setVisibility(View.VISIBLE);
     }
 
     public static void disableEditMode(){
         editMode.disable();
+        editMode.garbage.setVisibility(View.GONE);
     }
 
     private int getScreenWidth(){

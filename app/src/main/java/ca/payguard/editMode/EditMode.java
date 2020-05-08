@@ -53,7 +53,7 @@ public class EditMode extends GridLayout {
 
         try{
             db = new DatabaseController();
-        } catch (RuntimeException e) {
+        } catch (DatabaseController.AuthNotFoundError e) {
             context.startActivity(new Intent(context, LoginActivity.class));
         }
 
@@ -135,6 +135,7 @@ public class EditMode extends GridLayout {
 
         //getSupportActionBar().show();//used if action bar is active on home screen
 
+        //db.addTableSet(tables);
         setVisibility(View.GONE);
         active = false;
         MainActivity.settingsBtn.setVisibility(View.VISIBLE);
