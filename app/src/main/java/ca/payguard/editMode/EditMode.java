@@ -384,16 +384,6 @@ public class EditMode extends GridLayout {
         db.addTableSet(tables);
     }
 
-    /** Loads tableset from DB */
-    public void loadTableData(){
-        db.getTableSet(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                tables = documentSnapshot.toObject(TableSet.class);
-            }
-        });
-    }
-
     public void setSize(int size){
         this.size = size;
     }
