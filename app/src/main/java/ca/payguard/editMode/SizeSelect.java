@@ -55,7 +55,18 @@ public class SizeSelect extends LinearLayout {
 
     /** Loads the size when a table is selected. */
     public void selectTable(Table t){
-        size = "" + t.getSizeChar();
+        switch(t.getSizeMod()){
+            case 1:
+                size = "S";
+                break;
+            case 2:
+                size = "M";
+                break;
+            default:
+                size = "L";
+                break;
+        }
+
         if(size.equals("S")){
             subSize.setEnabled(false);
             addSize.setEnabled(true);
@@ -67,20 +78,20 @@ public class SizeSelect extends LinearLayout {
             addSize.setEnabled(false);
         }
 
-        sizeDisplay.setText("" + size);
+        sizeDisplay.setText(size);
     }
 
     public void addSize(){
         //if(EMToolbar.getSelected() != null), then EMToolbar.getSelectedTbl() also != null
         if(EMToolbar.getSelected() != null){
             if(size.equals("S")){
+                EMToolbar.getSelectedTbl().setSizeMod(2);
                 size = "M";
-                EMToolbar.getSelectedTbl().setSizeMod('M');
                 sizeDisplay.setText(size);
                 subSize.setEnabled(true);
             } else if(size.equals("M")){
+                EMToolbar.getSelectedTbl().setSizeMod(3);
                 size = "L";
-                EMToolbar.getSelectedTbl().setSizeMod('L');
                 sizeDisplay.setText(size);
                 addSize.setEnabled(false);
             }
@@ -93,13 +104,13 @@ public class SizeSelect extends LinearLayout {
     public void subSize(){
         if(EMToolbar.getSelected() != null){
             if(size.equals("L")){
+                EMToolbar.getSelectedTbl().setSizeMod(2);
                 size = "M";
-                EMToolbar.getSelectedTbl().setSizeMod('M');
                 sizeDisplay.setText(size);
                 addSize.setEnabled(true);
             } else if(size.equals("M")){
+                EMToolbar.getSelectedTbl().setSizeMod(1);
                 size = "S";
-                EMToolbar.getSelectedTbl().setSizeMod('S');
                 sizeDisplay.setText(size);
                 subSize.setEnabled(false);
             }

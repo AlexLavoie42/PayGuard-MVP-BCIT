@@ -84,6 +84,7 @@ public class EditMode extends GridLayout {
                 deselect();
                 disable();
                 garbage.setVisibility(View.GONE);
+                numList.setActive(false);
             }
         });
 
@@ -329,6 +330,9 @@ public class EditMode extends GridLayout {
             public void onClick(View v) {
                 if(!getActive())
                     ((MainActivity) getContext()).tablePopup(t);
+                else if(numList.getActive()){
+                    //tables are non selectable while the number list is selected
+                }
                 else
                     select(b);
             }

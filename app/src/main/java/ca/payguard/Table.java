@@ -62,16 +62,11 @@ public class Table implements Parcelable {
         this.y = y;
     }
 
-    public void setSizeMod(char c) throws IllegalArgumentException {
-        if(c != 'S' && c != 'M' && c != 'L')
-            throw new IllegalArgumentException("Error: size mod must be S, M, or L.");
+    public void setSizeMod(int m) throws IllegalArgumentException {
+        if(m != 1 && m != 2 && m != 3)
+            throw new IllegalArgumentException("Error: size mod is not allowed.");
 
-        if(c == 'S')
-            sizeMod = sizeMods[0];
-        else if(c == 'M')
-            sizeMod = sizeMods[1];
-        else
-            sizeMod = sizeMods[2];
+        sizeMod = m;
     }
 
     public void setShape(char c) throws IllegalArgumentException {
@@ -107,15 +102,6 @@ public class Table implements Parcelable {
             throw new IllegalArgumentException("Error: angle must be 0-359");
 
         this.angle = angle;
-    }
-
-    public char getSizeChar(){
-        if(sizeMod == sizeMods[0])
-            return 'S';
-        else if(sizeMod == sizeMods[1])
-            return 'M';
-        else
-            return 'L';
     }
 
     public double getPreauthAmt(){

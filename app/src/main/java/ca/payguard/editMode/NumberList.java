@@ -17,6 +17,8 @@ public class NumberList extends LinearLayout {
     NumberPicker p1, p2;
     Button cancelBtn, doneBtn;
 
+    boolean active;
+
     public NumberList(Context c, final EditMode EMToolbar){
         super(c);
         this.EMToolbar = EMToolbar;
@@ -134,7 +136,15 @@ public class NumberList extends LinearLayout {
         }
     }
 
+    public void setActive(boolean active){
+        this.active = active;
+    }
+
     private String getLabel(){
         return (p1.getValue() == 0) ? "" + p2.getValue() : "" + p1.getValue() + p2.getValue();
+    }
+
+    public boolean getActive(){
+        return active;
     }
 }
