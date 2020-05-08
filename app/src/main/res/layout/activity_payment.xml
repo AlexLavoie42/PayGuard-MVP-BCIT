@@ -104,8 +104,8 @@
 
         <com.github.mmin18.widget.RealtimeBlurView
             android:id="@+id/blur"
-            android:layout_width="751dp"
-            android:layout_height="421dp"
+            android:layout_width="960dp"
+            android:layout_height="600dp"
             app:realtimeBlurRadius="0dp"
             app:realtimeOverlayColor="#88C5FFAA" />
 

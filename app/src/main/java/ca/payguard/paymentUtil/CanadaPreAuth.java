@@ -124,42 +124,22 @@ public class CanadaPreAuth implements TransactionHandler
     }
 
     @Override
-    public AuthToken executeTransaction(String dollars) {
+    public AuthToken executeTransaction(String dollars) throws PreAuthFailure {
         mpgReq.setTransaction(preAuth);
         preAuth.setAmount(dollars);
         mpgReq.send();
         try
         {
             Receipt receipt = mpgReq.getReceipt();
-
-            System.out.println("CardType = " + receipt.getCardType());
-            System.out.println("TransAmount = " + receipt.getTransAmount());
-            System.out.println("TxnNumber = " + receipt.getTxnNumber());
-            System.out.println("ReceiptId = " + receipt.getReceiptId());
-            System.out.println("TransType = " + receipt.getTransType());
-            System.out.println("ReferenceNum = " + receipt.getReferenceNum());
-            System.out.println("ResponseCode = " + receipt.getResponseCode());
-            System.out.println("ISO = " + receipt.getISO());
-            System.out.println("BankTotals = " + receipt.getBankTotals());
-            System.out.println("Message = " + receipt.getMessage());
-            System.out.println("AuthCode = " + receipt.getAuthCode());
-            System.out.println("Complete = " + receipt.getComplete());
-            System.out.println("TransDate = " + receipt.getTransDate());
-            System.out.println("TransTime = " + receipt.getTransTime());
-            System.out.println("Ticket = " + receipt.getTicket());
-            System.out.println("TimedOut = " + receipt.getTimedOut());
-            System.out.println("IsVisaDebit = " + receipt.getIsVisaDebit());
-            //System.out.println("StatusCode = " + receipt.getStatusCode());
-            //System.out.println("StatusMessage = " + receipt.getStatusMessage());
-//            System.out.println("MCPAmount = " + receipt.getMCPAmount());
-//            System.out.println("MCPCurrencyCode = " + receipt.getMCPCurrencyCode());
-            System.out.println("IssuerId = " + receipt.getIssuerId());
+            if(receipt.getComplete().equalsIgnoreCase("false")){
+                throw new PreAuthFailure("Token Failed to be created: " + receipt.getMessage());
+            }
             return new AuthToken(receipt, orderId);
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            throw new IllegalArgumentException("Token Failed to be created.");
+            throw new PreAuthFailure("Token Failed to be created. ");
         }
     }
 }

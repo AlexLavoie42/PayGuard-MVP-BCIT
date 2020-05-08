@@ -8,7 +8,7 @@ import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.paymentUtil.CanadaPreAuth;
 import ca.payguard.paymentUtil.Transaction;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class PreAuthUnitTest {
 
@@ -21,11 +21,10 @@ public class PreAuthUnitTest {
         preAuth.setExpDate("2103"); // YY/MM
         transaction.newCustomer("serverPin", preAuth);
         try{
-            transaction.executeTransaction("1", "serverPin", "5.00"); // DO NOT TOUCH AMOUNT
-            transaction.completeTransaction("1", "serverPin", "4.00"); //DO NOT TOUCH AMOUNT
+            if(!transaction.executeTransaction("1", "serverPin", "5.00")) throw new Exception(); // DO NOT TOUCH AMOUNT
+            if(!transaction.completeTransaction("1", "serverPin", "4.00")) throw new Exception(); //DO NOT TOUCH AMOUNT
         }catch(Exception e){
-            System.out.println(e.toString());
-            Assert.fail();
+            fail("Error occurred: " + e.toString());
         }
 
 

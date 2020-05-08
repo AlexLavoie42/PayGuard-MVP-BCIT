@@ -1,8 +1,8 @@
 package ca.payguard.paymentUtil;
 
 public class PreAuthFailure extends Exception{
-    public PreAuthFailure(String errorMessage, Throwable err){
-        super(errorMessage, err);
+    public PreAuthFailure(String errorMessage){
+        super(errorMessage);
     }
 
     public PreAuthFailure(Throwable err){

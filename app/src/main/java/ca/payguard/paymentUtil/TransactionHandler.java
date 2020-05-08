@@ -12,5 +12,5 @@ public interface TransactionHandler {
     public void setExpDate(String date);
 
     /** Executes the initial transaction. Takes the pre-auth $ amount and returns an AuthToken. */
-    public AuthToken executeTransaction(String dollars);
+    public AuthToken executeTransaction(String dollars) throws PreAuthFailure;
 }

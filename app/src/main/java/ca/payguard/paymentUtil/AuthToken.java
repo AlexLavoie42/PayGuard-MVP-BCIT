@@ -12,7 +12,7 @@ class AuthToken {
         this.orderId = orderId;
     }
 
-    void completeTransaction(String amount){
+    void completeTransaction(String amount) throws PreAuthFailure {
         //TODO: Get Production keys & id
         String store_id = "store5"; // TestAPI, switch when in production
         String api_token = "yesguy";// TestAPI, switch when in production.
@@ -40,28 +40,13 @@ class AuthToken {
         try
         {
             Receipt receipt = mpgReq.getReceipt();
-
-            System.out.println("CardType = " + receipt.getCardType());
-            System.out.println("TransAmount = " + receipt.getTransAmount());
-            System.out.println("TxnNumber = " + receipt.getTxnNumber());
-            System.out.println("ReceiptId = " + receipt.getReceiptId());
-            System.out.println("TransType = " + receipt.getTransType());
-            System.out.println("ReferenceNum = " + receipt.getReferenceNum());
-            System.out.println("ResponseCode = " + receipt.getResponseCode());
-            System.out.println("ISO = " + receipt.getISO());
-            System.out.println("BankTotals = " + receipt.getBankTotals());
-            System.out.println("Message = " + receipt.getMessage());
-            System.out.println("AuthCode = " + receipt.getAuthCode());
-            System.out.println("Complete = " + receipt.getComplete());
-            System.out.println("TransDate = " + receipt.getTransDate());
-            System.out.println("TransTime = " + receipt.getTransTime());
-            System.out.println("Ticket = " + receipt.getTicket());
-            System.out.println("TimedOut = " + receipt.getTimedOut());
-            System.out.println("IsVisaDebit = " + receipt.getIsVisaDebit());
+            if(receipt.getComplete().equalsIgnoreCase("false")){
+                throw new PreAuthFailure("Token failed completion: " + receipt.getMessage());
+            }
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            throw new PreAuthFailure("Token failed completion: " + e.toString());
         }
     }
 }
