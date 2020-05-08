@@ -296,8 +296,8 @@ public class EditMode extends GridLayout {
     public void renderTableSet(ArrayList<Table> tables){
         MainActivity.tableLayout.removeAllViews();
 
-        for(Table t : tables){
-            Button b = new Button(getContext());
+        for(final Table t : tables){
+            final Button b = new Button(getContext());
             MainActivity.tblBtns.add(b);
             MainActivity.tableLayout.addView(b);
 
@@ -313,6 +313,24 @@ public class EditMode extends GridLayout {
             int angle = t.getAngle();
             if(angle != 0)
                 b.setRotation(angle);
+
+            b.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!getActive())
+                        ((MainActivity) getContext()).tablePopup(t);
+                    else
+                        select(b);
+                }
+            });
+
+            b.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    buttonTouched(b, event);
+                    return false;
+                }
+            });
         }
 
         deselect();
