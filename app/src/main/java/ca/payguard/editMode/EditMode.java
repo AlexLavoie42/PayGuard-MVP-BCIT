@@ -312,7 +312,7 @@ public class EditMode extends GridLayout {
 
             int angle = t.getAngle();
             if(angle != 0)
-                b.setRotation(t.getAngle());
+                b.setRotation(angle);
         }
 
         deselect();
