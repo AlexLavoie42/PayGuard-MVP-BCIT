@@ -81,6 +81,7 @@ public class EditMode extends GridLayout {
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                deselect();
                 disable();
                 garbage.setVisibility(View.GONE);
             }
