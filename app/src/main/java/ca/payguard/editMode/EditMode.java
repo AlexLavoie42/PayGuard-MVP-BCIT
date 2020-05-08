@@ -325,7 +325,7 @@ public class EditMode extends GridLayout {
         b.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isActive())
+                if(!getActive())
                     ((MainActivity) getContext()).tablePopup(t);
                 else
                     select(b);
@@ -391,6 +391,10 @@ public class EditMode extends GridLayout {
         this.size = size;
     }
 
+    public void setActive(boolean active){
+        this.active = active;
+    }
+
     public void setRatios(float wRatio, float hRatio){
         this.wRatio = wRatio;
         this.hRatio = hRatio;
@@ -408,7 +412,7 @@ public class EditMode extends GridLayout {
         return selectedTbl;
     }
 
-    public boolean isActive(){
+    public boolean getActive(){
         return active;
     }
 }

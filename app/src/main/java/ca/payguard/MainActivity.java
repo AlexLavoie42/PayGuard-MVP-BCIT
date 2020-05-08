@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
 
-    EditMode editMode;
+    static EditMode editMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
         editMode.applyStdArrangement();//creates std set of tables
+        disableEditMode();
     }
 
     /* Crashes app
@@ -82,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
         else
             disableEditMode();
     } */
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        if(editMode.getActive()) {
+            enableEditMode();
+            editMode.setVisibility(View.VISIBLE);
+        }
+        else
+            disableEditMode();
+    }
 
     //TODO doesn't seem to activate? supposed to function on orientation change
     @Override
@@ -217,6 +229,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void enableEditMode(){
         editMode.enable((float) getScreenWidth(), 250, tableGui);
+    }
+
+    public static void disableEditMode(){
+        editMode.disable();
     }
 
     private int getScreenWidth(){
