@@ -20,7 +20,7 @@ public class Payment extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         table = getIntent().getParcelableExtra("table");
-        newCustomer = new Customer(table.getAllCustomers().length, table);
+        newCustomer = new Customer(table.getAllCustomers().size(), table);
     }
 
     /**

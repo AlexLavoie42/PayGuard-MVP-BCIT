@@ -29,11 +29,11 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/email_address"
+        android:id="@+id/phone_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/email_hint"
+        android:hint="@string/phone_hint"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/confirm_total"
@@ -49,8 +49,8 @@
         android:layout_marginTop="24dp"
         android:onClick="onButtonClick"
         android:text="@string/done"
-        app:layout_constraintEnd_toEndOf="@+id/email_address"
+        app:layout_constraintEnd_toEndOf="@+id/phone_num"
         app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="@+id/email_address"
-        app:layout_constraintTop_toBottomOf="@+id/email_address" />
+        app:layout_constraintStart_toStartOf="@+id/phone_num"
+        app:layout_constraintTop_toBottomOf="@+id/phone_num" />
 </androidx.constraintlayout.widget.ConstraintLayout>

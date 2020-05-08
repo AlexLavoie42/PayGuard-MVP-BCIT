@@ -3,6 +3,10 @@ package ca.payguard;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+
 /**
  * The Table class stores all preauth/payment
  * data for one table.
@@ -22,10 +26,20 @@ public class Table implements Parcelable {
     private int angle = 0;
 
     //Array of Customers at Table.
-    private Customer[] customers;
+    private ArrayList<Customer> customers;
 
     public Table(){
+        customers = new ArrayList<>();
+    }
 
+    public Table(Map m){
+        preauthAmt = (double)m.get("preauthAmt");
+        setShape(((String)m.get("shape")).charAt(0));
+        y = ((Long)m.get("y")).intValue();
+        x = ((Long)m.get("x")).intValue();
+        label = (String)m.get("label");
+        sizeMod = ((Long)m.get("sizeMod")).intValue();
+        angle = ((Long)m.get("angle")).intValue();
     }
 
     protected Table(Parcel in) {
@@ -33,7 +47,7 @@ public class Table implements Parcelable {
         label = in.readString();
         x = in.readInt();
         y = in.readInt();
-        customers = in.createTypedArray(Customer.CREATOR);
+        customers = new ArrayList<Customer>(Arrays.asList(in.createTypedArray(Customer.CREATOR)));
         //TODO read size, shape, and angle
     }
 
@@ -132,29 +146,17 @@ public class Table implements Parcelable {
         return angle;
     }
 
-    public Customer[] getAllCustomers(){
-        if(customers != null)
-            return customers;
-        else return new Customer[0];
+    public ArrayList<Customer> getAllCustomers(){
+        return customers;
     }
 
     public void addCustomer(Customer customer){
-        if(customers != null) {
-            Customer[] newArr = new Customer[customers.length + 1];
-            for (int i = 0; i < customers.length; i++) {
-                newArr[i] = customers[i];
-            }
-            newArr[customers.length] = customer;
-            customers = newArr;
-        } else {
-            customers = new Customer[1];
-            customers[0] = customer;
-        }
+        customers.add(customer);
     }
 
     //TODO: Add error handling.
     public Customer getCustomerByID(int id){
-        return customers[id];
+        return customers.get(id);
     }
 
     @Override
@@ -168,7 +170,7 @@ public class Table implements Parcelable {
         dest.writeString(label);
         dest.writeInt(x);
         dest.writeInt(y);
-        dest.writeTypedArray(customers, flags);
+        dest.writeTypedArray(customers.toArray(new Customer[0]), flags);
         //dest.write(shape);
         //TODO write size, shape, and angle
     }

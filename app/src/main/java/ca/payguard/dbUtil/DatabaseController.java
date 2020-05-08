@@ -1,5 +1,6 @@
 package ca.payguard.dbUtil;
 
+import android.util.ArrayMap;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.TreeMap;
 
 import ca.payguard.TableSet;
 
@@ -39,7 +43,9 @@ public class DatabaseController {
     }
 
     public void addTableSet(TableSet tableset){
-        tables.document(TABLE_SET).set(tableset);
+        HashMap map = new HashMap<String, Object>();
+        map.put("tableset", tableset);
+        tables.document(TABLE_SET).set(map);
     }
 
     public void getTableSet(OnSuccessListener<DocumentSnapshot> onSuccess){
@@ -74,8 +80,8 @@ public class DatabaseController {
                 });
     }
 
-    private static class AuthNotFoundError extends RuntimeException {
-        public AuthNotFoundError(){
+    public static class AuthNotFoundError extends RuntimeException {
+        AuthNotFoundError(){
             super("Attempted to access database without authentication.");
         }
     }
