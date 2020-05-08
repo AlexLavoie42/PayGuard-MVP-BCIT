@@ -143,7 +143,7 @@ public class EditMode extends GridLayout {
         Table selected = null;
 
         if(this.selected != null) {
-            if(this.selectedTbl.getShape() != 'C')
+            if(this.selectedTbl.getShape() != Table.Shape.C)
                 this.selected.setBackgroundColor(getResources().getColor(R.color.brightGreen));
             else
                 this.selected.setBackground(getResources().getDrawable(R.drawable.btn_rounded));
@@ -156,7 +156,7 @@ public class EditMode extends GridLayout {
             }
         }
 
-        if(selected.getShape() != 'C')
+        if(selected.getShape() != Table.Shape.C)
             b.setBackground(getResources().getDrawable(R.drawable.table_selector));
         else
             b.setBackground(getResources().getDrawable(R.drawable.btn_rounded_selected));
@@ -179,7 +179,7 @@ public class EditMode extends GridLayout {
         Button b = getSelected();
         if(b != null){
             Table t = getSelectedTbl();
-            if(t.getShape() == 'C')
+            if(t.getShape() == Table.Shape.C)
                 b.setBackground(getResources().getDrawable(R.drawable.btn_rounded));
             else
                 b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
@@ -343,17 +343,13 @@ public class EditMode extends GridLayout {
         });
 
         //transform to specified shape
-        switch(t.getShape()){
-            case 'S':
-                shapeSelect.applySquare(b);
-                break;
-            case 'C':
-                shapeSelect.applyCircle(b);
-                break;
-            case 'R':
-                shapeSelect.applyRectangle(b);
-                break;
-        }
+        final Table.Shape ts = t.getShape();
+        if(ts == Table.Shape.S)
+            shapeSelect.applySquare(b);
+        else if(ts == Table.Shape.C)
+            shapeSelect.applyCircle(b);
+        else
+            shapeSelect.applyRectangle(b);
 
         select(b);
     }

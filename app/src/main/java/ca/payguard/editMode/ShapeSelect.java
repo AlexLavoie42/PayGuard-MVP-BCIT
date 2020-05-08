@@ -137,10 +137,10 @@ public class ShapeSelect extends LinearLayout {
 
     /* Finds the table's set shape and calls the corresponding function. */
     public void transform(){
-        char shape = EMToolbar.getSelectedTbl().getShape();
-        if(shape == Table.shapes[0])
+        Table.Shape shape = EMToolbar.getSelectedTbl().getShape();
+        if(shape == Table.Shape.S)
             applySquare(EMToolbar.getSelected());
-        else if(shape == Table.shapes[1])
+        else if(shape == Table.Shape.C)
             applyCircle(EMToolbar.getSelected());
         else
             applyRectangle(EMToolbar.getSelected());

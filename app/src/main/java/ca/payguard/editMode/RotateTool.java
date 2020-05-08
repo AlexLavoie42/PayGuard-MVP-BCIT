@@ -33,7 +33,7 @@ public class RotateTool {
 
     /** Locates the rotation tools by the button (excluding circles). */
     public void locateTools(Table t, Button b){
-        if(t.getShape() != 'C'){
+        if(t.getShape() != Table.Shape.C){
             rotLeft.setVisibility(View.VISIBLE);
             rotRight.setVisibility(View.VISIBLE);
 

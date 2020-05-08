@@ -17,8 +17,8 @@ public class Table implements Parcelable {
 
     private final int[] sizeMods = {1, 2, 3};//float? would allow for 1.5x modifier, etc.
     private int sizeMod = sizeMods[0];
-    public static final char[] shapes = {'S', 'C', 'R'};
-    private char shape = shapes[2];//default shape is rectangle
+    public enum Shape { S, C, R }
+    private Shape shape = Shape.R;//default shape is rectangle
     private int angle = 0;
 
     //Array of Customers at Table.
@@ -75,10 +75,19 @@ public class Table implements Parcelable {
     }
 
     public void setShape(char c) throws IllegalArgumentException {
-        if(c != shapes[0] && c != shapes[1] && c != shapes[2])
-            throw new IllegalArgumentException("Error: shape character must be an allowed shape.");
-
-        shape = c;
+        switch (c){
+            case 'S':
+                shape = Shape.S;
+                break;
+            case 'C':
+                shape = Shape.C;
+                break;
+            case 'R':
+                shape = Shape.R;
+                break;
+            default:
+                throw new IllegalArgumentException("Error: argument shape isn't allowed.");
+        }
     }
 
     /** Ensures that the angle is between 0-359. */
@@ -121,7 +130,7 @@ public class Table implements Parcelable {
         return sizeMod;
     }
 
-    public char getShape(){
+    public Shape getShape(){
         return shape;
     }
 
@@ -174,7 +183,7 @@ public class Table implements Parcelable {
         dest.writeInt(x);
         dest.writeInt(y);
         dest.writeTypedArray(customers, flags);
-        dest.writeInt(shape);
+        //dest.write(shape);
         //TODO write size, shape, and angle
     }
 }
