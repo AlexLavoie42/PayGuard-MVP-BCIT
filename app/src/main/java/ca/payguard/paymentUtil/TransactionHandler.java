@@ -1,7 +1,6 @@
 package ca.payguard.paymentUtil;
 
 public interface TransactionHandler {
-    public void setStoreId(String id);
 
     public void setDate(String date);
 

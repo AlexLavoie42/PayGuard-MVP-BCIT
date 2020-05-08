@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.paymentUtil.CanadaPreAuth;
 import ca.payguard.paymentUtil.Transaction;
 
@@ -11,15 +12,13 @@ import static org.junit.Assert.assertEquals;
 
 public class PreAuthUnitTest {
 
-    Transaction transaction = new Transaction();
-
     @Test
     public void PreAuthFlow() {
+        Transaction transaction = new Transaction();
         CanadaPreAuth preAuth = new CanadaPreAuth();
-        preAuth.setOrderId("PG-type1-00001");
-        preAuth.setStoreId("store5");
+        preAuth.setOrderId("PG-type1-00002");
         preAuth.setPan("4242424242424242"); // Test Visa card
-        preAuth.setExpDate("21/03"); // YY/MM
+        preAuth.setExpDate("2103"); // YY/MM
         transaction.newCustomer("serverPin", preAuth);
         try{
             transaction.executeTransaction("1", "serverPin", "5.00"); // DO NOT TOUCH AMOUNT

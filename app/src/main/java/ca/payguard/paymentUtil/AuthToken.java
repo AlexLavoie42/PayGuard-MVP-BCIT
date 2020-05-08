@@ -14,8 +14,8 @@ class AuthToken {
 
     void completeTransaction(String amount){
         //TODO: Get Production keys & id
-        String store_id = "monca04523"; // YOU FUCKERS BETTER NOT ABUSE THIS
-        String api_token = "q5ev3FRYYDxKpFbfMK5a";// YOU FUCKERS BETTER NOT ABUSE THIS
+        String store_id = "store5"; // TestAPI, switch when in production
+        String api_token = "yesguy";// TestAPI, switch when in production.
         String crypt = "7"; //TODO: Check if right crypt to be using.
         String storeName = "PayGuard"; // Must be <= 13 char.
         String processing_country_code = "CA";

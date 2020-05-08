@@ -18,6 +18,11 @@ public class CanadaPreAuth implements TransactionHandler
         mpgReq.setTestMode(true); //false or comment out this line for production transactions
         preAuth.setCryptType(crypt);
         mpgReq.setProcCountryCode("CA");
+        mpgReq.setStoreId("store5"); // TODO: Change this for production
+        String api_token = "yesguy"; //TODO: Get a production api key.
+        boolean status_check = false; //TODO: Should change this to true and test.
+        mpgReq.setApiToken(api_token);
+        mpgReq.setStatusCheck(status_check);
     }
 
 //    public static void execute()
@@ -97,17 +102,13 @@ public class CanadaPreAuth implements TransactionHandler
 //    }
 
     @Override
-    public void setStoreId(String id) {
-        mpgReq.setStoreId(id); // TODO: Change this for production
-    }
-
-    @Override
     public void setDate(String date) {
         //TODO: Check if we actually need this.
     }
 
     @Override
     public void setOrderId(String id) {
+        //TODO: Make this so it increments upwards.
         preAuth.setOrderId(id);
         orderId = id;
     }
@@ -124,11 +125,8 @@ public class CanadaPreAuth implements TransactionHandler
 
     @Override
     public AuthToken executeTransaction(String dollars) {
-        String api_token = "yesguy"; //TODO: Get a production api key.
-        boolean status_check = false; //TODO: Should change this to true and test.
-        mpgReq.setApiToken(api_token);
         mpgReq.setTransaction(preAuth);
-        mpgReq.setStatusCheck(status_check);
+        preAuth.setAmount(dollars);
         mpgReq.send();
         try
         {
