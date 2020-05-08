@@ -16,6 +16,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.protobuf.DescriptorProtos;
 
+import java.util.ArrayList;
+
 import ca.payguard.LoginActivity;
 import ca.payguard.MainActivity;
 import ca.payguard.R;
@@ -289,6 +291,23 @@ public class EditMode extends GridLayout {
 
             deselect();
         }
+    }
+
+    public void renderTableSet(ArrayList<Table> tables){
+        MainActivity.tableLayout.removeAllViews();
+
+        for(Table t : tables){
+            Button b = new Button(getContext());
+            MainActivity.tblBtns.add(b);
+            MainActivity.tableLayout.addView(b);
+
+            selected = b;
+            selectedTbl = t;
+
+            shapeSelect.transform();
+        }
+
+        deselect();
     }
 
     /** Adds a table to tableset and button to the screen. */
