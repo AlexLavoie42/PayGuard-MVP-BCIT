@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         db.getTableSet(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                disableEditMode();
                 tableGui = new TableSet((ArrayList)documentSnapshot.getData().get("tableset"));
                 editMode.renderTableSet(tableGui);
             }

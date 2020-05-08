@@ -40,6 +40,7 @@ public class Table implements Parcelable {
         label = (String)m.get("label");
         sizeMod = ((Long)m.get("sizeMod")).intValue();
         angle = ((Long)m.get("angle")).intValue();
+        customers = new ArrayList<>();
     }
 
     protected Table(Parcel in) {
