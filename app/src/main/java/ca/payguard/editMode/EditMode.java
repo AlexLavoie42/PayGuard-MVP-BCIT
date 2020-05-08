@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.protobuf.DescriptorProtos;
 
 import ca.payguard.LoginActivity;
 import ca.payguard.MainActivity;
@@ -28,8 +29,7 @@ public class EditMode extends GridLayout {
     final String ILLEGAL_ARGE = "Error: table shape is not allowed.";
 
     //access bar tools
-    TextView nameInput;
-    static NumberList numList;
+    LabelInput labelInput;
     public ShapeSelect shapeSelect;
     SizeSelect sizeSelect;
     Button exitBtn;
@@ -61,22 +61,13 @@ public class EditMode extends GridLayout {
         setRowCount(1);
         setColumnCount(4);
 
-        nameInput = new TextView(context);
+        labelInput = new LabelInput(context);
         shapeSelect = new ShapeSelect(context, this);
         sizeSelect = new SizeSelect(context, this);
         exitBtn = new Button(context);
 
-        nameInput.setText("Table Name");
-        nameInput.setSingleLine(true);
-        nameInput.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(getSelected() != null) {
-                    numList.setVisibility(View.VISIBLE);
-                    garbage.setVisibility(View.GONE);
-                }
-            }
-        });
+        labelInput.setText("Table Name");
+        labelInput.setSingleLine(true);
         exitBtn.setText("X");
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,11 +75,10 @@ public class EditMode extends GridLayout {
                 deselect();
                 disable();
                 garbage.setVisibility(View.GONE);
-                numList.setActive(false);
             }
         });
 
-        addView(nameInput);
+        addView(labelInput);
         addView(shapeSelect);
         addView(sizeSelect);
         addView(exitBtn);
@@ -110,8 +100,11 @@ public class EditMode extends GridLayout {
         sizeSelect - 12.5%
         exitBtn - 12.5%
          */
-        nameInput.setMinimumWidth((int)(width * 0.4));
-        nameInput.setMinimumHeight(height);
+        labelInput.setMinimumWidth((int)(width * 0.3));
+        labelInput.setMinimumHeight((int)(height * 0.5));
+        labelInput.setX((float)(width * 0.025));
+        labelInput.setY((float)(height / 2));
+        labelInput.setEnabled(false);
         //nameInput.setGravity(Gravity.CENTER);
         shapeSelect.load(width, height);
         sizeSelect.load(width, height);
@@ -123,7 +116,6 @@ public class EditMode extends GridLayout {
         active = true;
 
         this.tables = tables;
-        nameInput.setEnabled(false);
         sizeSelect.addSize.setEnabled(false);
         sizeSelect.subSize.setEnabled(false);
         MainActivity.settingsBtn.setVisibility(View.GONE);
@@ -163,13 +155,12 @@ public class EditMode extends GridLayout {
             b.setBackground(getResources().getDrawable(R.drawable.btn_rounded_selected));
 
         if(selected != null){
-            nameInput.setText(selected.getLabel());
-            nameInput.setEnabled(true);
+            labelInput.setText(selected.getLabel());
+            labelInput.setEnabled(true);
             sizeSelect.selectTable(selected);
 
             rotateTool.locateTools(selected, b);
 
-            numList.selectLabel(selected.getLabel());
             garbage.setEnabled(true);
             selectedTbl = selected;
             this.selected = b;
@@ -187,7 +178,7 @@ public class EditMode extends GridLayout {
 
             selected = null;
             selectedTbl = null;
-            nameInput.setText("Table Name");
+            labelInput.setText("Table Name");
 
             //hide rotation tools
             rotateTool.hide();
@@ -260,12 +251,6 @@ public class EditMode extends GridLayout {
         mainLayout.addView(rotateTool.rotLeft);
         mainLayout.addView(rotateTool.rotRight);
         mainLayout.addView(garbage);
-
-        //add the number list query to main layout
-        numList = new NumberList(getContext(), this);
-        numList.setVisibility(View.GONE);
-        numList.enableExternalTools(wRatio, hRatio);
-        mainLayout.addView(numList);
     }
 
     /** Allocates a table at the specified point. */
@@ -330,9 +315,9 @@ public class EditMode extends GridLayout {
             public void onClick(View v) {
                 if(!getActive())
                     ((MainActivity) getContext()).tablePopup(t);
-                else if(numList.getActive()){
+                /*TODO else if(numList.getActive()){
                     //tables are non selectable while the number list is selected
-                }
+                }*/
                 else
                     select(b);
             }
