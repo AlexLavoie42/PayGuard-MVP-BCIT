@@ -304,6 +304,10 @@ public class EditMode extends GridLayout {
             selected = b;
             selectedTbl = t;
 
+            b.setText(t.getLabel());
+            b.setX(t.getX() * wRatio);
+            b.setY(t.getY() * hRatio);
+
             shapeSelect.transform();
         }
 
