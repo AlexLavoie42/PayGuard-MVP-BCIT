@@ -304,7 +304,15 @@ public class EditMode extends GridLayout {
             selected = b;
             selectedTbl = t;
 
+            b.setText(t.getLabel());
+            b.setX(t.getX() * wRatio);
+            b.setY(t.getY() * hRatio);
+
             shapeSelect.transform();
+
+            int angle = t.getAngle();
+            if(angle != 0)
+                b.setRotation(angle);
         }
 
         deselect();
@@ -382,16 +390,6 @@ public class EditMode extends GridLayout {
     /** Stores tableset data in DB */
     public void saveTableData(){
         db.addTableSet(tables);
-    }
-
-    /** Loads tableset from DB */
-    public void loadTableData(){
-        db.getTableSet(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                tables = documentSnapshot.toObject(TableSet.class);
-            }
-        });
     }
 
     public void setSize(int size){
