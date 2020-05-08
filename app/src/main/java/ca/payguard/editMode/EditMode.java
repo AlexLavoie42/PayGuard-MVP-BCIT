@@ -295,6 +295,7 @@ public class EditMode extends GridLayout {
 
     public void renderTableSet(ArrayList<Table> tables){
         MainActivity.tableLayout.removeAllViews();
+        this.tables = (TableSet) tables;
 
         for(final Table t : tables){
             final Button b = new Button(getContext());
