@@ -46,7 +46,7 @@ public class EditMode extends GridLayout {
     //external tools
     ConstraintLayout mainLayout;
     RotateTool rotateTool;
-    Button garbage;
+    public static Button garbage;
 
     public EditMode(Context context) {
         super(context);
@@ -82,6 +82,7 @@ public class EditMode extends GridLayout {
             @Override
             public void onClick(View v) {
                 disable();
+                garbage.setVisibility(View.GONE);
             }
         });
 

@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         editMode.enableExternalTools(constraintLayout, this);
         editMode.applyStdArrangement();//creates std set of tables
         disableEditMode();
+        editMode.garbage.setVisibility(View.GONE);
     }
 
     /* Crashes app
@@ -90,9 +91,11 @@ public class MainActivity extends AppCompatActivity {
         if(editMode.getActive()) {
             enableEditMode();
             editMode.setVisibility(View.VISIBLE);
-        }
-        else
+            editMode.garbage.setVisibility(View.VISIBLE);
+        } else {
             disableEditMode();
+            editMode.garbage.setVisibility(View.GONE);
+        }
     }
 
     //TODO doesn't seem to activate? supposed to function on orientation change
