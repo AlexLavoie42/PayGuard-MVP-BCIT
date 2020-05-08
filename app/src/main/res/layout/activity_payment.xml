@@ -7,12 +7,23 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context="ca.payguard.Payment">
+
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:id="@+id/constraintLayout"
+            android:layout_width="181dp"
+            android:layout_height="253dp"
+            android:background="@drawable/bckg_rectangle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.873">
 
             <Button
                 android:id="@+id/dollarAmount1"
@@ -20,44 +31,46 @@
                 android:layout_height="wrap_content"
                 android:onClick="onAmount1"
                 android:text="@string/dollarAmount1"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/dollarAmount2"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.358" />
 
             <Button
-        android:id="@+id/dollarAmount2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="onAmount2"
-        android:text="@string/dollarAmount2"
-        app:layout_constraintStart_toStartOf="@+id/dollarAmount1"
-        app:layout_constraintTop_toBottomOf="@+id/dollarAmount1" />
+                android:id="@+id/dollarAmount2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:onClick="onAmount2"
+                android:text="@string/dollarAmount2"
+                app:layout_constraintStart_toStartOf="@+id/dollarAmount1"
+                app:layout_constraintTop_toBottomOf="@+id/dollarAmount1" />
 
-    <Button
-        android:id="@+id/dollarAmount3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="onAmount3"
-        android:text="@string/dollarAmount3"
-        app:layout_constraintStart_toStartOf="@+id/dollarAmount2"
-        app:layout_constraintTop_toBottomOf="@+id/dollarAmount2" />
+            <Button
+                android:id="@+id/dollarAmount3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:onClick="onAmount3"
+                android:text="@string/dollarAmount3"
+                app:layout_constraintStart_toStartOf="@+id/dollarAmount2"
+                app:layout_constraintTop_toBottomOf="@+id/dollarAmount2" />
 
-    <Button
-        android:id="@+id/customAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="onCustomAmount"
-        android:text="@string/customAmount"
-        app:layout_constraintStart_toStartOf="@+id/dollarAmount3"
-        app:layout_constraintTop_toBottomOf="@+id/dollarAmount3" />
+            <Button
+                android:id="@+id/customAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:onClick="onCustomAmount"
+                android:text="@string/customAmount"
+                app:layout_constraintStart_toStartOf="@+id/dollarAmount3"
+                app:layout_constraintTop_toBottomOf="@+id/dollarAmount3" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
+        <TextView
         android:id="@+id/paymentType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,10 +104,10 @@
 
         <com.github.mmin18.widget.RealtimeBlurView
             android:id="@+id/blur"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="751dp"
+            android:layout_height="421dp"
             app:realtimeBlurRadius="0dp"
-            app:realtimeOverlayColor="#8000" />
+            app:realtimeOverlayColor="#88C5FFAA" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
