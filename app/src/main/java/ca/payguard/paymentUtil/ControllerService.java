@@ -4,13 +4,15 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import ca.payguard.dbUtil.DatabaseController;
+
 public class ControllerService extends Service {
 
-    private Transaction transaction;
 
 
     /**
@@ -18,13 +20,19 @@ public class ControllerService extends Service {
      */
     @Override
     public void onCreate(){
-        transaction = new Transaction();
+        DatabaseController dbc = new DatabaseController();
     }
 
     /** This is run whenever a startService() call is made. */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //do something
+        try{
+            audit(intent.getStringExtra("pin"), intent.getStringExtra("reason"));
+            intent.putExtra("complete", "true");
+        }catch(Exception e){
+            intent.putExtra("complete", "false");
+        }
         return START_STICKY;
     }
 
@@ -60,33 +68,8 @@ public class ControllerService extends Service {
     }
 
     /** Runs Transactions newCustomer method. */
-    public void newCustomer(String serverPin){
-        Thread thread = new Thread() {
-            public void run() {
-                // your code here
-            }
-        };
-        thread.start();
-    }
-
-    /** Runs Transactions executeTransaction method. */
-    public void executeTransaction(final String id, final String serverPin, final String amount){
-        Thread thread = new Thread() {
-            public void run() {
-                transaction.executeTransaction(id, serverPin, amount);
-            }
-        };
-        thread.start();
-    }
-
-    /** Runs Transactions completeTransaction method. */
-    public void completeTransaction(final String id, final String serverPin, final String amount){
-        Thread thread = new Thread() {
-            public void run() {
-                transaction.completeTransaction(id, serverPin, amount);
-            }
-        };
-        thread.start();
+    private void audit(String pin, String reason) throws NotAuthorized {
+        Audit.audit(pin, reason);
     }
 
 //    public void exampleMethod(String someParam){

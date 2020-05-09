@@ -1,5 +1,7 @@
 package ca.payguard.paymentUtil;
 
+import android.content.Intent;
+
 import java.security.InvalidKeyException;
 import java.util.Hashtable;
 
@@ -26,7 +28,8 @@ public class Transaction {
      */
     public boolean executeTransaction(String id, String serverPin, String amount){
         try{
-            Audit.audit(serverPin, "Pre-authorizing " + amount + " to " + id);
+            String reason = "Pre-authorizing " + amount + " to " + id;
+            audit(serverPin, reason);
             //TODO: Build the transaction.
             AuthToken token = transHandler.executeTransaction(amount); //Enter dollars here.
             tokenHash.put(id, token);
@@ -49,7 +52,8 @@ public class Transaction {
      */
     public boolean completeTransaction(String id, String serverPin, String amount){
         try{
-            Audit.audit(serverPin, "Completing " + amount + " to " + id);
+            String reason = "Completing " + amount + " to " + id;
+            audit(serverPin, reason);
             AuthToken token = tokenHash.get(id);
             if(token == null) throw new InvalidKeyException();
             token.completeTransaction(amount);
@@ -64,6 +68,21 @@ public class Transaction {
         }catch(Exception e){
             System.out.println(e.toString());
             return false;
+        }
+    }
+
+    private void audit(String serverPin, String reason) throws NotAuthorized {
+        Intent auditServiceCall = new Intent();
+        auditServiceCall.putExtra("pin", serverPin);
+        auditServiceCall.putExtra("reason", reason);
+        auditServiceCall.putExtra("complete", "null");
+        ControllerService cs = new ControllerService();
+        cs.startService(auditServiceCall);
+        while(auditServiceCall.getStringExtra("complete").equalsIgnoreCase("null")){
+            // Something witty.
+        }
+        if(auditServiceCall.getStringExtra("complete").equalsIgnoreCase("false")){
+            throw new NotAuthorized();
         }
     }
 }
