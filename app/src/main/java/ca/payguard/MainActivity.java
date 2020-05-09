@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
+        disableEditMode();
     }
 
     /* Crashes app

@@ -129,7 +129,7 @@ public class EditMode extends GridLayout {
 
         //getSupportActionBar().show();//used if action bar is active on home screen
 
-        //db.addTableSet(tables);
+        db.addTableSet(tables);
         setVisibility(View.GONE);
         active = false;
         MainActivity.settingsBtn.setVisibility(View.VISIBLE);
@@ -222,7 +222,7 @@ public class EditMode extends GridLayout {
                     b.setY(ny);
                     btnX = nx;
                     btnY = ny;
-                    getSelectedTbl().setCoords(btnX / wRatio, btnY / hRatio);
+                    getSelectedTbl().setCoords((int)(btnX / wRatio), (int)(btnY / hRatio));
                 }
         }
     }
