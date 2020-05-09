@@ -212,6 +212,19 @@ public class EditMode extends GridLayout {
                     btnY = ny;
                 }
                 break;
+            case MotionEvent.ACTION_BUTTON_RELEASE:
+                if(getSelected() == b){
+                    float x = event.getRawX() - getSize(), y = event.getRawY() - getSize();
+                    float distanceX = (btnX - x) * -1, distanceY = (btnY - y) * -1;
+
+                    float nx = btnX + distanceX, ny = btnY + distanceY;
+                    b.setX(nx);
+                    b.setY(ny);
+                    btnX = nx;
+                    btnY = ny;
+                    getSelectedTbl().setX(btnX / wRatio);
+                    getSelectedTbl().setY(btnY / hRatio);
+                }
         }
     }
 

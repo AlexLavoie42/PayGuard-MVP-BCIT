@@ -72,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
         editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
         settingsBtn = findViewById(R.id.settings_btn);
 
-        editMode.setRatios(getWidthRatio(), getHeightRatio());
-        editMode.enableExternalTools(constraintLayout, this);
         db.getTableSet(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -81,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
                 editMode.renderTableSet(tableGui);
             }
         });
+
+        editMode.setRatios(getWidthRatio(), getHeightRatio());
+        editMode.enableExternalTools(constraintLayout, this);
     }
 
     /* Crashes app
