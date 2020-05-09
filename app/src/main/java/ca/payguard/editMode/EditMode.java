@@ -212,7 +212,7 @@ public class EditMode extends GridLayout {
                     btnY = ny;
                 }
                 break;
-            case MotionEvent.ACTION_BUTTON_RELEASE:
+            case MotionEvent.ACTION_UP:
                 if(getSelected() == b){
                     float x = event.getRawX() - getSize(), y = event.getRawY() - getSize();
                     float distanceX = (btnX - x) * -1, distanceY = (btnY - y) * -1;
