@@ -80,8 +80,17 @@ public class MainActivity extends AppCompatActivity {
         db.getTableSet(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                tableGui = new TableSet((ArrayList)documentSnapshot.getData().get("tableset"));
-                editMode.renderTableSet(tableGui);
+                if(documentSnapshot.getData() == null ||
+                        documentSnapshot.getData().get("tableset") == null){
+                    tableGui = new TableSet();
+                    tableGui.load();
+                    enableEditMode();
+                    editMode.applyStdArrangement();
+                    disableEditMode();
+                } else {
+                    tableGui = new TableSet((ArrayList) documentSnapshot.getData().get("tableset"));
+                    editMode.renderTableSet(tableGui);
+                }
                 loading.setVisibility(View.GONE);
             }
         });

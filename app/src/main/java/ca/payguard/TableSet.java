@@ -35,6 +35,15 @@ public class TableSet extends ArrayList<Table> {
         return stdFormation;
     }
 
+    public void updateTable(Table table){
+        for(Table t : this){
+            if(t.getLabel().equals(table.getLabel())) {
+                this.remove(t);
+                this.add(table);
+            }
+        }
+    }
+
     /** Returns false if label is unique. */
     public boolean containsLabel(String label){
         for(Table t : this){
