@@ -36,11 +36,15 @@ public class TableSet extends ArrayList<Table> {
     }
 
     public void updateTable(Table table){
+        Table clone = null;
         for(Table t : this){
             if(t.getLabel().equals(table.getLabel())) {
-                this.remove(t);
-                this.add(table);
+                clone = t;
             }
+        }
+        if(clone != null){
+            this.remove(clone);
+            this.add(table);
         }
     }
 

@@ -31,9 +31,10 @@ public class Payment extends AppCompatActivity{
     protected void forwardAmount(String amount){
         int dollars = Integer.parseInt(amount.substring(1));
         newCustomer.setPreAuthTotal(dollars);
-        //TODO: Move this to the end of the pre-auth to avoid exploiting.
         table.addCustomer(newCustomer);
+
         Intent myIntent = new Intent(getBaseContext(),   TapCard.class);
+        myIntent.putExtra("table", table);
         myIntent.putExtra("preAuthAmount", dollars);
         startActivity(myIntent);
     }

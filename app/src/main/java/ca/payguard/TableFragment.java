@@ -74,7 +74,7 @@ public class TableFragment extends Fragment {
                         (ViewGroup) layout);
                 TextView custText = custView.findViewById(R.id.tv_seatLabel);
                 custText.setText(getResources().getString(R.string.seatInfoText, c.getId(),
-                        c.getBillTotal(), c.getPreAuthTotal()));
+                        c.getPreAuthTotal(), c.getBillTotal()));
             }
         }
     }

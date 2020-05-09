@@ -3,22 +3,30 @@ package ca.payguard;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Map;
+
 public class Customer implements Parcelable {
 
     //Customer data
-    private int id;
-    private float billTotal;
-    private float preAuthTotal;
-    private float tipAmount;
-    private Table table;
-    private int phoneNum;
+    private long id;
+    private double billTotal;
+    private double preAuthTotal;
+    private double tipAmount;
+    private long phoneNum;
 
     public Customer(int id, Table table) {
         this.id = id;
         this.billTotal = 0;
         this.tipAmount = 0;
-        this.table = table;
         this.phoneNum = 0;
+    }
+
+    public Customer(Map m){
+        id = (long)m.get("id");
+        billTotal = (double)m.get("billTotal");
+        preAuthTotal = (double)m.get("preAuthTotal");
+        tipAmount = (double)m.get("tipAmount");
+        phoneNum = (long)m.get("phoneNum");
     }
 
     protected Customer(Parcel in) {
@@ -41,11 +49,11 @@ public class Customer implements Parcelable {
         }
     };
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public float getBillTotal() {
+    public double getBillTotal() {
         return billTotal;
     }
 
@@ -54,15 +62,11 @@ public class Customer implements Parcelable {
     }
 
 
-    public Table getTable() {
-        return table;
-    }
-
-    public int getPhoneNum() {
+    public long getPhoneNum() {
         return phoneNum;
     }
 
-    public float getPreAuthTotal() {
+    public double getPreAuthTotal() {
         return preAuthTotal;
     }
 
@@ -70,7 +74,7 @@ public class Customer implements Parcelable {
         this.preAuthTotal = preAuthTotal;
     }
 
-    public float getTipAmount() {
+    public double getTipAmount() {
         return tipAmount;
     }
 
@@ -85,10 +89,10 @@ public class Customer implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeFloat(billTotal);
-        dest.writeFloat(preAuthTotal);
-        dest.writeFloat(tipAmount);
-        dest.writeInt(phoneNum);
+        dest.writeLong(id);
+        dest.writeDouble(billTotal);
+        dest.writeDouble(preAuthTotal);
+        dest.writeDouble(tipAmount);
+        dest.writeLong(phoneNum);
     }
 }

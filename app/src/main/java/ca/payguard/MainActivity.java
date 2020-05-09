@@ -92,12 +92,20 @@ public class MainActivity extends AppCompatActivity {
                     editMode.renderTableSet(tableGui);
                 }
                 loading.setVisibility(View.GONE);
+
+                if(getIntent().getParcelableExtra("table") != null){
+                    tableGui.updateTable((Table) getIntent().getParcelableExtra("table"));
+                    db.addTableSet(tableGui);
+                    editMode.renderTableSet(tableGui);
+                }
             }
         });
 
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
         disableEditMode();
+
+
     }
 
     /* Crashes app
