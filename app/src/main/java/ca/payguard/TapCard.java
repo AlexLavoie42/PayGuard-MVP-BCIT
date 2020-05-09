@@ -17,8 +17,9 @@ public class TapCard extends AppCompatActivity {
     }
 
     public void onButtonClick(View v){
-        Intent myIntent = new Intent(getBaseContext(), Pin.class);
-        myIntent.putExtra("table", getIntent().getParcelableExtra("table"));
+        Intent myIntent = new Intent(getBaseContext(), EmailConfirmation.class);
+        if(getIntent().getExtras() != null)
+            myIntent.putExtras(getIntent().getExtras());
         startActivity(myIntent);
     }
 

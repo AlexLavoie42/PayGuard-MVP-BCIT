@@ -41,6 +41,9 @@ public class Table implements Parcelable {
         sizeMod = ((Long)m.get("sizeMod")).intValue();
         angle = ((Long)m.get("angle")).intValue();
         customers = new ArrayList<>();
+        for(Map map : (ArrayList<Map>)m.get("allCustomers")){
+            customers.add(new Customer(map));
+        }
     }
 
     protected Table(Parcel in) {
