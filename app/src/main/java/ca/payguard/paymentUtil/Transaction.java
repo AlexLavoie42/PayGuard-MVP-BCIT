@@ -29,7 +29,7 @@ public class Transaction {
     public boolean executeTransaction(String id, String serverPin, String amount){
         try{
             String reason = "Pre-authorizing " + amount + " to " + id;
-            audit(serverPin, reason);
+            Audit.audit(serverPin, reason);
             //TODO: Build the transaction.
             AuthToken token = transHandler.executeTransaction(amount); //Enter dollars here.
             tokenHash.put(id, token);
@@ -53,7 +53,7 @@ public class Transaction {
     public boolean completeTransaction(String id, String serverPin, String amount){
         try{
             String reason = "Completing " + amount + " to " + id;
-            audit(serverPin, reason);
+            Audit.audit(serverPin, reason);
             AuthToken token = tokenHash.get(id);
             if(token == null) throw new InvalidKeyException();
             token.completeTransaction(amount);
@@ -71,18 +71,6 @@ public class Transaction {
         }
     }
 
-    private void audit(String serverPin, String reason) throws NotAuthorized {
-        Intent auditServiceCall = new Intent();
-        auditServiceCall.putExtra("pin", serverPin);
-        auditServiceCall.putExtra("reason", reason);
-        auditServiceCall.putExtra("complete", "null");
-        ControllerService cs = new ControllerService();
-        cs.startService(auditServiceCall);
-        while(auditServiceCall.getStringExtra("complete").equalsIgnoreCase("null")){
-            // Something witty.
-        }
-        if(auditServiceCall.getStringExtra("complete").equalsIgnoreCase("false")){
-            throw new NotAuthorized();
-        }
-    }
+    //TODO: Move this to the audit class.
+
 }

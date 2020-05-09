@@ -1,5 +1,7 @@
 package ca.payguard.paymentUtil;
 
+import android.content.Intent;
+
 import ca.payguard.dbUtil.DatabaseController;
 
 public class Audit {
@@ -16,10 +18,8 @@ public class Audit {
             throw new NotAuthorized();
         }else{
             try{
-                DatabaseController dbc = new DatabaseController();
-                dbc.checkPin(pin, dummyRunnable);
-                sendToDb(reason);
-            }catch(DatabaseController.AuthNotFoundError e){
+                serverAudit(pin, reason);
+            }catch(NotAuthorized e){
                 System.out.println("Auth Exception: " + e.getLocalizedMessage());
                 throw new NotAuthorized();
             }catch(Exception e){
@@ -35,5 +35,20 @@ public class Audit {
 
     private static void sendToDb(String reason){
         //TODO: Send the log to Db.
+    }
+
+    private static void serverAudit(String serverPin, String reason) throws NotAuthorized {
+        Intent auditServiceCall = new Intent();
+        auditServiceCall.putExtra("pin", serverPin);
+        auditServiceCall.putExtra("reason", reason);
+        auditServiceCall.putExtra("complete", "null");
+        ControllerService cs = new ControllerService();
+        cs.startService(auditServiceCall);
+        while(auditServiceCall.getStringExtra("complete").equalsIgnoreCase("null")){
+            // Something witty.
+        }
+        if(auditServiceCall.getStringExtra("complete").equalsIgnoreCase("false")){
+            throw new NotAuthorized();
+        }
     }
 }
