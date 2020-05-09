@@ -62,6 +62,8 @@ public class DatabaseController {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(!task.getResult().isEmpty()){
                             onComplete.run();
+                        }else{
+                            throw new AuthNotFoundError();
                         }
                     }
                 });

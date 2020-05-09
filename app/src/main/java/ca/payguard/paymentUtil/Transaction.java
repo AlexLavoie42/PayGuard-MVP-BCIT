@@ -26,15 +26,14 @@ public class Transaction {
      */
     public boolean executeTransaction(String id, String serverPin, String amount){
         try{
-            //TODO: Uncomment audit after testing.
-//            Audit.audit(serverPin, "Pre-authorizing " + amount + " to " + id);
+            Audit.audit(serverPin, "Pre-authorizing " + amount + " to " + id);
             //TODO: Build the transaction.
             AuthToken token = transHandler.executeTransaction(amount); //Enter dollars here.
             tokenHash.put(id, token);
             return true;
-//        }catch(NotAuthorized e){
-//            System.out.println(e.toString());
-//            return false;
+        }catch(NotAuthorized e){
+            System.out.println(e.toString());
+            return false;
         }catch(Exception e){
             System.out.println(e.toString());
             return false;
@@ -50,15 +49,15 @@ public class Transaction {
      */
     public boolean completeTransaction(String id, String serverPin, String amount){
         try{
-//            Audit.audit(serverPin, "Completing " + amount + " to " + id);
+            Audit.audit(serverPin, "Completing " + amount + " to " + id);
             AuthToken token = tokenHash.get(id);
             if(token == null) throw new InvalidKeyException();
             token.completeTransaction(amount);
             //TODO: Delete transaction.
             return true;
-//        }catch(NotAuthorized e){
-//            System.out.println(e.toString());
-//            return false;
+        }catch(NotAuthorized e){
+            System.out.println(e.toString());
+            return false;
         }catch(InvalidKeyException e){
             System.out.println(e.toString());
             return false;
