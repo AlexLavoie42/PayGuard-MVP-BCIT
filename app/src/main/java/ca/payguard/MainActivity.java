@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Button> tblBtns = new ArrayList<>();
     private Fragment popup;
     private DatabaseController db;
+    private ProgressBar loading;
 
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
@@ -72,11 +74,15 @@ public class MainActivity extends AppCompatActivity {
         editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
         settingsBtn = findViewById(R.id.settings_btn);
 
+        loading = findViewById(R.id.progressBar);
+        loading.setVisibility(View.VISIBLE);
+
         db.getTableSet(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 tableGui = new TableSet((ArrayList)documentSnapshot.getData().get("tableset"));
                 editMode.renderTableSet(tableGui);
+                loading.setVisibility(View.GONE);
             }
         });
 
