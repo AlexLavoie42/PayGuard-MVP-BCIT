@@ -222,8 +222,7 @@ public class EditMode extends GridLayout {
                     b.setY(ny);
                     btnX = nx;
                     btnY = ny;
-                    getSelectedTbl().setX(btnX / wRatio);
-                    getSelectedTbl().setY(btnY / hRatio);
+                    getSelectedTbl().setCoords(btnX / wRatio, btnY / hRatio);
                 }
         }
     }
