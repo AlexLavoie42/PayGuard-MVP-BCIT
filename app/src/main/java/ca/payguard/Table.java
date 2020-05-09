@@ -12,8 +12,6 @@ import java.util.Map;
  * data for one table.
  */
 public class Table implements Parcelable {
-    //data pertaining to bill/preauth info
-    private double preauthAmt;
 
     //customizeable table gui info
     private String label;
@@ -33,7 +31,6 @@ public class Table implements Parcelable {
     }
 
     public Table(Map m){
-        preauthAmt = (double)m.get("preauthAmt");
         setShape(((String)m.get("shape")).charAt(0));
         y = ((Long)m.get("y")).intValue();
         x = ((Long)m.get("x")).intValue();
@@ -47,7 +44,6 @@ public class Table implements Parcelable {
     }
 
     protected Table(Parcel in) {
-        preauthAmt = in.readDouble();
         label = in.readString();
         x = in.readInt();
         y = in.readInt();
@@ -66,10 +62,6 @@ public class Table implements Parcelable {
             return new Table[size];
         }
     };
-
-    public void setPreauthAmt(double preauthAmt){
-        this.preauthAmt = preauthAmt;
-    }
 
     public void setLabel(String label){
         this.label = label;
@@ -122,10 +114,6 @@ public class Table implements Parcelable {
         this.angle = angle;
     }
 
-    public double getPreauthAmt(){
-        return preauthAmt;
-    }
-
     public String getLabel(){
         return label;
     }
@@ -170,7 +158,6 @@ public class Table implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeDouble(preauthAmt);
         dest.writeString(label);
         dest.writeInt(x);
         dest.writeInt(y);
