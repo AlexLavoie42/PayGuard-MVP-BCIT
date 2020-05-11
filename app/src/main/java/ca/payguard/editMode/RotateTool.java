@@ -31,26 +31,14 @@ public class RotateTool {
         });
     }
 
-    /** Locates the rotation tools by the button (excluding circles). */
-    public void locateTools(Table t, Button b){
-        if(t.getShape() != Table.Shape.C){
-            rotLeft.setVisibility(View.VISIBLE);
-            rotRight.setVisibility(View.VISIBLE);
-
-            float halfwayX = TableSet.STD_WIDTH * EMToolbar.wRatio / 2;
-            float halfwayY = EMToolbar.getHeight();
-
-            rotLeft.setX(halfwayX / 2);
-            rotLeft.setY(halfwayY / 8 * 1);
-            rotRight.setX(halfwayX / 2);
-            rotRight.setY(halfwayY / 8 * 5);
-        } else
-            hide();
+    public void disable(){
+        rotLeft.setEnabled(false);
+        rotRight.setEnabled(false);
     }
 
-    public void hide(){
-        rotLeft.setVisibility(View.GONE);
-        rotRight.setVisibility(View.GONE);
+    public void enable(){
+        rotLeft.setEnabled(true);
+        rotRight.setEnabled(true);
     }
 
     /**
