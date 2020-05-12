@@ -35,11 +35,11 @@ public class Customer implements Parcelable {
     }
 
     protected Customer(Parcel in) {
-        id = in.readInt();
-        billTotal = in.readFloat();
-        preAuthTotal = in.readFloat();
-        tipAmount = in.readFloat();
-        phoneNum = in.readInt();
+        id = in.readLong();
+        billTotal = in.readDouble();
+        preAuthTotal = in.readDouble();
+        tipAmount = in.readDouble();
+        phoneNum = in.readLong();
     }
 
     public static final Creator<Customer> CREATOR = new Creator<Customer>() {
