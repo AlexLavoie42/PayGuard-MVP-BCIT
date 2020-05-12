@@ -57,7 +57,7 @@ public class EditMode extends GridLayout {
         setRowCount(1);
         setColumnCount(4);
 
-        labelInput = new LabelInput(context);
+        labelInput = new LabelInput(context, this);
         shapeSelect = new ShapeSelect(context, this);
         sizeSelect = new SizeSelect(context, this);
         exitBtn = new Button(context);

@@ -8,14 +8,19 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
+import ca.payguard.R;
+
 public class LabelInput extends LinearLayout {
     AppCompatEditText label;
     Button[] btns;
 
     LinearLayout r1, r3;//layout rows - r2 only has 1 element and doesn't need layout
 
-    public LabelInput(Context c){
+    EditMode EMToolbar;
+
+    public LabelInput(Context c, EditMode em){
         super(c);
+        this.EMToolbar = em;
 
         btns = new Button[4];
         for(int i = 0; i < 4; i++) {
@@ -24,6 +29,7 @@ public class LabelInput extends LinearLayout {
         }
 
         label = new AppCompatEditText(c);
+        label.setBackgroundColor(getResources().getColor(R.color.colorBackground));
         btns[2].setRotation(180);
         btns[3].setRotation(180);
 
@@ -37,17 +43,38 @@ public class LabelInput extends LinearLayout {
         r3.addView(btns[3]);
         r3.addView(btns[2]);
 
-        setOnTouchListener(new OnTouchListener() {
+        label.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
             }
         });
 
-        setOnClickListener(new OnClickListener() {
+        btns[0].setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeLabel(10);
+            }
+        });
 
+        btns[1].setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLabel(1);
+            }
+        });
+
+        btns[2].setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLabel(-1);
+            }
+        });
+
+        btns[3].setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLabel(-10);
             }
         });
 
@@ -57,25 +84,43 @@ public class LabelInput extends LinearLayout {
         addView(r3);
     }
 
-    public void setText(String s){
-        label.setText(s);
-    }
+    public void changeLabel(int add){
+        int curNo = Integer.parseInt(label.getText().toString()) + add;
+        if(curNo < 0)
+            return;
 
-    public void setSingleLine(boolean val){
-        label.setSingleLine(val);
+        String nLabel = "" + curNo;
+        label.setText(nLabel);
+
+        if(EMToolbar.tables.containsLabel(nLabel) &&
+            Integer.parseInt(EMToolbar.getSelectedTbl().getLabel()) != curNo)
+            label.setBackgroundColor(getResources().getColor(R.color.red));
+        else {
+            EMToolbar.getSelectedTbl().setLabel(nLabel);
+            EMToolbar.getSelected().setText(nLabel);
+            label.setBackgroundColor(getResources().getColor(R.color.colorBackground));
+        }
     }
 
     public void enable(){
         for(int i = 0; i < 4; i++)
-            btns[i].setVisibility(View.VISIBLE);
+            btns[i].setEnabled(true);
 
         label.setEnabled(true);
     }
 
     public void disable(){
         for(int i = 0; i < 4; i++)
-            btns[i].setVisibility(View.INVISIBLE);
+            btns[i].setEnabled(false);
 
         label.setEnabled(false);
+    }
+
+    public void setText(String s){
+        label.setText(s);
+    }
+
+    public void setSingleLine(boolean val){
+        label.setSingleLine(val);
     }
 }
