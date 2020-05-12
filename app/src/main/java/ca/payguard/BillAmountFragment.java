@@ -70,7 +70,7 @@ public class BillAmountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 EditText total = view.findViewById(R.id.et_billAmount);
-                if(total.getText().toString().matches("([1-9]+)")) {
+                if(total.getText().toString().matches("\\b[0-9]+\\b$")) {
                     cust.setBillTotal(Float.parseFloat(total.getText().toString()));
                     ((MainActivity) getActivity()).updateCustomer(cust, tableNum);
                     ((MainActivity) getActivity()).resetTablePopup();
