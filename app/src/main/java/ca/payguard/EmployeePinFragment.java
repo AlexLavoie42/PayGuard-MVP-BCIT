@@ -3,7 +3,6 @@ package ca.payguard;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -12,15 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import ca.payguard.R;
 import ca.payguard.dbUtil.DatabaseController;
 
 /**
@@ -32,6 +25,7 @@ public class EmployeePinFragment extends Fragment {
 
     private Class<? extends AppCompatActivity> activity;
     private Table table;
+    private boolean bill;
 
     public EmployeePinFragment() {
         // Required empty public constructor
@@ -73,6 +67,20 @@ public class EmployeePinFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment with a target activity.
+     *
+     * @return A new instance of fragment EmployeePinFragment.
+     */
+    public static EmployeePinFragment newBillInstance() {
+        EmployeePinFragment fragment = new EmployeePinFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("fragment", true);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +92,8 @@ public class EmployeePinFragment extends Fragment {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-        }
+        } else
+            bill = getArguments().getBoolean("fragment");
     }
 
     @Override
@@ -104,12 +113,35 @@ public class EmployeePinFragment extends Fragment {
                             intent.putExtra("tableNum", table.getLabel());
                             startActivity(intent);
                         }
+                    }, new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Invalid Pin", Toast.LENGTH_SHORT).show();
+                        }
                     });
-                } else {
+                } else if(activity != null){
                     new DatabaseController().checkPin((EditText) pin, new Runnable() {
                         @Override
                         public void run() {
                             startActivity(new Intent(getContext(), activity));
+                        }
+                    }, new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Invalid Pin", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else if(bill){
+                    System.out.println("Whoah");
+                    ((MainActivity)getActivity()).getDb().checkPin((EditText) pin, new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity)getActivity()).billOnSuccess();
+                        }
+                    }, new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Invalid Pin", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

@@ -54,30 +54,22 @@ public class DatabaseController {
                 .addOnSuccessListener(onSuccess);
     }
 
-    public void checkPin(String pin, final Runnable onComplete){
-        users.whereEqualTo("id", pin)
+    public void checkPin(EditText pin, OnCompleteListener<QuerySnapshot> onComplete){
+        users.whereEqualTo("id", pin.getText().toString())
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(!task.getResult().isEmpty()){
-                            onComplete.run();
-                        }else{
-                            throw new AuthNotFoundError();
-                        }
-                    }
-                });
+                .addOnCompleteListener(onComplete);
     }
 
-    public void checkPin(EditText pin, final Runnable onComplete){
+    public void checkPin(EditText pin, final Runnable onComplete, final Runnable onFail){
         users.whereEqualTo("id", pin.getText().toString())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(!task.getResult().isEmpty()){
+                        if(!task.getResult().isEmpty())
                             onComplete.run();
-                        }
+                        else
+                            onFail.run();
                     }
                 });
     }
