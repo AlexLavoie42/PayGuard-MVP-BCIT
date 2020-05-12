@@ -3,7 +3,10 @@ package ca.payguard;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
+import java.util.Random;
 
 public class Customer implements Parcelable {
 
@@ -30,6 +33,7 @@ public class Customer implements Parcelable {
         this.billTotal = 0;
         this.tipAmount = 0;
         this.phoneNum = 0;
+        this.orderID = generateNewID();
     }
 
     public Customer(Map m){
@@ -38,6 +42,7 @@ public class Customer implements Parcelable {
         preAuthTotal = (double)m.get("preAuthTotal");
         tipAmount = (double)m.get("tipAmount");
         phoneNum = (long)m.get("phoneNum");
+        orderID = (String)m.get("orderID");
     }
 
     protected Customer(Parcel in) {
@@ -46,6 +51,7 @@ public class Customer implements Parcelable {
         preAuthTotal = in.readDouble();
         tipAmount = in.readDouble();
         phoneNum = in.readLong();
+        orderID = in.readString();
     }
 
     public static final Creator<Customer> CREATOR = new Creator<Customer>() {
@@ -105,5 +111,27 @@ public class Customer implements Parcelable {
         dest.writeDouble(preAuthTotal);
         dest.writeDouble(tipAmount);
         dest.writeLong(phoneNum);
+        dest.writeString(orderID);
+    }
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    private String generateNewID(){
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 6;
+        Random random = new Random();
+        StringBuilder buffer = new StringBuilder(targetStringLength);
+        for (int i = 0; i < targetStringLength; i++) {
+            int randomLimitedInt = leftLimit + (int)
+                    (random.nextFloat() * (rightLimit - leftLimit + 1));
+            buffer.append((char) randomLimitedInt);
+        }
+        String generatedString = buffer.toString();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyymmdd");
+        return "PG-" + df.format(new Date()) + generatedString;
     }
 }
