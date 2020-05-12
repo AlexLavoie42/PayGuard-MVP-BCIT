@@ -70,6 +70,7 @@ public class EditMode extends GridLayout {
 
         labelInput.setText("Table Name");
         labelInput.setSingleLine(true);
+        labelInput.disable();
         exitBtn.setText("X");
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +81,14 @@ public class EditMode extends GridLayout {
             }
         });
 
+        rotateTool = new RotateTool(context, this);
+        rotateTool.disable();
+        rotateTool.rotLeft.setText("rotL");//TODO replace with drawable
+        rotateTool.rotRight.setText("rotR");//TODO replace with drawable
+
         addView(labelInput);
+        addView(rotateTool.rotLeft);
+        addView(rotateTool.rotRight);
         addView(shapeSelect);
         addView(sizeSelect);
         addView(exitBtn);
@@ -159,10 +167,10 @@ public class EditMode extends GridLayout {
 
         if(selected != null){
             labelInput.setText(selected.getLabel());
-            labelInput.setEnabled(true);
             sizeSelect.selectTable(selected);
 
-            rotateTool.locateTools(selected, b);
+            rotateTool.enable();
+            labelInput.enable();
 
             garbage.setEnabled(true);
             selectedTbl = selected;
@@ -183,8 +191,8 @@ public class EditMode extends GridLayout {
             selectedTbl = null;
             labelInput.setText("Table Name");
 
-            //hide rotation tools
-            rotateTool.hide();
+            rotateTool.disable();
+            labelInput.disable();
         }
 
         garbage.setEnabled(false);
@@ -246,11 +254,6 @@ public class EditMode extends GridLayout {
             }
         });
 
-        rotateTool = new RotateTool(c, this);
-        rotateTool.hide();
-        rotateTool.rotLeft.setText("rotL");//TODO replace with drawable
-        rotateTool.rotRight.setText("rotR");//TODO replace with drawable
-
         garbage = new Button(c);
         garbage.setText("Garb");//TODO replace with drawable
         garbage.setEnabled(false);//disabled until table is selected
@@ -263,8 +266,6 @@ public class EditMode extends GridLayout {
             }
         });
 
-        mainLayout.addView(rotateTool.rotLeft);
-        mainLayout.addView(rotateTool.rotRight);
         mainLayout.addView(garbage);
     }
 

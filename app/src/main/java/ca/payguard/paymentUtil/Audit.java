@@ -39,6 +39,7 @@ public class Audit {
 
     private static void serverAudit(String serverPin, String reason) throws NotAuthorized {
         Intent auditServiceCall = new Intent();
+        auditServiceCall.setType("text/plain");
         auditServiceCall.putExtra("pin", serverPin);
         auditServiceCall.putExtra("reason", reason);
         auditServiceCall.putExtra("complete", "null");
