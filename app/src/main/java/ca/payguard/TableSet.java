@@ -64,6 +64,7 @@ public class TableSet extends ArrayList<Table> {
         for(Table t : this){
             if(t.getLabel().equals(tableNum)) {
                 t.addCustomer(customer);
+                customer.setId(t.getAllCustomers().size());
             }
         }
     }

@@ -7,6 +7,10 @@ import java.util.Map;
 
 public class Customer implements Parcelable {
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     //Customer data
     private long id;
     private double billTotal;
