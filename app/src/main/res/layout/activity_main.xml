@@ -67,6 +67,23 @@
 
         </LinearLayout>
 
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/billBlur"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:realtimeBlurRadius="0dp"
+            app:realtimeOverlayColor="#8000" />
+
+        <LinearLayout
+            android:id="@+id/billPopupLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar

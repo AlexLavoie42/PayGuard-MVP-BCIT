@@ -52,6 +52,9 @@
     <string name="EditValue1">+$25</string>
     <string name="editAmount2">+$50</string>
     <string name="editAmount3">+$100</string>
+    <string name="bill_limit">Limit: %.2f</string>
+    <string name="bill_table_num">Table %s</string>
+    <string name="update_bill">Update Bill</string>
     <string name="expMonth">mm</string>
     <string name="expYear">yy</string>
     <string name="cvc">cvc</string>

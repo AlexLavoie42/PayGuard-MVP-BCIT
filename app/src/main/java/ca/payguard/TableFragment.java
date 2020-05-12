@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import ca.payguard.R;
@@ -66,15 +67,27 @@ public class TableFragment extends Fragment {
         return root;
     }
 
-    private void displayCustomers(View root) {
+    public void displayCustomers(View root) {
         View layout = root.findViewById(R.id.layout_seats);
+        ((ViewGroup) layout).removeAllViews();
         if(table.getAllCustomers() != null) {
             for (Customer c : table.getAllCustomers()) {
                 View custView = LayoutInflater.from(root.getContext()).inflate(R.layout.layout_customer,
                         (ViewGroup) layout, false);
+
                 TextView custText = custView.findViewById(R.id.tv_seatLabel);
                 custText.setText(getResources().getString(R.string.seatInfoText, c.getId(),
                         c.getPreAuthTotal(), c.getBillTotal()));
+
+                Button addBill = custView.findViewById(R.id.btn_addBill);
+                final Customer cRef = c;
+                addBill.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((MainActivity)getActivity()).billPopup(cRef, table);
+                    }
+                });
+
                 ((ViewGroup) layout).addView(custView);
             }
         }

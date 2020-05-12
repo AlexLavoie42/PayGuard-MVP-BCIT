@@ -1,30 +1,17 @@
 package ca.payguard;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.text.Layout;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -33,7 +20,6 @@ import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.editMode.EditMode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * MainActivity is the main controller class
@@ -43,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private TableSet tableGui;
     public static ArrayList<Button> tblBtns = new ArrayList<>();
     private Fragment popup;
+    private Fragment billPopup;
     private DatabaseController db;
     private ProgressBar loading;
 
@@ -98,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     tableGui.addCustomer(
                             (Customer) getIntent().getParcelableExtra("customer"),
                             getIntent().getStringExtra("tableNum"));
-                    db.addTableSet(tableGui);
+                    db.updateTableSet(tableGui);
                     editMode.renderTableSet(tableGui);
                 }
             }
@@ -188,6 +175,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void resetTablePopup(){
+        ((TableFragment)popup).displayCustomers(findViewById(R.id.tableFragment));
+    }
+
     public void pinPopup(Class<? extends AppCompatActivity> activity, Table table){
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -243,6 +234,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void billPopup(Customer customer, Table table){
+        //Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //Add TableFragment to layout
+        billPopup = BillAmountFragment.newInstance(customer, table.getLabel());
+        ft.add(R.id.billPopupLayout, billPopup);
+        //Complete changes
+        ft.commit();
+        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+        blur.setBlurRadius(6);
+        blur.setAlpha(0.8f);
+        blur.setOverlayColor(1);
+        blur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeBillPopup();
+            }
+        });
+    }
+
+    public void closeBillPopup(){
+        if(billPopup != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+            ft.detach(billPopup);
+            ft.commit();
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+            blur.setBlurRadius(0);
+            blur.setAlpha(0);
+            blur.setClickable(false);
+        }
+    }
+
     /** Verifies if the button is already in layout view or not. */
     /*private void addButton(Button b){
         //gets the layout tag from xml
@@ -264,6 +288,16 @@ public class MainActivity extends AppCompatActivity {
         tblBtns.add(b);
         layout.addView(b);
     }*/
+
+    public void addCustomer(Customer customer, String tableNum){
+        tableGui.addCustomer(customer, tableNum);
+        db.updateTableSet(tableGui);
+    }
+
+    public void updateCustomer(Customer customer, String tableNum){
+        tableGui.updateCustomer(customer, tableNum);
+        db.updateTableSet(tableGui);
+    }
 
     public void enableEditMode(){
         editMode.enable((float) getScreenWidth(), 250, tableGui);

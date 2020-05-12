@@ -68,4 +68,13 @@ public class TableSet extends ArrayList<Table> {
             }
         }
     }
+
+    public void updateCustomer(Customer customer, String tableNum) {
+        for(Table t : this){
+            if(t.getLabel().equals(tableNum)) {
+                t.updateCustomer(customer);
+                customer.setId(t.getAllCustomers().size());
+            }
+        }
+    }
 }

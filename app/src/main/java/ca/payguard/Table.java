@@ -151,6 +151,15 @@ public class Table implements Parcelable {
         customers.add(customer);
     }
 
+    public void updateCustomer(Customer customer){
+        for(Customer c : customers){
+            if(c.getId() == customer.getId()){
+                customers.remove(c);
+                customers.add((int) (customer.getId()-1), customer);
+            }
+        }
+    }
+
     //TODO: Add error handling.
     public Customer getCustomerByID(int id){
         return customers.get(id);
