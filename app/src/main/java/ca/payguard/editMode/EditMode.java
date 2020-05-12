@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -19,7 +20,7 @@ import ca.payguard.Table;
 import ca.payguard.TableSet;
 import ca.payguard.dbUtil.DatabaseController;
 
-public class EditMode extends GridLayout {
+public class EditMode extends LinearLayout {
     private boolean active;
     private DatabaseController db;
     final String ILLEGAL_ARGE = "Error: table shape is not allowed.";
@@ -53,13 +54,13 @@ public class EditMode extends GridLayout {
             context.startActivity(new Intent(context, LoginActivity.class));
         }
 
+        setOrientation(LinearLayout.HORIZONTAL);
         setBackgroundColor(getResources().getColor(R.color.brightGreen));
-        setRowCount(1);
-        setColumnCount(4);
 
         labelInput = new LabelInput(context, this);
         shapeSelect = new ShapeSelect(context, this);
         sizeSelect = new SizeSelect(context, this);
+        sizeSelect.disable();
         exitBtn = new Button(context);
 
         labelInput.setText("Table Name");
@@ -104,9 +105,9 @@ public class EditMode extends GridLayout {
         sizeSelect - 12.5%
         exitBtn - 12.5%
          */
-        labelInput.setMinimumWidth((int)(width * 0.3));
+        labelInput.setMinimumWidth((int)(width * 0.4));
         labelInput.setMinimumHeight((int)(height * 0.5));
-        labelInput.setX((float)(width * 0.025));
+        labelInput.setX(0);
         labelInput.setY((float)(height / 2));
         labelInput.setEnabled(false);
         //nameInput.setGravity(Gravity.CENTER);
@@ -183,9 +184,10 @@ public class EditMode extends GridLayout {
 
             selected = null;
             selectedTbl = null;
-            labelInput.setText("Table Name");
+            labelInput.clear();
 
             rotateTool.disable();
+            sizeSelect.disable();
             labelInput.disable();
         }
 
@@ -361,6 +363,8 @@ public class EditMode extends GridLayout {
         b.setX((float) TableSet.STD_WIDTH / 2 * wRatio - (float) size / 2);
         b.setY((float) TableSet.STD_HEIGHT / 2 * hRatio - (float) size / 2);
 
+        t.setCoords((int)(b.getX() / wRatio), (int)(b.getY() / hRatio));
+
         MainActivity.tblBtns.add(b);
         MainActivity.tableLayout.addView(b);
 
@@ -411,11 +415,6 @@ public class EditMode extends GridLayout {
         b.setVisibility(View.GONE);
 
         deselect();
-    }
-
-    /** Stores tableset data in DB */
-    public void saveTableData(){
-        db.updateTableSet(tables);
     }
 
     public void setSize(int size){

@@ -30,6 +30,7 @@ public class LabelInput extends LinearLayout {
 
         label = new AppCompatEditText(c);
         label.setBackgroundColor(getResources().getColor(R.color.colorBackground));
+        label.setMinimumHeight(50);
         btns[2].setRotation(180);
         btns[3].setRotation(180);
 
@@ -114,6 +115,11 @@ public class LabelInput extends LinearLayout {
             btns[i].setEnabled(false);
 
         label.setEnabled(false);
+    }
+
+    public void clear(){
+        label.setText("Table Name");
+        label.setBackgroundColor(getResources().getColor(R.color.colorBackground));
     }
 
     public void setText(String s){
