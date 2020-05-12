@@ -20,12 +20,19 @@ public class ManualCardInput extends AppCompatActivity {
 
     public void onNext(View v){
         try{
-            String cvc = findViewById(R.id.CVC).toString();
+            String orderId = findViewById(R.id.CVC).toString();
             String pan = findViewById(R.id.PAN).toString();
             String exp = findViewById(R.id.exp_year).toString() + findViewById(R.id.exp_month).toString();
             //TODO: Put these into transaction.
-            Intent myIntent = new Intent(getBaseContext(),   EmailConfirmation.class);
+            if(TransactionService.isRunning ){
+                TransactionService.instance.executeTransaction(orderId, pan, exp, getIntent().getStringExtra("preAuthAmount"));
+            }else{
+                Intent intent = new Intent(this, TransactionService.class);
+                startService(intent);
+                TransactionService.instance.executeTransaction(orderId, pan, exp, getIntent().getStringExtra("preAuthAmount"));
+            }
 
+            Intent myIntent = new Intent(getBaseContext(),   EmailConfirmation.class);
             myIntent.putExtra("customer", getIntent().getParcelableExtra("customer"));
             myIntent.putExtra("tableNum", getIntent().getStringExtra("tableNum"));
             myIntent.putExtra("preAuthAmount", getIntent().getIntExtra("preAuthAmount", 0));

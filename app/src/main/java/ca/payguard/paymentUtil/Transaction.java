@@ -67,6 +67,4 @@ public class Transaction {
         }
     }
 
-    //TODO: Move this to the audit class.
-
 }
