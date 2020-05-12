@@ -19,7 +19,7 @@ public class PreAuthUnitTest {
         preAuth.setOrderId("PG-type1-00002");
         preAuth.setPan("4242424242424242"); // Test Visa card
         preAuth.setExpDate("2103"); // YY/MM
-        transaction.newCustomer("serverPin", preAuth);
+        transaction.newTransaction(preAuth);
         try{
             if(!transaction.executeTransaction("1", "serverPin", "5.00")) throw new Exception(); // DO NOT TOUCH AMOUNT
             if(!transaction.completeTransaction("1", "serverPin", "4.00")) throw new Exception(); //DO NOT TOUCH AMOUNT

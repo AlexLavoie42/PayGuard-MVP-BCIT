@@ -15,21 +15,19 @@ public class Transaction {
         tokenHash = new Hashtable<>();
     }
 
-    public void newCustomer(String serverPin, TransactionHandler preAuthUnit){
+    public void newTransaction(TransactionHandler preAuthUnit){
         transHandler = preAuthUnit;
     }
 
     /**
      * Executes the initial Pre-authorization. This will get the pre-auth token from Moneris.
      * @param id Id of the customer
-     * @param serverPin Servers audit pin. If its invalid will throw NotAuthorized erro.
      * @return If token is recieved will return true. If no token, then returns false.
      */
-    public boolean executeTransaction(String id, String serverPin, String amount){
+    public boolean executeTransaction(String id, String amount){
         try{
             String reason = "Pre-authorizing " + amount + " to " + id;
 //            Audit.audit(serverPin, reason);
-            //TODO: Build the transaction.
             AuthToken token = transHandler.executeTransaction(amount); //Enter dollars here.
             tokenHash.put(id, token);
             return true;
@@ -45,11 +43,10 @@ public class Transaction {
     /**
      * Completes the transaction. This will send the final bill total to Moneris.
      * @param id Id of the customer
-     * @param serverPin Servers audit pin. If its invalid will throw NotAuthorized error.
      * @param amount Total bill amount.
      * @return If token is received will return true. If no token, then returns false.
      */
-    public boolean completeTransaction(String id, String serverPin, String amount){
+    public boolean completeTransaction(String id, String amount){
         try{
             String reason = "Completing " + amount + " to " + id;
 //            Audit.audit(serverPin, reason);

@@ -1,80 +1,76 @@
 package ca.payguard.paymentUtil;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ServiceInfo;
-import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
+import androidx.core.app.NotificationCompat;
 
-import androidx.annotation.Nullable;
+import static ca.payguard.Table.Shape.R;
 
 public class TransactionService extends Service {
+    private int NOTIFICATION = 1; // Unique identifier for our notification
 
-    private static final String TAG = "TransactionService";
+    public static boolean isRunning = false;
+    public static TransactionService instance = null;
 
-    private IBinder mBinder = new MyBinder();
-    private Handler mHandler;
-    private Boolean mIsPaused;
-    private Transaction transaction;
 
-    @Override
-    public void onCreate(){
-        super.onCreate();
-        mHandler = new Handler();
-        //TODO: init all variables.
-        transaction = new Transaction();
-    }
+    private NotificationManager notificationManager = null;
 
-    @Nullable
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
-    public class MyBinder extends Binder {
-        public TransactionService getService(){
-            return TransactionService.this;
-        }
-    }
+    @Override
+    public void onCreate(){
+        instance = this;
+        isRunning = true;
 
-    public void startTask(){
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                if(mIsPaused){
-                    Log.d(TAG, "run: removing callbacks.");
-                    mHandler.removeCallbacks(this);
-                    pauseTask();
-                }else{
-                    Log.d(TAG, "run: running");
-                    // Do stuff here
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-                    mHandler.postDelayed(this, 100); // No point having this loop immediatly
-                }
-            }
-        };
-        mHandler.post(runnable);
-    }
-
-    public void pauseTask(){
-        mIsPaused = true;
-    }
-
-    public void restartTask(){
-        mIsPaused = false;
-        startTask();
-    }
-
-    public Boolean getIsPaused(){
-        return mIsPaused;
+        super.onCreate();
     }
 
     @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        super.onTaskRemoved(rootIntent);
-        stopSelf(); //Hard stop for when app is swiped off.
+    public int onStartCommand(Intent intent, int flags, int startId){
+        // The PendingIntent to launch our activity if the user selects this notification
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+
+        // Set the info for the views that show in the notification panel.
+        Notification notification = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)        // the status icon
+                .setTicker("Service running...")           // the status text
+                .setWhen(System.currentTimeMillis())       // the time stamp
+                .setContentTitle("My App")                 // the label of the entry
+                .setContentText("Service running...")      // the content of the entry
+                .setContentIntent(contentIntent)           // the intent to send when the entry is clicked
+                .setOngoing(true)                          // make persistent (disable swipe-away)
+                .build();
+
+        // Start service in foreground mode
+        startForeground(NOTIFICATION, notification);
+
+        return START_STICKY;
     }
+
+
+    @Override
+    public void onDestroy(){
+        isRunning = false;
+        instance = null;
+
+        notificationManager.cancel(NOTIFICATION); // Remove notification
+
+        super.onDestroy();
+    }
+
+
+    public void doSomething(){
+
+    }
+
 }

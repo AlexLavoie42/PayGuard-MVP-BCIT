@@ -22,9 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.editMode.EditMode;
-import ca.payguard.paymentUtil.Transaction;
 import ca.payguard.paymentUtil.TransactionService;
-import ca.payguard.paymentUtil.TransactionViewModel;
 
 import java.util.ArrayList;
 
@@ -46,11 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar loading;
     private Customer curCust;
     private Table curTable;
-
-    //TODO: Change these to match any updates to architecture
-    private TransactionViewModel mViewModel;
-    private TransactionService mService;
-
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
 
@@ -60,21 +53,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //TODO: SERVICE SHIT
-        mViewModel = new TransactionViewModel();
-        mViewModel.getBinder().observe(this, new Observer<TransactionService.MyBinder>() {
-            @Override
-            public void onChanged(TransactionService.MyBinder myBinder) {
-                if(myBinder != null){
-                    Log.d("Service:", "OnChanged: connected to service");
-                    mService = myBinder.getService();
-                }else{
-                    Log.d("Service:", "OnChanged: unbound from service");
-                    mService = null;
-                }
-            }
-        });
 
         try{
             db = new DatabaseController();
@@ -129,12 +107,6 @@ public class MainActivity extends AppCompatActivity {
         disableEditMode();
     }
 
-    //TODO: Service might not need this
-    private void bindService(){
-        Intent serviceIntent = new Intent(this, TransactionService.class);
-        bindService(serviceIntent, mViewModel.getServiceConnection(), Context.BIND_AUTO_CREATE);
-    }
-
 //    /* Crashes app
     @Override
     protected void onResume(){
@@ -146,20 +118,11 @@ public class MainActivity extends AppCompatActivity {
 //            enableEditMode();
 //        else
 //            disableEditMode();
-
-        Intent serviceIntent = new Intent(this, TransactionService.class);
-        startService(serviceIntent);
-        //TODO: Service might not need this.
-        bindService();
     }
 
     @Override
     protected void onPause(){
         super.onPause();
-        //TODO: Service might not need this
-        if(mViewModel.getBinder() != null){
-            unbindService(mViewModel.getServiceConnection());
-        }
     }
 
     @Override
