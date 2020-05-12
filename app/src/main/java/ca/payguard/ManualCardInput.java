@@ -25,7 +25,10 @@ public class ManualCardInput extends AppCompatActivity {
             String exp = findViewById(R.id.exp_year).toString() + findViewById(R.id.exp_month).toString();
             //TODO: Put these into transaction.
             Intent myIntent = new Intent(getBaseContext(),   EmailConfirmation.class);
-            //TODO: Add extras
+
+            myIntent.putExtra("customer", getIntent().getParcelableExtra("customer"));
+            myIntent.putExtra("tableNum", getIntent().getStringExtra("tableNum"));
+            myIntent.putExtra("preAuthAmount", getIntent().getIntExtra("preAuthAmount", 0));
             startActivity(myIntent);
         }catch (Exception e){
             System.out.println(e.toString());
