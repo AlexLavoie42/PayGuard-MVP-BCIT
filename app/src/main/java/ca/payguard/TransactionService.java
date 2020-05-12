@@ -1,4 +1,4 @@
-package ca.payguard.paymentUtil;
+package ca.payguard;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -6,9 +6,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import androidx.core.app.NotificationCompat;
 
-import static ca.payguard.Table.Shape.R;
+import androidx.core.app.NotificationCompat;
 
 public class TransactionService extends Service {
     private int NOTIFICATION = 1; // Unique identifier for our notification

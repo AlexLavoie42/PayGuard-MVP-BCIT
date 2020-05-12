@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,7 +19,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.editMode.EditMode;
-import ca.payguard.paymentUtil.TransactionService;
 
 import java.util.ArrayList;
 
@@ -105,13 +101,26 @@ public class MainActivity extends AppCompatActivity {
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
         disableEditMode();
+        startOrStopService();
+    }
+
+    public void startOrStopService(){
+        if( TransactionService.isRunning ){
+            // Stop service
+            Intent intent = new Intent(this, TransactionService.class);
+            stopService(intent);
+        }
+        else {
+            // Start service
+            Intent intent = new Intent(this, TransactionService.class);
+            startService(intent);
+        }
     }
 
 //    /* Crashes app
     @Override
     protected void onResume(){
         super.onResume();
-
 //        Intent i = getIntent();
 //
 //        if(i.getStringExtra("edit_mode").equals("e"))
