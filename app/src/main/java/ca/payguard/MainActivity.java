@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(!billPopup.isDetached())
+        if(billPopup != null && !billPopup.isDetached())
             closeBillPopup();
         else closePopup();
     }
@@ -237,18 +237,18 @@ public class MainActivity extends AppCompatActivity {
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
-        popup = EmployeePinFragment.newInstance(activity, table);
-        ft.replace(R.id.popupLayout, popup);
+        billPopup = EmployeePinFragment.newInstance(activity, table);
+        ft.replace(R.id.billPopupLayout, billPopup);
         //Complete changes
         ft.commit();
-        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
+        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
         blur.setBlurRadius(6);
         blur.setAlpha(0.8f);
         blur.setOverlayColor(1);
         blur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closePopup();
+                closeBillPopup();
             }
         });
     }

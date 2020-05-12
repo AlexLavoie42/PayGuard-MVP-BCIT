@@ -363,6 +363,8 @@ public class EditMode extends LinearLayout {
         b.setX((float) TableSet.STD_WIDTH / 2 * wRatio - (float) size / 2);
         b.setY((float) TableSet.STD_HEIGHT / 2 * hRatio - (float) size / 2);
 
+        t.setCoords((int)(b.getX() / wRatio), (int)(b.getY() / hRatio));
+
         MainActivity.tblBtns.add(b);
         MainActivity.tableLayout.addView(b);
 
@@ -413,11 +415,6 @@ public class EditMode extends LinearLayout {
         b.setVisibility(View.GONE);
 
         deselect();
-    }
-
-    /** Stores tableset data in DB */
-    public void saveTableData(){
-        db.updateTableSet(tables);
     }
 
     public void setSize(int size){
