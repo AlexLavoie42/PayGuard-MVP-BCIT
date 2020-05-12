@@ -321,6 +321,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void billCustomer(){
+
+    }
+
+    public void billAll(){
+
+    }
+
     /** Verifies if the button is already in layout view or not. */
     /*private void addButton(Button b){
         //gets the layout tag from xml
