@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/phone_hint"
-        android:inputType="textEmailAddress"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/ConfirmationMessage"
         app:layout_constraintStart_toStartOf="@+id/ConfirmationMessage"
