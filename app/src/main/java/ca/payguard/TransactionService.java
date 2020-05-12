@@ -80,18 +80,20 @@ public class TransactionService extends Service {
         thc.setPan(pan);
         transaction.newTransaction(thc);
         try{
-            transaction.executeTransaction(id, amount);
+            //TODO: ONLY GARRETT IS ALLOWED TO UNCOMMENT THIS
+//            transaction.executeTransaction(id, amount);
         }catch (Exception e){
             System.out.println(e.toString());
         }
     }
 
     public void completeTransaction(String id, String amount){
-        if(transaction.completeTransaction(id, amount)){
-            System.out.println("Transaction completed");
-        }else{
-            System.out.println("Error in transaction");
-        }
+        //TODO: ONLY GARRETT IS ALLOWED TO UNCOMMENT THIS
+//        if(transaction.completeTransaction(id, amount)){
+//            System.out.println("Transaction completed");
+//        }else{
+//            System.out.println("Error in transaction");
+//        }
     }
 
 }
