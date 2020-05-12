@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ca.payguard.ManualCardInput">
+
+    <EditText
+        android:id="@+id/CVC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/cvc"
+        android:inputType="numberPassword"
+        app:layout_constraintStart_toStartOf="@+id/PAN"
+        app:layout_constraintTop_toBottomOf="@+id/PAN" />
+
+    <EditText
+        android:id="@+id/PAN"
+        android:layout_width="476dp"
+        android:layout_height="31dp"
+        android:ems="10"
+        android:hint="@string/PAN"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/exp_year"
+        android:layout_width="116dp"
+        android:layout_height="27dp"
+        android:ems="10"
+        android:hint="@string/expYear"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/PAN"
+        app:layout_constraintTop_toBottomOf="@+id/PAN" />
+
+    <EditText
+        android:id="@+id/exp_month"
+        android:layout_width="116dp"
+        android:layout_height="27dp"
+        android:ems="10"
+        android:hint="@string/expMonth"
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@+id/exp_year"
+        app:layout_constraintTop_toBottomOf="@+id/PAN" />
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="473dp"
+        android:layout_height="40dp"
+        android:onClick="onNext"
+        android:text="@string/manualPayButton"
+        app:layout_constraintEnd_toEndOf="@+id/exp_year"
+        app:layout_constraintStart_toStartOf="@+id/CVC"
+        app:layout_constraintTop_toBottomOf="@+id/CVC" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
