@@ -37,7 +37,7 @@ public class LabelInput extends LinearLayout {
         r3.addView(btns[3]);
         r3.addView(btns[2]);
 
-        setOnTouchListener(new OnTouchListener() {
+        label.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
@@ -67,14 +67,14 @@ public class LabelInput extends LinearLayout {
 
     public void enable(){
         for(int i = 0; i < 4; i++)
-            btns[i].setVisibility(View.VISIBLE);
+            btns[i].setEnabled(true);
 
         label.setEnabled(true);
     }
 
     public void disable(){
         for(int i = 0; i < 4; i++)
-            btns[i].setVisibility(View.INVISIBLE);
+            btns[i].setEnabled(false);
 
         label.setEnabled(false);
     }

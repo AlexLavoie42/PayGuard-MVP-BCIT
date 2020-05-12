@@ -21,7 +21,6 @@ public class Table implements Parcelable {
     //customizeable table gui info
     private String label;
     private int x, y;
-
     private final int[] sizeMods = {1, 2, 3};//float? would allow for 1.5x modifier, etc.
     private int sizeMod = sizeMods[0];
     public enum Shape { S, C, R }
