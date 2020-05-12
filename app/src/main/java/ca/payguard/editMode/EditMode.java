@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -19,7 +20,7 @@ import ca.payguard.Table;
 import ca.payguard.TableSet;
 import ca.payguard.dbUtil.DatabaseController;
 
-public class EditMode extends GridLayout {
+public class EditMode extends LinearLayout {
     private boolean active;
     private DatabaseController db;
     final String ILLEGAL_ARGE = "Error: table shape is not allowed.";
@@ -53,9 +54,8 @@ public class EditMode extends GridLayout {
             context.startActivity(new Intent(context, LoginActivity.class));
         }
 
+        setOrientation(LinearLayout.HORIZONTAL);
         setBackgroundColor(getResources().getColor(R.color.brightGreen));
-        setRowCount(1);
-        setColumnCount(4);
 
         labelInput = new LabelInput(context, this);
         shapeSelect = new ShapeSelect(context, this);
