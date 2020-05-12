@@ -1,5 +1,7 @@
 package ca.payguard;
 
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -56,5 +58,13 @@ public class TableSet extends ArrayList<Table> {
         }
 
         return false;
+    }
+
+    public void addCustomer(Customer customer, String tableNum) {
+        for(Table t : this){
+            if(t.getLabel().equals(tableNum)) {
+                t.addCustomer(customer);
+            }
+        }
     }
 }

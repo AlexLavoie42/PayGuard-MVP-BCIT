@@ -13,14 +13,14 @@ import ca.payguard.R;
 public class Payment extends AppCompatActivity{
 
     private Customer newCustomer;
-    private Table table;
+    private String tableNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-        table = getIntent().getParcelableExtra("table");
-        newCustomer = new Customer(table.getAllCustomers().size(), table);
+        tableNum = getIntent().getStringExtra("tableNum");
+        newCustomer = new Customer();
     }
 
     /**
@@ -31,10 +31,10 @@ public class Payment extends AppCompatActivity{
     protected void forwardAmount(String amount){
         int dollars = Integer.parseInt(amount.substring(1));
         newCustomer.setPreAuthTotal(dollars);
-        table.addCustomer(newCustomer);
 
         Intent myIntent = new Intent(getBaseContext(),   TapCard.class);
-        myIntent.putExtra("table", table);
+        myIntent.putExtra("tableNum", tableNum);
+        myIntent.putExtra("customer", newCustomer);
         myIntent.putExtra("preAuthAmount", dollars);
         startActivity(myIntent);
     }

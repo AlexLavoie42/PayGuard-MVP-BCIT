@@ -1,7 +1,10 @@
 package ca.payguard;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +13,8 @@ import java.util.Map;
 /**
  * The Table class stores all preauth/payment
  * data for one table.
+ *
+ * TODO: Fix writing customers to parcel. DO NOT PASS TABLES THROUGH INTENTS.
  */
 public class Table implements Parcelable {
 
@@ -47,7 +52,7 @@ public class Table implements Parcelable {
         label = in.readString();
         x = in.readInt();
         y = in.readInt();
-        customers = new ArrayList<Customer>(Arrays.asList(in.createTypedArray(Customer.CREATOR)));
+        customers = new ArrayList<Customer>();
         //TODO read size, shape, and angle
     }
 
@@ -161,7 +166,6 @@ public class Table implements Parcelable {
         dest.writeString(label);
         dest.writeInt(x);
         dest.writeInt(y);
-        dest.writeTypedArray(customers.toArray(new Customer[0]), flags);
         //dest.write(shape);
         //TODO write size, shape, and angle
     }

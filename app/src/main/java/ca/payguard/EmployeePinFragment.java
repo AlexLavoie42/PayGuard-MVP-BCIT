@@ -101,7 +101,7 @@ public class EmployeePinFragment extends Fragment {
                         @Override
                         public void run() {
                             Intent intent = new Intent(getContext(), activity);
-                            intent.putExtra("table", table);
+                            intent.putExtra("tableNum", table.getLabel());
                             startActivity(intent);
                         }
                     });

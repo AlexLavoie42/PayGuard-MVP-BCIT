@@ -14,8 +14,9 @@ public class Customer implements Parcelable {
     private double tipAmount;
     private long phoneNum;
 
-    public Customer(int id, Table table) {
-        this.id = id;
+    public Customer() {
+        //TODO: Auto generate ID
+        this.id = 0;
         this.billTotal = 0;
         this.tipAmount = 0;
         this.phoneNum = 0;

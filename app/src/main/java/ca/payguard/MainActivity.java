@@ -93,8 +93,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 loading.setVisibility(View.GONE);
 
-                if(getIntent().getParcelableExtra("table") != null){
-                    tableGui.updateTable((Table) getIntent().getParcelableExtra("table"));
+                if(getIntent().getParcelableExtra("customer") != null
+                        || getIntent().getStringExtra("tableNum") != null){
+                    tableGui.addCustomer(
+                            (Customer) getIntent().getParcelableExtra("customer"),
+                            getIntent().getStringExtra("tableNum"));
                     db.addTableSet(tableGui);
                     editMode.renderTableSet(tableGui);
                 }
@@ -104,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
         disableEditMode();
-
 
     }
 

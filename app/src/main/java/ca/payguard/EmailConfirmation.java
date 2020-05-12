@@ -23,7 +23,8 @@ public class EmailConfirmation extends AppCompatActivity {
 
     public void onButtonClick(View v){
         Intent myIntent = new Intent(getBaseContext(),   MainActivity.class);
-        myIntent.putExtra("table", getIntent().getParcelableExtra("table"));
+        myIntent.putExtra("customer", getIntent().getParcelableExtra("customer"));
+        myIntent.putExtra("tableNum", getIntent().getStringExtra("tableNum"));
         startActivity(myIntent);
     }
 }
