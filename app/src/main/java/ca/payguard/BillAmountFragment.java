@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,10 +70,15 @@ public class BillAmountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 EditText total = view.findViewById(R.id.et_billAmount);
-                cust.setBillTotal(Float.parseFloat(total.getText().toString()));
-                ((MainActivity)getActivity()).updateCustomer(cust, tableNum);
-                ((MainActivity)getActivity()).resetTablePopup();
-                ((MainActivity)getActivity()).closeBillPopup();
+                if(total.getText().toString().matches("([1-9])")) {
+                    cust.setBillTotal(Float.parseFloat(total.getText().toString()));
+                    ((MainActivity) getActivity()).updateCustomer(cust, tableNum);
+                    ((MainActivity) getActivity()).resetTablePopup();
+                    ((MainActivity) getActivity()).closeBillPopup();
+                } else {
+                    Toast.makeText(getContext(), "Enter new bill amount.", Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         });
 

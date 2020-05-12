@@ -132,7 +132,6 @@ public class EmployeePinFragment extends Fragment {
                         }
                     });
                 } else if(bill){
-                    System.out.println("Whoah");
                     ((MainActivity)getActivity()).getDb().checkPin((EditText) pin, new Runnable() {
                         @Override
                         public void run() {

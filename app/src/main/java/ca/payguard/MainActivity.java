@@ -142,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        closePopup();
+        if(!billPopup.isDetached())
+            closeBillPopup();
+        else closePopup();
     }
 
     public void launchSettings(View v){
