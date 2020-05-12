@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 loading.setVisibility(View.GONE);
 
                 if(getIntent().getParcelableExtra("customer") != null
-                        || getIntent().getStringExtra("tableNum") != null){
+                        && getIntent().getStringExtra("tableNum") != null){
                     tableGui.addCustomer(
                             (Customer) getIntent().getParcelableExtra("customer"),
                             getIntent().getStringExtra("tableNum"));

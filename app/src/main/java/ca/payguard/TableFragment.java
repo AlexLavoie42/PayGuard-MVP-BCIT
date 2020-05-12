@@ -70,11 +70,12 @@ public class TableFragment extends Fragment {
         View layout = root.findViewById(R.id.layout_seats);
         if(table.getAllCustomers() != null) {
             for (Customer c : table.getAllCustomers()) {
-                View custView = LayoutInflater.from(getContext()).inflate(R.layout.layout_customer,
-                        (ViewGroup) layout);
+                View custView = LayoutInflater.from(root.getContext()).inflate(R.layout.layout_customer,
+                        (ViewGroup) layout, false);
                 TextView custText = custView.findViewById(R.id.tv_seatLabel);
                 custText.setText(getResources().getString(R.string.seatInfoText, c.getId(),
                         c.getPreAuthTotal(), c.getBillTotal()));
+                ((ViewGroup) layout).addView(custView);
             }
         }
     }
