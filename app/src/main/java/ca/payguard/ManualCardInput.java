@@ -24,7 +24,7 @@ public class ManualCardInput extends AppCompatActivity {
             String pan = findViewById(R.id.PAN).toString();
             String exp = findViewById(R.id.exp_year).toString() + findViewById(R.id.exp_month).toString();
             //TODO: Put these into transaction.
-            Intent myIntent = new Intent(getBaseContext(),   ManualCardInput.class);
+            Intent myIntent = new Intent(getBaseContext(),   EmailConfirmation.class);
             //TODO: Add extras
             startActivity(myIntent);
         }catch (Exception e){

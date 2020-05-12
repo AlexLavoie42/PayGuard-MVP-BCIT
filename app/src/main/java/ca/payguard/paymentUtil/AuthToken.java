@@ -12,7 +12,7 @@ class AuthToken {
         this.orderId = orderId;
     }
 
-    void completeTransaction(String amount) throws PreAuthFailure {
+    boolean completeTransaction(String amount) throws PreAuthFailure {
         //TODO: Get Production keys & id
         String store_id = "store5"; // TestAPI, switch when in production
         String api_token = "yesguy";// TestAPI, switch when in production.
@@ -43,6 +43,7 @@ class AuthToken {
             if(receipt.getComplete().equalsIgnoreCase("false")){
                 throw new PreAuthFailure("Token failed completion: " + receipt.getMessage());
             }
+            return true;
         }
         catch (Exception e)
         {

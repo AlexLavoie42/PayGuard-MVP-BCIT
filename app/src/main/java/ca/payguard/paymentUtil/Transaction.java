@@ -15,9 +15,8 @@ public class Transaction {
         tokenHash = new Hashtable<>();
     }
 
-    public Customer newCustomer(String serverPin, TransactionHandler preAuthUnit){
+    public void newCustomer(String serverPin, TransactionHandler preAuthUnit){
         transHandler = preAuthUnit;
-        return null;
     }
 
     /**
@@ -57,7 +56,7 @@ public class Transaction {
             AuthToken token = tokenHash.get(id);
             if(token == null) throw new InvalidKeyException();
             token.completeTransaction(amount);
-            //TODO: Delete transaction.
+            tokenHash.remove(id);
             return true;
 //        }catch(NotAuthorized e){
 //            System.out.println(e.toString());
