@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,6 +22,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.editMode.EditMode;
+import ca.payguard.paymentUtil.Transaction;
+import ca.payguard.paymentUtil.TransactionService;
+import ca.payguard.paymentUtil.TransactionViewModel;
 
 import java.util.ArrayList;
 
@@ -40,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
     private Customer curCust;
     private Table curTable;
 
+    //TODO: Change these to match any updates to architecture
+    private TransactionViewModel mViewModel;
+    private TransactionService mService;
+
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
 
@@ -49,6 +60,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //TODO: SERVICE SHIT
+        mViewModel = new TransactionViewModel();
+        mViewModel.getBinder().observe(this, new Observer<TransactionService.MyBinder>() {
+            @Override
+            public void onChanged(TransactionService.MyBinder myBinder) {
+                if(myBinder != null){
+                    Log.d("Service:", "OnChanged: connected to service");
+                    mService = myBinder.getService();
+                }else{
+                    Log.d("Service:", "OnChanged: unbound from service");
+                    mService = null;
+                }
+            }
+        });
 
         try{
             db = new DatabaseController();
@@ -101,21 +127,40 @@ public class MainActivity extends AppCompatActivity {
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
         disableEditMode();
-
     }
 
-    /* Crashes app
+    //TODO: Service might not need this
+    private void bindService(){
+        Intent serviceIntent = new Intent(this, TransactionService.class);
+        bindService(serviceIntent, mViewModel.getServiceConnection(), Context.BIND_AUTO_CREATE);
+    }
+
+//    /* Crashes app
     @Override
     protected void onResume(){
-        super.onStart();
+        super.onResume();
 
-        Intent i = getIntent();
+//        Intent i = getIntent();
+//
+//        if(i.getStringExtra("edit_mode").equals("e"))
+//            enableEditMode();
+//        else
+//            disableEditMode();
 
-        if(i.getStringExtra("edit_mode").equals("e"))
-            enableEditMode();
-        else
-            disableEditMode();
-    } */
+        Intent serviceIntent = new Intent(this, TransactionService.class);
+        startService(serviceIntent);
+        //TODO: Service might not need this.
+        bindService();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        //TODO: Service might not need this
+        if(mViewModel.getBinder() != null){
+            unbindService(mViewModel.getServiceConnection());
+        }
+    }
 
     @Override
     protected void onRestart(){
