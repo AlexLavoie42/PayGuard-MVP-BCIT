@@ -7,14 +7,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.TextView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.protobuf.DescriptorProtos;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 
@@ -137,7 +131,7 @@ public class EditMode extends GridLayout {
 
         //getSupportActionBar().show();//used if action bar is active on home screen
 
-        db.addTableSet(tables);
+        db.updateTableSet(tables);
         setVisibility(View.GONE);
         active = false;
         MainActivity.settingsBtn.setVisibility(View.VISIBLE);
@@ -421,7 +415,7 @@ public class EditMode extends GridLayout {
 
     /** Stores tableset data in DB */
     public void saveTableData(){
-        db.addTableSet(tables);
+        db.updateTableSet(tables);
     }
 
     public void setSize(int size){

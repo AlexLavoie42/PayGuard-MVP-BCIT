@@ -42,7 +42,7 @@ public class DatabaseController {
         } else throw new AuthNotFoundError();
     }
 
-    public void addTableSet(TableSet tableset){
+    public void updateTableSet(TableSet tableset){
         HashMap map = new HashMap<String, Object>();
         map.put("tableset", tableset);
         tables.document(TABLE_SET).set(map);

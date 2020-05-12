@@ -24,8 +24,9 @@ public class EmailConfirmation extends AppCompatActivity {
 
     public void onButtonClick(View v){
         Customer c = getIntent().getParcelableExtra("customer");
-        c.setPhoneNum(Integer.parseInt(
-                ((EditText)findViewById(R.id.phone_num)).getText().toString()));
+        if(((EditText)findViewById(R.id.phone_num)).getText().toString().matches("([1-9])"))
+            c.setPhoneNum(Integer.parseInt(
+                    ((EditText)findViewById(R.id.phone_num)).getText().toString()));
         Intent myIntent = new Intent(getBaseContext(),   MainActivity.class);
         myIntent.putExtra("customer", c);
         myIntent.putExtra("tableNum", getIntent().getStringExtra("tableNum"));
