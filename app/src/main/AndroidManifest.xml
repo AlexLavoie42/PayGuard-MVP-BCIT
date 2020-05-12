@@ -9,27 +9,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ManualCardInput"></activity>
         <activity
-            android:name="ca.payguard.SettingsActivity"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        </activity>
-        <activity android:name="ca.payguard.LoginActivity">
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ca.payguard.Pin" />
-        <activity android:name="ca.payguard.TapCard" />
+        <activity android:name=".Pin" />
+        <activity android:name=".TapCard" />
         <activity
-            android:name="ca.payguard.MainActivity"
+            android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden" />
-        <activity android:name="ca.payguard.Payment" />
-        <activity android:name="ca.payguard.EditPaymentActivity" />
-        <activity android:name="ca.payguard.EmailConfirmation" />
-        <service android:enabled="true" android:name="ca.payguard.paymentUtil.ControllerService"/>
+        <activity android:name=".Payment" />
+        <activity android:name=".EditPaymentActivity" />
+        <activity android:name=".EmailConfirmation" />
+
+        <service
+            android:name=".paymentUtil.ControllerService"
+            android:enabled="true" />
     </application>
 
 </manifest>

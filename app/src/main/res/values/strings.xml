@@ -52,4 +52,9 @@
     <string name="EditValue1">+$25</string>
     <string name="editAmount2">+$50</string>
     <string name="editAmount3">+$100</string>
+    <string name="expMonth">mm</string>
+    <string name="expYear">yy</string>
+    <string name="cvc">cvc</string>
+    <string name="PAN">Enter CC number here</string>
+    <string name="manualPayButton">Next</string>
 </resources>
