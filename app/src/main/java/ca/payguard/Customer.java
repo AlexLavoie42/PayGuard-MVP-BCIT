@@ -16,6 +16,7 @@ public class Customer implements Parcelable {
     private double billTotal;
     private double preAuthTotal;
     private double tipAmount;
+    private String orderID;
 
     public void setPhoneNum(long phoneNum) {
         this.phoneNum = phoneNum;
