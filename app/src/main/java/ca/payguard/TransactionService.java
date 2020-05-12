@@ -1,13 +1,16 @@
 package ca.payguard;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import ca.payguard.paymentUtil.CanadaPreAuth;
 import ca.payguard.paymentUtil.Transaction;
@@ -42,22 +45,21 @@ public class TransactionService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
         // The PendingIntent to launch our activity if the user selects this notification
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+//        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 
-        // Set the info for the views that show in the notification panel.
-        Notification notification = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)        // the status icon
-                .setTicker("Service running...")           // the status text
-                .setWhen(System.currentTimeMillis())       // the time stamp
-                .setContentTitle("My App")                 // the label of the entry
-                .setContentText("Service running...")      // the content of the entry
-                .setContentIntent(contentIntent)           // the intent to send when the entry is clicked
-                .setOngoing(true)                          // make persistent (disable swipe-away)
-                .build();
-
-        // Start service in foreground mode
-        startForeground(NOTIFICATION, notification);
-
+//        // Set the info for the views that show in the notification panel.
+//        Notification notification = new NotificationCompat.Builder(this)
+//                .setSmallIcon(R.mipmap.ic_launcher)        // the status icon
+//                .setTicker("Service running...")           // the status text
+//                .setWhen(System.currentTimeMillis())       // the time stamp
+//                .setContentTitle("My App")                 // the label of the entry
+//                .setContentText("Service running...")      // the content of the entry
+//                .setContentIntent(contentIntent)           // the intent to send when the entry is clicked
+//                .setOngoing(true)                          // make persistent (disable swipe-away)
+//                .build();
+//
+//        // Start service in foreground mode
+//        startForeground(NOTIFICATION, notification);
         return START_STICKY;
     }
 
@@ -81,7 +83,13 @@ public class TransactionService extends Service {
         transaction.newTransaction(thc);
         try{
             //TODO: ONLY GARRETT IS ALLOWED TO UNCOMMENT THIS
-//            transaction.executeTransaction(id, amount);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Permission is not granted
+            }else{
+                //            transaction.executeTransaction(id, amount);
+            }
+
         }catch (Exception e){
             System.out.println(e.toString());
         }
