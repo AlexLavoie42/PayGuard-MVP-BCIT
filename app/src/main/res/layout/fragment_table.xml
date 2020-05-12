@@ -36,7 +36,6 @@
             android:layout_alignParentRight="true"
             android:layout_margin="25dp"
             android:backgroundTint="@color/colorButton"
-            android:onClick="onCloseTableButtonClick"
             android:text="@string/closeTableButton" />
 
     </RelativeLayout>

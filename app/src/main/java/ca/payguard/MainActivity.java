@@ -30,8 +30,15 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Button> tblBtns = new ArrayList<>();
     private Fragment popup;
     private Fragment billPopup;
+
+    public DatabaseController getDb() {
+        return db;
+    }
+
     private DatabaseController db;
     private ProgressBar loading;
+    private Customer curCust;
+    private Table curTable;
 
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
@@ -135,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        closePopup();
+        if(!billPopup.isDetached())
+            closeBillPopup();
+        else closePopup();
     }
 
     public void launchSettings(View v){
@@ -219,6 +228,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void pinBillPopup(){
+        //Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //Add TableFragment to layout
+        billPopup = EmployeePinFragment.newBillInstance();
+        ft.replace(R.id.billPopupLayout, billPopup);
+        //Complete changes
+        ft.commit();
+        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+        blur.setBlurRadius(6);
+        blur.setAlpha(0.8f);
+        blur.setOverlayColor(1);
+        blur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeBillPopup();
+            }
+        });
+    }
+
     /** Closes any open popups */
     private void closePopup(){
         //Detach current popup if it exists
@@ -235,11 +264,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void billPopup(Customer customer, Table table){
+        curCust = customer;
+        curTable = table;
+        pinBillPopup();
+    }
+
+    /** I hate this I'm sorry */
+    public void billOnSuccess() {
+        tablePopup(curTable);
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
-        billPopup = BillAmountFragment.newInstance(customer, table.getLabel());
-        ft.add(R.id.billPopupLayout, billPopup);
+        billPopup = BillAmountFragment.newInstance(curCust, curTable.getLabel());
+        ft.replace(R.id.billPopupLayout, billPopup);
         //Complete changes
         ft.commit();
         com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
