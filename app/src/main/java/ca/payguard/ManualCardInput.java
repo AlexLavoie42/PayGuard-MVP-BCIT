@@ -2,6 +2,7 @@ package ca.payguard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -23,6 +24,9 @@ public class ManualCardInput extends AppCompatActivity {
             String pan = findViewById(R.id.PAN).toString();
             String exp = findViewById(R.id.exp_year).toString() + findViewById(R.id.exp_month).toString();
             //TODO: Put these into transaction.
+            Intent myIntent = new Intent(getBaseContext(),   ManualCardInput.class);
+            //TODO: Add extras
+            startActivity(myIntent);
         }catch (Exception e){
             System.out.println(e.toString());
         }

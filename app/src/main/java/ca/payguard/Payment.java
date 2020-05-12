@@ -32,7 +32,7 @@ public class Payment extends AppCompatActivity{
         int dollars = Integer.parseInt(amount.substring(1));
         newCustomer.setPreAuthTotal(dollars);
 
-        Intent myIntent = new Intent(getBaseContext(),   TapCard.class);
+        Intent myIntent = new Intent(getBaseContext(),   ManualCardInput.class);
         myIntent.putExtra("tableNum", tableNum);
         myIntent.putExtra("customer", newCustomer);
         myIntent.putExtra("preAuthAmount", dollars);
