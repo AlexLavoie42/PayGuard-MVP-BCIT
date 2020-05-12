@@ -184,7 +184,7 @@ public class EditMode extends LinearLayout {
 
             selected = null;
             selectedTbl = null;
-            labelInput.setText("Table Name");
+            labelInput.clear();
 
             rotateTool.disable();
             sizeSelect.disable();

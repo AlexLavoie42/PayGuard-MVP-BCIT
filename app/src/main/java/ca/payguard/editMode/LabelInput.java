@@ -117,6 +117,11 @@ public class LabelInput extends LinearLayout {
         label.setEnabled(false);
     }
 
+    public void clear(){
+        label.setText("Table Name");
+        label.setBackgroundColor(getResources().getColor(R.color.colorBackground));
+    }
+
     public void setText(String s){
         label.setText(s);
     }
