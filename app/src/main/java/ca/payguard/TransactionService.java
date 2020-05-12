@@ -75,9 +75,9 @@ public class TransactionService extends Service {
     }
 
 
-    public void executeTransaction(String id, String pan, String exp, String amount){
+    public void executeTransaction(String orderId, String pan, String exp, String amount){
         TransactionHandler thc = new CanadaPreAuth(); //420
-        thc.setOrderId(id);
+        thc.setOrderId(orderId);
         thc.setExpDate(exp);
         thc.setPan(pan);
         transaction.newTransaction(thc);
@@ -95,9 +95,9 @@ public class TransactionService extends Service {
         }
     }
 
-    public void completeTransaction(String id, String amount){
+    public void completeTransaction(String orderId, String amount){
         //TODO: ONLY GARRETT IS ALLOWED TO UNCOMMENT THIS
-//        if(transaction.completeTransaction(id, amount)){
+//        if(transaction.completeTransaction(orderId, amount)){
 //            System.out.println("Transaction completed");
 //        }else{
 //            System.out.println("Error in transaction");
