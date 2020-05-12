@@ -119,4 +119,9 @@ public class SizeSelect extends LinearLayout {
             EMToolbar.select(EMToolbar.getSelected());
         }
     }
+
+    public void disable(){
+        subSize.setEnabled(false);
+        addSize.setEnabled(false);
+    }
 }

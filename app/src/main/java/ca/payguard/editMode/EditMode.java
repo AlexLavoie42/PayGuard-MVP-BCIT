@@ -60,6 +60,7 @@ public class EditMode extends GridLayout {
         labelInput = new LabelInput(context, this);
         shapeSelect = new ShapeSelect(context, this);
         sizeSelect = new SizeSelect(context, this);
+        sizeSelect.disable();
         exitBtn = new Button(context);
 
         labelInput.setText("Table Name");
@@ -104,9 +105,9 @@ public class EditMode extends GridLayout {
         sizeSelect - 12.5%
         exitBtn - 12.5%
          */
-        labelInput.setMinimumWidth((int)(width * 0.3));
+        labelInput.setMinimumWidth((int)(width * 0.4));
         labelInput.setMinimumHeight((int)(height * 0.5));
-        labelInput.setX((float)(width * 0.025));
+        labelInput.setX(0);
         labelInput.setY((float)(height / 2));
         labelInput.setEnabled(false);
         //nameInput.setGravity(Gravity.CENTER);
@@ -186,6 +187,7 @@ public class EditMode extends GridLayout {
             labelInput.setText("Table Name");
 
             rotateTool.disable();
+            sizeSelect.disable();
             labelInput.disable();
         }
 
