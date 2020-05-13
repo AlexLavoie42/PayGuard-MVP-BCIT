@@ -245,6 +245,7 @@ public class EditMode extends LinearLayout {
 
         setMinimumWidth((int) (TableSet.STD_WIDTH * wRatio));
         setMinimumHeight(200);
+
         float segment = (TableSet.STD_WIDTH * wRatio) / 25;
         labelInput.setX(segment * 1);
         rotateTool.rotLeft.setX(segment * (float) 3.5);
@@ -275,8 +276,6 @@ public class EditMode extends LinearLayout {
      * table arrangement is used. */
     public void applyStdArrangement(){
         if(tables.isStdFormation()){
-            int segmentX = TableSet.STD_WIDTH / 20, segmentY = TableSet.STD_HEIGHT / 20;
-
             allocateTable('C', 2, 6);
             allocateTable('C', 7, 6);
             allocateTable('C', 11, 8);

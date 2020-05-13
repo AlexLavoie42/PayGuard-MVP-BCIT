@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.mainLayout);
         constraintLayout.addView(editMode);
 
-        editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
+        editMode.setSize((int) Math.max((TableSet.STD_WIDTH * getWidthRatio()) / 20,
+                (TableSet.STD_HEIGHT * getHeightRatio()) / 20));
         settingsBtn = findViewById(R.id.settings_btn);
 
         loading = findViewById(R.id.progressBar);
