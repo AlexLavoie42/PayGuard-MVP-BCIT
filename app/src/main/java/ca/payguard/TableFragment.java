@@ -71,6 +71,13 @@ public class TableFragment extends Fragment {
         View layout = root.findViewById(R.id.layout_seats);
         ((ViewGroup) layout).removeAllViews();
         if(table.getAllCustomers() != null) {
+            Button processTable = root.findViewById(R.id.closeTableButton);
+            processTable.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    billAll();
+                }
+            });
             for (Customer c : table.getAllCustomers()) {
                 View custView = LayoutInflater.from(root.getContext()).inflate(R.layout.layout_customer,
                         (ViewGroup) layout, false);
@@ -96,6 +103,14 @@ public class TableFragment extends Fragment {
                 });
 
                 ((ViewGroup) layout).addView(custView);
+            }
+        }
+    }
+
+    public void billAll(){
+        if(table.getAllCustomers() != null) {
+            for (Customer c : table.getAllCustomers()) {
+                TransactionService.instance.completeTransaction(c.getOrderID(), "" + c.getBillTotal());
             }
         }
     }
