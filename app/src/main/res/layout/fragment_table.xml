@@ -42,7 +42,7 @@
 
     </RelativeLayout>
 
-    <GridLayout
+    <ListView
         android:id="@+id/layout_seats"
         android:layout_width="match_parent"
         android:layout_height="400dp"
@@ -52,7 +52,7 @@
         android:background="#F8FDF2"
         android:columnCount="1">
 
-    </GridLayout>
+    </ListView>
 
     <Button
         android:id="@+id/btn_addCustomer"

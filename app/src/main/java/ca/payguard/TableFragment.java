@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import ca.payguard.R;
@@ -67,7 +68,14 @@ public class TableFragment extends Fragment {
         return root;
     }
 
-    public void displayCustomers(View root) {
+    public void displayCustomers(View root){
+        ListView listView = root.findViewById(R.id.layout_seats);
+        CustomerAdapter adapter = new CustomerAdapter(
+                table.getAllCustomers(), table, (MainActivity) getActivity(), getContext());
+        listView.setAdapter(adapter);
+    }
+
+    /*public void displayCustomers(View root) {
         View layout = root.findViewById(R.id.layout_seats);
         ((ViewGroup) layout).removeAllViews();
         if(table.getAllCustomers() != null) {
@@ -105,7 +113,7 @@ public class TableFragment extends Fragment {
                 ((ViewGroup) layout).addView(custView);
             }
         }
-    }
+    }*/
 
     public void billAll(){
         if(table.getAllCustomers() != null) {

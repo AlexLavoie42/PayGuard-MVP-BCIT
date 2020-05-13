@@ -46,7 +46,7 @@
     <string name="tableHeader">Table #%s</string>
     <string name="closeTableButton">Process Table</string>
     <string name="addSeatButton">Add Seat</string>
-    <string name="seatInfoText">Seat #%d\nLimit:$%.2f\nBill: $%.2f</string>
+    <string name="seatInfoText">Seat #%d\nLimit: $%.2f\nBill: $%.2f</string>
     <string name="settings_logout">Logout</string>
     <string name="settings_edit_logout">Logout from PayGuard</string>
     <string name="EditValue1">+$25</string>
