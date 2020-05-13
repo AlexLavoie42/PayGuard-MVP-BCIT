@@ -3,6 +3,7 @@ package ca.payguard.editMode;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +46,8 @@ public class EditMode extends LinearLayout {
     RotateTool rotateTool;
     public static Button garbage;
 
+    LayoutInflater inflater;
+
     public EditMode(Context context) {
         super(context);
 
@@ -81,12 +84,16 @@ public class EditMode extends LinearLayout {
         rotateTool.rotLeft.setText("rotL");//TODO replace with drawable
         rotateTool.rotRight.setText("rotR");//TODO replace with drawable
 
-        addView(labelInput);
+        /*addView(labelInput);
         addView(rotateTool.rotLeft);
         addView(rotateTool.rotRight);
         addView(shapeSelect);
         addView(sizeSelect);
-        addView(exitBtn);
+        addView(exitBtn);*/
+
+        //load xml layout/////////////////////////////////
+        inflater = LayoutInflater.from(context);
+        inflater.inflate(R.layout.layout_edit_mode, this);
     }
 
     public void enable(float width, int height, TableSet tables){
@@ -95,17 +102,7 @@ public class EditMode extends LinearLayout {
 
         //getSupportActionBar().hide();//used if action bar is active on home screen
 
-        setMinimumWidth((int) width);
-        setMinimumHeight(height);
-
-        /*
-        Width distribution:
-        nameInput - 40%
-        shapeSelect - 35%
-        sizeSelect - 12.5%
-        exitBtn - 12.5%
-         */
-        labelInput.setMinimumWidth((int)(width * 0.4));
+        /*labelInput.setMinimumWidth((int)(width * 0.4));
         labelInput.setMinimumHeight((int)(height * 0.5));
         labelInput.setX(0);
         labelInput.setY((float)(height / 2));
@@ -115,14 +112,17 @@ public class EditMode extends LinearLayout {
         sizeSelect.load(width, height);
         exitBtn.setMinimumWidth((int)(width * 0.125));
         exitBtn.setMinimumHeight(height);
-        exitBtn.setGravity(Gravity.CENTER);
+        exitBtn.setGravity(Gravity.CENTER);*/
 
-        setVisibility(View.VISIBLE);
-        active = true;
-
-        this.tables = tables;
+        /*setVisibility(View.VISIBLE);
         sizeSelect.addSize.setEnabled(false);
         sizeSelect.subSize.setEnabled(false);
+
+        setMinimumWidth((int) width);
+        setMinimumHeight(height);*/
+
+        active = true;
+        this.tables = tables;
         MainActivity.settingsBtn.setVisibility(View.GONE);
     }
 
