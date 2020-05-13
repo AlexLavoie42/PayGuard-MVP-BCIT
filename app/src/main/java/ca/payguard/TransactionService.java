@@ -88,7 +88,7 @@ public class TransactionService extends Service {
                 // Permission is not granted
                 System.out.println("Transaction: " + orderId + " would be executed for " + amount);
             }else{
-                //            transaction.executeTransaction(id, amount);
+                transaction.executeTransaction(orderId, amount);
                 System.out.println("Transaction: " + orderId + " executed for " + amount);
             }
         }catch (Exception e){
@@ -98,11 +98,11 @@ public class TransactionService extends Service {
 
     public void completeTransaction(String orderId, String amount){
         //TODO: ONLY GARRETT IS ALLOWED TO UNCOMMENT THIS
-//        if(transaction.completeTransaction(orderId, amount)){
-//            System.out.println("Transaction completed");
-//        }else{
-//            System.out.println("Error in transaction");
-//        }
+        if(transaction.completeTransaction(orderId, amount)){
+            System.out.println("Transaction completed");
+        }else{
+            System.out.println("Error in transaction");
+        }
         System.out.println("Transaction: " + orderId + " completed for " + amount);
     }
 
