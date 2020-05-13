@@ -89,7 +89,6 @@ public class TransactionService extends Service {
             }else{
                 //            transaction.executeTransaction(id, amount);
             }
-
         }catch (Exception e){
             System.out.println(e.toString());
         }
@@ -102,6 +101,7 @@ public class TransactionService extends Service {
 //        }else{
 //            System.out.println("Error in transaction");
 //        }
+        System.out.println("Transaction: " + orderId + " completed for " + amount);
     }
 
 }

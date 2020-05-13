@@ -321,12 +321,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void billCustomer(){
-
-    }
-
-    public void billAll(){
-
+    public void billCustomer(Customer customer){
+        if(TransactionService.isRunning ){
+            TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
+        }else{
+            Intent intent = new Intent(this, TransactionService.class);
+            startService(intent);
+            TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
+        }
     }
 
     /** Verifies if the button is already in layout view or not. */
