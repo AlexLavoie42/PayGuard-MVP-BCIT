@@ -84,42 +84,23 @@ public class EditMode extends LinearLayout {
         rotateTool.rotLeft.setText("rotL");//TODO replace with drawable
         rotateTool.rotRight.setText("rotR");//TODO replace with drawable
 
-        /*addView(labelInput);
+        addView(labelInput);
         addView(rotateTool.rotLeft);
         addView(rotateTool.rotRight);
         addView(shapeSelect);
         addView(sizeSelect);
-        addView(exitBtn);*/
+        addView(exitBtn);
 
         //load xml layout/////////////////////////////////
-        inflater = LayoutInflater.from(context);
-        inflater.inflate(R.layout.layout_edit_mode, this);
+        /*inflater = LayoutInflater.from(context);
+        inflater.inflate(R.layout.layout_edit_mode, this);*/
     }
 
-    public void enable(float width, int height, TableSet tables){
+    public void enable(TableSet tables){
         if(active)
             return;
 
         //getSupportActionBar().hide();//used if action bar is active on home screen
-
-        /*labelInput.setMinimumWidth((int)(width * 0.4));
-        labelInput.setMinimumHeight((int)(height * 0.5));
-        labelInput.setX(0);
-        labelInput.setY((float)(height / 2));
-        labelInput.setEnabled(false);
-        //nameInput.setGravity(Gravity.CENTER);
-        shapeSelect.load(width, height);
-        sizeSelect.load(width, height);
-        exitBtn.setMinimumWidth((int)(width * 0.125));
-        exitBtn.setMinimumHeight(height);
-        exitBtn.setGravity(Gravity.CENTER);*/
-
-        /*setVisibility(View.VISIBLE);
-        sizeSelect.addSize.setEnabled(false);
-        sizeSelect.subSize.setEnabled(false);
-
-        setMinimumWidth((int) width);
-        setMinimumHeight(height);*/
 
         active = true;
         this.tables = tables;
@@ -261,6 +242,18 @@ public class EditMode extends LinearLayout {
                 deleteTable();
             }
         });
+
+        setMinimumWidth((int) (TableSet.STD_WIDTH * wRatio));
+        setMinimumHeight(200);
+        float segment = (TableSet.STD_WIDTH * wRatio) / 25;
+        labelInput.setX(segment * 1);
+        rotateTool.rotLeft.setX(segment * (float) 3.5);
+        rotateTool.rotRight.setX(segment * (float) 4.5);
+        rotateTool.rotLeft.setY(100);
+        rotateTool.rotRight.setY(100);
+        shapeSelect.setX(segment * 6);
+        sizeSelect.setX(segment * 8);
+        exitBtn.setX(segment * (float) 8.5);
 
         mainLayout.addView(garbage);
     }

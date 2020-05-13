@@ -356,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enableEditMode(){
-        editMode.enable((float) getScreenWidth(), 250, tableGui);
+        editMode.enable(tableGui);
         editMode.setVisibility(View.VISIBLE);
         editMode.garbage.setVisibility(View.VISIBLE);
     }
