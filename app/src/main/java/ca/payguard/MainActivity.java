@@ -27,6 +27,8 @@ import java.util.ArrayList;
  * for PayGuard MVP.
  */
 public class MainActivity extends AppCompatActivity {
+    private final boolean DEBUG_NO_PIN = true;
+
     private TableSet tableGui;
     public static ArrayList<Button> tblBtns = new ArrayList<>();
     private Fragment popup;
@@ -121,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         if(editMode.getActive()) {
             enableEditMode();
         } else {
@@ -186,101 +188,122 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void pinPopup(final Class<? extends AppCompatActivity> activity, final Table table){
-        //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //Add TableFragment to layout
-        popup = EmployeePinFragment.newInstance();
-        ((EmployeePinFragment)popup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
-            @Override
-            public void onSuccess() {
-                Intent intent = new Intent(getBaseContext(), activity);
-                intent.putExtra("table", table);
-                startActivity(intent);
-            }
-        });
-        ft.replace(R.id.popupLayout, popup);
-        //Complete changes
-        ft.commit();
-        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.8f);
-        blur.setOverlayColor(1);
-        blur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeBillPopup();
-            }
-        });
+        if(DEBUG_NO_PIN){
+            Intent intent = new Intent(getBaseContext(), activity);
+            intent.putExtra("table", table);
+            startActivity(intent);
+        } else {
+
+            //Begin the transaction
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            //Add TableFragment to layout
+            popup = EmployeePinFragment.newInstance();
+            ((EmployeePinFragment) popup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
+                @Override
+                public void onSuccess() {
+                    Intent intent = new Intent(getBaseContext(), activity);
+                    intent.putExtra("table", table);
+                    startActivity(intent);
+                }
+            });
+            ft.replace(R.id.popupLayout, popup);
+            //Complete changes
+            ft.commit();
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
+            blur.setBlurRadius(6);
+            blur.setAlpha(0.8f);
+            blur.setOverlayColor(1);
+            blur.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    closeBillPopup();
+                }
+            });
+        }
     }
 
     public void pinPopup(EmployeePinFragment.onConfirmListener onConfirm){
-        //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //Add TableFragment to layout
-        popup = EmployeePinFragment.newInstance();
-        ((EmployeePinFragment)popup).setConConfirm(onConfirm);
-        ft.replace(R.id.popupLayout, popup);
-        //Complete changes
-        ft.commit();
-        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.8f);
-        blur.setOverlayColor(1);
-        blur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closePopup();
-            }
-        });
+        if(DEBUG_NO_PIN)
+            onConfirm.onSuccess();
+        else {
+            //Begin the transaction
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            //Add TableFragment to layout
+            popup = EmployeePinFragment.newInstance();
+            ((EmployeePinFragment) popup).setConConfirm(onConfirm);
+            ft.replace(R.id.popupLayout, popup);
+            //Complete changes
+            ft.commit();
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
+            blur.setBlurRadius(6);
+            blur.setAlpha(0.8f);
+            blur.setOverlayColor(1);
+            blur.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    closePopup();
+                }
+            });
+        }
     }
 
     public void pinBillPopup(final Class<? extends AppCompatActivity> activity, final Table table){
-        //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //Add TableFragment to layout
-        billPopup = EmployeePinFragment.newInstance();
-        ((EmployeePinFragment)billPopup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
-            @Override
-            public void onSuccess() {
-                Intent intent = new Intent(getBaseContext(), activity);
-                intent.putExtra("table", table);
-                startActivity(intent);
-            }
-        });
-        ft.replace(R.id.billPopupLayout, billPopup);
-        //Complete changes
-        ft.commit();
-        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.8f);
-        blur.setOverlayColor(1);
-        blur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeBillPopup();
-            }
-        });
+        if(DEBUG_NO_PIN){
+            Intent intent = new Intent(getBaseContext(), activity);
+            intent.putExtra("table", table);
+            startActivity(intent);
+        } else {
+            //Begin the transaction
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            //Add TableFragment to layout
+            billPopup = EmployeePinFragment.newInstance();
+            ((EmployeePinFragment) billPopup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
+                @Override
+                public void onSuccess() {
+                    Intent intent = new Intent(getBaseContext(), activity);
+                    intent.putExtra("table", table);
+                    startActivity(intent);
+                }
+            });
+            ft.replace(R.id.billPopupLayout, billPopup);
+            //Complete changes
+            ft.commit();
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+            blur.setBlurRadius(6);
+            blur.setAlpha(0.8f);
+            blur.setOverlayColor(1);
+            blur.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    closeBillPopup();
+                }
+            });
+        }
     }
 
     public void pinBillPopup(EmployeePinFragment.onConfirmListener onConfirm){
-        //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //Add TableFragment to layout
-        billPopup = EmployeePinFragment.newInstance();
-        ((EmployeePinFragment)billPopup).setConConfirm(onConfirm);
-        ft.replace(R.id.billPopupLayout, billPopup);
-        //Complete changes
-        ft.commit();
-        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.8f);
-        blur.setOverlayColor(1);
-        blur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeBillPopup();
-            }
-        });
+        if(DEBUG_NO_PIN)
+            onConfirm.onSuccess();
+        else {
+            //Begin the transaction
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            //Add TableFragment to layout
+            billPopup = EmployeePinFragment.newInstance();
+            ((EmployeePinFragment) billPopup).setConConfirm(onConfirm);
+            ft.replace(R.id.billPopupLayout, billPopup);
+            //Complete changes
+            ft.commit();
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+            blur.setBlurRadius(6);
+            blur.setAlpha(0.8f);
+            blur.setOverlayColor(1);
+            blur.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    closeBillPopup();
+                }
+            });
+        }
     }
 
     /** Closes any open popups */
