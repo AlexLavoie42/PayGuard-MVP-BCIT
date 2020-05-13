@@ -101,38 +101,10 @@ public class MainActivity extends AppCompatActivity {
 
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
-        disableEditMode();
         if( !TransactionService.isRunning ){
             // Start service
             Intent intent = new Intent(this, TransactionService.class);
             startService(intent);
-        }
-    }
-
-//    /* Crashes app
-    @Override
-    protected void onResume(){
-        super.onResume();
-//        Intent i = getIntent();
-//
-//        if(i.getStringExtra("edit_mode").equals("e"))
-//            enableEditMode();
-//        else
-//            disableEditMode();
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-    }
-
-    @Override
-    protected void onRestart(){
-        super.onRestart();
-        if(editMode.getActive()) {
-            enableEditMode();
-        } else {
-            disableEditMode();
         }
     }
 
@@ -147,6 +119,16 @@ public class MainActivity extends AppCompatActivity {
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
 
         }*/
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(editMode.getActive()) {
+            enableEditMode();
+        } else {
+            disableEditMode();
+        }
     }
 
     @Override
@@ -187,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.btn_addCustomer).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        pinPopup(Payment.class, table);
+                        pinBillPopup(Payment.class, table);
                     }
                 });
             }
@@ -198,15 +180,23 @@ public class MainActivity extends AppCompatActivity {
         ((TableFragment)popup).displayCustomers(findViewById(R.id.tableFragment));
     }
 
-    public void pinPopup(Class<? extends AppCompatActivity> activity, Table table){
+    public void pinPopup(final Class<? extends AppCompatActivity> activity, final Table table){
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
-        billPopup = EmployeePinFragment.newInstance(activity, table);
-        ft.replace(R.id.billPopupLayout, billPopup);
+        popup = EmployeePinFragment.newInstance();
+        ((EmployeePinFragment)popup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
+            @Override
+            public void onSuccess() {
+                Intent intent = new Intent(getBaseContext(), activity);
+                intent.putExtra("table", table);
+                startActivity(intent);
+            }
+        });
+        ft.replace(R.id.popupLayout, popup);
         //Complete changes
         ft.commit();
-        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
         blur.setBlurRadius(6);
         blur.setAlpha(0.8f);
         blur.setOverlayColor(1);
@@ -218,11 +208,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void pinPopup(Class<? extends AppCompatActivity> activity){
+    public void pinPopup(EmployeePinFragment.onConfirmListener onConfirm){
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
-        popup = EmployeePinFragment.newInstance(activity);
+        popup = EmployeePinFragment.newInstance();
+        ((EmployeePinFragment)popup).setConConfirm(onConfirm);
         ft.replace(R.id.popupLayout, popup);
         //Complete changes
         ft.commit();
@@ -238,11 +229,40 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void pinBillPopup(){
+    public void pinBillPopup(final Class<? extends AppCompatActivity> activity, final Table table){
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
-        billPopup = EmployeePinFragment.newBillInstance();
+        billPopup = EmployeePinFragment.newInstance();
+        ((EmployeePinFragment)billPopup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
+            @Override
+            public void onSuccess() {
+                Intent intent = new Intent(getBaseContext(), activity);
+                intent.putExtra("table", table);
+                startActivity(intent);
+            }
+        });
+        ft.replace(R.id.billPopupLayout, billPopup);
+        //Complete changes
+        ft.commit();
+        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+        blur.setBlurRadius(6);
+        blur.setAlpha(0.8f);
+        blur.setOverlayColor(1);
+        blur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeBillPopup();
+            }
+        });
+    }
+
+    public void pinBillPopup(EmployeePinFragment.onConfirmListener onConfirm){
+        //Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //Add TableFragment to layout
+        billPopup = EmployeePinFragment.newInstance();
+        ((EmployeePinFragment)billPopup).setConConfirm(onConfirm);
         ft.replace(R.id.billPopupLayout, billPopup);
         //Complete changes
         ft.commit();
@@ -276,27 +296,27 @@ public class MainActivity extends AppCompatActivity {
     public void billPopup(Customer customer, Table table){
         curCust = customer;
         curTable = table;
-        pinBillPopup();
-    }
-
-    /** I hate this I'm sorry */
-    public void billOnSuccess() {
-        tablePopup(curTable);
-        //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //Add TableFragment to layout
-        billPopup = BillAmountFragment.newInstance(curCust, curTable.getLabel());
-        ft.replace(R.id.billPopupLayout, billPopup);
-        //Complete changes
-        ft.commit();
-        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.8f);
-        blur.setOverlayColor(1);
-        blur.setOnClickListener(new View.OnClickListener() {
+        pinBillPopup(new EmployeePinFragment.onConfirmListener() {
             @Override
-            public void onClick(View v) {
-                closeBillPopup();
+            public void onSuccess() {
+                tablePopup(curTable);
+                //Begin the transaction
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                //Add TableFragment to layout
+                billPopup = BillAmountFragment.newInstance(curCust, curTable.getLabel());
+                ft.replace(R.id.billPopupLayout, billPopup);
+                //Complete changes
+                ft.commit();
+                com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+                blur.setBlurRadius(6);
+                blur.setAlpha(0.8f);
+                blur.setOverlayColor(1);
+                blur.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeBillPopup();
+                    }
+                });
             }
         });
     }
@@ -357,9 +377,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enableEditMode(){
-        editMode.enable(tableGui);
-        editMode.setVisibility(View.VISIBLE);
-        editMode.garbage.setVisibility(View.VISIBLE);
+        pinPopup(new EmployeePinFragment.onConfirmListener() {
+            @Override
+            public void onSuccess() {
+                closePopup();
+                editMode.enable(tableGui);
+                editMode.setVisibility(View.VISIBLE);
+                editMode.garbage.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public static void disableEditMode(){

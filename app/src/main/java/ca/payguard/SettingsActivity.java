@@ -28,6 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        MainActivity.editMode.setActive(false);
     }
 
     public void goBack() {
@@ -42,7 +43,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         public boolean onPreferenceTreeClick(Preference preference) {
-            MainActivity.editMode.setActive(false);
 
             if(preference.getKey().equals("edit_mode")) {
                 MainActivity.editMode.setActive(true);
