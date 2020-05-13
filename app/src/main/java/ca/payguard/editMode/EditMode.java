@@ -277,15 +277,15 @@ public class EditMode extends LinearLayout {
         if(tables.isStdFormation()){
             int segmentX = TableSet.STD_WIDTH / 20, segmentY = TableSet.STD_HEIGHT / 20;
 
-            allocateTable('R', 2, 6);
-            allocateTable('R', 7, 6);
-            allocateTable('R', 11, 8);
-            allocateTable('R', 2, 10);
-            allocateTable('R', 7, 10);
-            allocateTable('R', 11, 12);
-            allocateTable('R', 2, 14);
-            allocateTable('R', 7, 14);
-            allocateTable('R', 15, 9);
+            allocateTable('C', 2, 6);
+            allocateTable('C', 7, 6);
+            allocateTable('C', 11, 8);
+            allocateTable('C', 2, 10);
+            allocateTable('C', 7, 10);
+            allocateTable('C', 11, 12);
+            allocateTable('C', 2, 14);
+            allocateTable('C', 7, 14);
+            allocateTable('C', 15, 9);
 
             sizeSelect.addSize();
             for(int i = 0; i < 3; i++)
