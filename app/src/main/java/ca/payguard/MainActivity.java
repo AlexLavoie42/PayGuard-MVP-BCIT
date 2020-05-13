@@ -139,8 +139,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchSettings(View v){
-        Intent myIntent = new Intent(getBaseContext(), SettingsActivity.class);
-        startActivity(myIntent);
+        pinPopup(new EmployeePinFragment.onConfirmListener() {
+            @Override
+            public void onSuccess() {
+                closePopup();
+                Intent myIntent = new Intent(getBaseContext(), SettingsActivity.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
     /** Creates new TableFragment as overlay */
@@ -377,15 +383,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enableEditMode(){
-        pinPopup(new EmployeePinFragment.onConfirmListener() {
-            @Override
-            public void onSuccess() {
-                closePopup();
-                editMode.enable(tableGui);
-                editMode.setVisibility(View.VISIBLE);
-                editMode.garbage.setVisibility(View.VISIBLE);
-            }
-        });
+        editMode.enable(tableGui);
+        editMode.setVisibility(View.VISIBLE);
+        editMode.garbage.setVisibility(View.VISIBLE);
     }
 
     public static void disableEditMode(){
