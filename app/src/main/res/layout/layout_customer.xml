@@ -9,26 +9,30 @@
 
     <TextView
         android:id="@+id/tv_seatLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="174dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="100dp"
         android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginRight="50dp"
         android:layout_marginBottom="25dp"
-        android:fontFamily="@font/muli_semibold"
+        android:layout_toStartOf="@+id/btn_addBill"
+        android:layout_toLeftOf="@+id/btn_addBill"
+        android:fontFamily="@font/muli_regular"
+        android:gravity="center_vertical"
         android:text="@string/seatInfoText"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btn_addBill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_margin="25dp"
+        android:layout_toLeftOf="@id/btn_closeCustomer"
         android:backgroundTint="@color/colorButton"
         android:text="Add $" />
 
@@ -37,8 +41,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="25dp"
-        android:layout_toRightOf="@+id/btn_addBill"
         android:backgroundTint="@color/colorButton"
         android:text="Bill" />
 
