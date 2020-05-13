@@ -7,16 +7,6 @@
     tools:context="ca.payguard.ManualCardInput">
 
     <EditText
-        android:id="@+id/CVC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/cvc"
-        android:inputType="numberPassword"
-        app:layout_constraintStart_toStartOf="@+id/PAN"
-        app:layout_constraintTop_toBottomOf="@+id/PAN" />
-
-    <EditText
         android:id="@+id/PAN"
         android:layout_width="476dp"
         android:layout_height="31dp"
@@ -55,7 +45,6 @@
         android:onClick="onNext"
         android:text="@string/manualPayButton"
         app:layout_constraintEnd_toEndOf="@+id/exp_year"
-        app:layout_constraintStart_toStartOf="@+id/CVC"
-        app:layout_constraintTop_toBottomOf="@+id/CVC" />
+        app:layout_constraintTop_toBottomOf="@+id/exp_month" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

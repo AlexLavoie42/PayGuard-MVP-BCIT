@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,9 +19,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.editMode.EditMode;
-import ca.payguard.paymentUtil.Transaction;
-import ca.payguard.paymentUtil.TransactionService;
-import ca.payguard.paymentUtil.TransactionViewModel;
 
 import java.util.ArrayList;
 
@@ -33,6 +27,8 @@ import java.util.ArrayList;
  * for PayGuard MVP.
  */
 public class MainActivity extends AppCompatActivity {
+    private final boolean DEBUG_NO_PIN = true;
+
     private TableSet tableGui;
     public static ArrayList<Button> tblBtns = new ArrayList<>();
     private Fragment popup;
@@ -46,11 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar loading;
     private Customer curCust;
     private Table curTable;
-
-    //TODO: Change these to match any updates to architecture
-    private TransactionViewModel mViewModel;
-    private TransactionService mService;
-
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
 
@@ -60,21 +51,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //TODO: SERVICE SHIT
-        mViewModel = new TransactionViewModel();
-        mViewModel.getBinder().observe(this, new Observer<TransactionService.MyBinder>() {
-            @Override
-            public void onChanged(TransactionService.MyBinder myBinder) {
-                if(myBinder != null){
-                    Log.d("Service:", "OnChanged: connected to service");
-                    mService = myBinder.getService();
-                }else{
-                    Log.d("Service:", "OnChanged: unbound from service");
-                    mService = null;
-                }
-            }
-        });
 
         try{
             db = new DatabaseController();
@@ -92,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         constraintLayout.addView(editMode);
 
         editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
+        editMode.setRatios(getWidthRatio(), getHeightRatio());
         settingsBtn = findViewById(R.id.settings_btn);
 
         loading = findViewById(R.id.progressBar);
@@ -124,51 +101,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
-        disableEditMode();
-    }
-
-    //TODO: Service might not need this
-    private void bindService(){
-        Intent serviceIntent = new Intent(this, TransactionService.class);
-        bindService(serviceIntent, mViewModel.getServiceConnection(), Context.BIND_AUTO_CREATE);
-    }
-
-//    /* Crashes app
-    @Override
-    protected void onResume(){
-        super.onResume();
-
-//        Intent i = getIntent();
-//
-//        if(i.getStringExtra("edit_mode").equals("e"))
-//            enableEditMode();
-//        else
-//            disableEditMode();
-
-        Intent serviceIntent = new Intent(this, TransactionService.class);
-        startService(serviceIntent);
-        //TODO: Service might not need this.
-        bindService();
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        //TODO: Service might not need this
-        if(mViewModel.getBinder() != null){
-            unbindService(mViewModel.getServiceConnection());
-        }
-    }
-
-    @Override
-    protected void onRestart(){
-        super.onRestart();
-        if(editMode.getActive()) {
-            enableEditMode();
-        } else {
-            disableEditMode();
+        if( !TransactionService.isRunning ){
+            // Start service
+            Intent intent = new Intent(this, TransactionService.class);
+            startService(intent);
         }
     }
 
@@ -186,15 +123,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(editMode.getActive()) {
+            enableEditMode();
+        } else {
+            disableEditMode();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
-        if(!billPopup.isDetached())
+        if(billPopup != null && !billPopup.isDetached())
             closeBillPopup();
         else closePopup();
     }
 
     public void launchSettings(View v){
-        Intent myIntent = new Intent(getBaseContext(), SettingsActivity.class);
-        startActivity(myIntent);
+        pinPopup(new EmployeePinFragment.onConfirmListener() {
+            @Override
+            public void onSuccess() {
+                closePopup();
+                Intent myIntent = new Intent(getBaseContext(), SettingsActivity.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
     /** Creates new TableFragment as overlay */
@@ -202,7 +155,8 @@ public class MainActivity extends AppCompatActivity {
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
-        popup = TableFragment.newInstance(table);
+        boolean right = table.getX()*getWidthRatio() < getScreenWidth()/2;
+        popup = TableFragment.newInstance(table, right);
         ft.replace(R.id.popupLayout, popup);
         //Complete changes
         ft.commit();
@@ -222,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.btn_addCustomer).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        pinPopup(Payment.class, table);
+                        pinBillPopup(Payment.class, table);
                     }
                 });
             }
@@ -233,64 +187,123 @@ public class MainActivity extends AppCompatActivity {
         ((TableFragment)popup).displayCustomers(findViewById(R.id.tableFragment));
     }
 
-    public void pinPopup(Class<? extends AppCompatActivity> activity, Table table){
-        //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //Add TableFragment to layout
-        popup = EmployeePinFragment.newInstance(activity, table);
-        ft.replace(R.id.popupLayout, popup);
-        //Complete changes
-        ft.commit();
-        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.8f);
-        blur.setOverlayColor(1);
-        blur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closePopup();
-            }
-        });
+    public void pinPopup(final Class<? extends AppCompatActivity> activity, final Table table){
+        if(DEBUG_NO_PIN){
+            Intent intent = new Intent(getBaseContext(), activity);
+            intent.putExtra("table", table);
+            startActivity(intent);
+        } else {
+
+            //Begin the transaction
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            //Add TableFragment to layout
+            popup = EmployeePinFragment.newInstance();
+            ((EmployeePinFragment) popup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
+                @Override
+                public void onSuccess() {
+                    Intent intent = new Intent(getBaseContext(), activity);
+                    intent.putExtra("table", table);
+                    startActivity(intent);
+                }
+            });
+            ft.replace(R.id.popupLayout, popup);
+            //Complete changes
+            ft.commit();
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
+            blur.setBlurRadius(6);
+            blur.setAlpha(0.8f);
+            blur.setOverlayColor(1);
+            blur.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    closeBillPopup();
+                }
+            });
+        }
     }
 
-    public void pinPopup(Class<? extends AppCompatActivity> activity){
-        //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //Add TableFragment to layout
-        popup = EmployeePinFragment.newInstance(activity);
-        ft.replace(R.id.popupLayout, popup);
-        //Complete changes
-        ft.commit();
-        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.8f);
-        blur.setOverlayColor(1);
-        blur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closePopup();
-            }
-        });
+    public void pinPopup(EmployeePinFragment.onConfirmListener onConfirm){
+        if(DEBUG_NO_PIN)
+            onConfirm.onSuccess();
+        else {
+            //Begin the transaction
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            //Add TableFragment to layout
+            popup = EmployeePinFragment.newInstance();
+            ((EmployeePinFragment) popup).setConConfirm(onConfirm);
+            ft.replace(R.id.popupLayout, popup);
+            //Complete changes
+            ft.commit();
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
+            blur.setBlurRadius(6);
+            blur.setAlpha(0.8f);
+            blur.setOverlayColor(1);
+            blur.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    closePopup();
+                }
+            });
+        }
     }
 
-    public void pinBillPopup(){
-        //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //Add TableFragment to layout
-        billPopup = EmployeePinFragment.newBillInstance();
-        ft.replace(R.id.billPopupLayout, billPopup);
-        //Complete changes
-        ft.commit();
-        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.8f);
-        blur.setOverlayColor(1);
-        blur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeBillPopup();
-            }
-        });
+    public void pinBillPopup(final Class<? extends AppCompatActivity> activity, final Table table){
+        if(DEBUG_NO_PIN){
+            Intent intent = new Intent(getBaseContext(), activity);
+            intent.putExtra("table", table);
+            startActivity(intent);
+        } else {
+            //Begin the transaction
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            //Add TableFragment to layout
+            billPopup = EmployeePinFragment.newInstance();
+            ((EmployeePinFragment) billPopup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
+                @Override
+                public void onSuccess() {
+                    Intent intent = new Intent(getBaseContext(), activity);
+                    intent.putExtra("table", table);
+                    startActivity(intent);
+                }
+            });
+            ft.replace(R.id.billPopupLayout, billPopup);
+            //Complete changes
+            ft.commit();
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+            blur.setBlurRadius(6);
+            blur.setAlpha(0.8f);
+            blur.setOverlayColor(1);
+            blur.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    closeBillPopup();
+                }
+            });
+        }
+    }
+
+    public void pinBillPopup(EmployeePinFragment.onConfirmListener onConfirm){
+        if(DEBUG_NO_PIN)
+            onConfirm.onSuccess();
+        else {
+            //Begin the transaction
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            //Add TableFragment to layout
+            billPopup = EmployeePinFragment.newInstance();
+            ((EmployeePinFragment) billPopup).setConConfirm(onConfirm);
+            ft.replace(R.id.billPopupLayout, billPopup);
+            //Complete changes
+            ft.commit();
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+            blur.setBlurRadius(6);
+            blur.setAlpha(0.8f);
+            blur.setOverlayColor(1);
+            blur.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    closeBillPopup();
+                }
+            });
+        }
     }
 
     /** Closes any open popups */
@@ -311,27 +324,27 @@ public class MainActivity extends AppCompatActivity {
     public void billPopup(Customer customer, Table table){
         curCust = customer;
         curTable = table;
-        pinBillPopup();
-    }
-
-    /** I hate this I'm sorry */
-    public void billOnSuccess() {
-        tablePopup(curTable);
-        //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //Add TableFragment to layout
-        billPopup = BillAmountFragment.newInstance(curCust, curTable.getLabel());
-        ft.replace(R.id.billPopupLayout, billPopup);
-        //Complete changes
-        ft.commit();
-        com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.8f);
-        blur.setOverlayColor(1);
-        blur.setOnClickListener(new View.OnClickListener() {
+        pinBillPopup(new EmployeePinFragment.onConfirmListener() {
             @Override
-            public void onClick(View v) {
-                closeBillPopup();
+            public void onSuccess() {
+                tablePopup(curTable);
+                //Begin the transaction
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                //Add TableFragment to layout
+                billPopup = BillAmountFragment.newInstance(curCust, curTable.getLabel());
+                ft.replace(R.id.billPopupLayout, billPopup);
+                //Complete changes
+                ft.commit();
+                com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+                blur.setBlurRadius(6);
+                blur.setAlpha(0.8f);
+                blur.setOverlayColor(1);
+                blur.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeBillPopup();
+                    }
+                });
             }
         });
     }
@@ -346,6 +359,16 @@ public class MainActivity extends AppCompatActivity {
             blur.setBlurRadius(0);
             blur.setAlpha(0);
             blur.setClickable(false);
+        }
+    }
+
+    public void billCustomer(Customer customer){
+        if(TransactionService.isRunning ){
+            TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
+        }else{
+            Intent intent = new Intent(this, TransactionService.class);
+            startService(intent);
+            TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
         }
     }
 
@@ -382,7 +405,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enableEditMode(){
-        editMode.enable((float) getScreenWidth(), 250, tableGui);
+        editMode.enable(tableGui);
         editMode.setVisibility(View.VISIBLE);
         editMode.garbage.setVisibility(View.VISIBLE);
     }

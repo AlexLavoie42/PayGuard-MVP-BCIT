@@ -3,6 +3,7 @@ package ca.payguard.editMode;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,8 @@ public class EditMode extends LinearLayout {
     ConstraintLayout mainLayout;
     RotateTool rotateTool;
     public static Button garbage;
+
+    LayoutInflater inflater;
 
     public EditMode(Context context) {
         super(context);
@@ -87,42 +90,20 @@ public class EditMode extends LinearLayout {
         addView(shapeSelect);
         addView(sizeSelect);
         addView(exitBtn);
+
+        //load xml layout/////////////////////////////////
+        /*inflater = LayoutInflater.from(context);
+        inflater.inflate(R.layout.layout_edit_mode, this);*/
     }
 
-    public void enable(float width, int height, TableSet tables){
+    public void enable(TableSet tables){
         if(active)
             return;
 
         //getSupportActionBar().hide();//used if action bar is active on home screen
 
-        setMinimumWidth((int) width);
-        setMinimumHeight(height);
-
-        /*
-        Width distribution:
-        nameInput - 40%
-        shapeSelect - 35%
-        sizeSelect - 12.5%
-        exitBtn - 12.5%
-         */
-        labelInput.setMinimumWidth((int)(width * 0.4));
-        labelInput.setMinimumHeight((int)(height * 0.5));
-        labelInput.setX(0);
-        labelInput.setY((float)(height / 2));
-        labelInput.setEnabled(false);
-        //nameInput.setGravity(Gravity.CENTER);
-        shapeSelect.load(width, height);
-        sizeSelect.load(width, height);
-        exitBtn.setMinimumWidth((int)(width * 0.125));
-        exitBtn.setMinimumHeight(height);
-        exitBtn.setGravity(Gravity.CENTER);
-
-        setVisibility(View.VISIBLE);
         active = true;
-
         this.tables = tables;
-        sizeSelect.addSize.setEnabled(false);
-        sizeSelect.subSize.setEnabled(false);
         MainActivity.settingsBtn.setVisibility(View.GONE);
     }
 
@@ -262,6 +243,19 @@ public class EditMode extends LinearLayout {
             }
         });
 
+        setMinimumWidth((int) (TableSet.STD_WIDTH * wRatio));
+        setMinimumHeight(200);
+
+        float segment = (TableSet.STD_WIDTH * wRatio) / 25;
+        labelInput.setX(segment * 1);
+        rotateTool.rotLeft.setX(segment * (float) 3.5);
+        rotateTool.rotRight.setX(segment * (float) 4.5);
+        rotateTool.rotLeft.setY(100);
+        rotateTool.rotRight.setY(100);
+        shapeSelect.setX(segment * 6);
+        sizeSelect.setX(segment * 8);
+        exitBtn.setX(segment * (float) 8.5);
+
         mainLayout.addView(garbage);
     }
 
@@ -282,16 +276,14 @@ public class EditMode extends LinearLayout {
      * table arrangement is used. */
     public void applyStdArrangement(){
         if(tables.isStdFormation()){
-            int segmentX = TableSet.STD_WIDTH / 20, segmentY = TableSet.STD_HEIGHT / 20;
-
-            allocateTable('R', 2, 6);
-            allocateTable('R', 7, 6);
-            allocateTable('R', 11, 8);
-            allocateTable('R', 2, 10);
-            allocateTable('R', 7, 10);
-            allocateTable('R', 11, 12);
-            allocateTable('R', 2, 14);
-            allocateTable('R', 7, 14);
+            allocateTable('C', 2, 6);
+            allocateTable('C', 7, 6);
+            allocateTable('C', 11, 8);
+            allocateTable('C', 2, 10);
+            allocateTable('C', 7, 10);
+            allocateTable('C', 11, 12);
+            allocateTable('C', 2, 14);
+            allocateTable('C', 7, 14);
             allocateTable('R', 15, 9);
 
             sizeSelect.addSize();
@@ -363,6 +355,8 @@ public class EditMode extends LinearLayout {
         b.setX((float) TableSet.STD_WIDTH / 2 * wRatio - (float) size / 2);
         b.setY((float) TableSet.STD_HEIGHT / 2 * hRatio - (float) size / 2);
 
+        t.setCoords((int)(b.getX() / wRatio), (int)(b.getY() / hRatio));
+
         MainActivity.tblBtns.add(b);
         MainActivity.tableLayout.addView(b);
 
@@ -415,11 +409,6 @@ public class EditMode extends LinearLayout {
         deselect();
     }
 
-    /** Stores tableset data in DB */
-    public void saveTableData(){
-        db.updateTableSet(tables);
-    }
-
     public void setSize(int size){
         this.size = size;
     }
@@ -431,6 +420,8 @@ public class EditMode extends LinearLayout {
     public void setRatios(float wRatio, float hRatio){
         this.wRatio = wRatio;
         this.hRatio = hRatio;
+
+        this.size = (int) Math.max((float) size * wRatio, (float) size * hRatio) / 6 * 5;
     }
 
     public int getSize(){

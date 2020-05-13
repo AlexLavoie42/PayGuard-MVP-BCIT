@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import ca.payguard.R;
 
@@ -29,27 +30,39 @@ public class Payment extends AppCompatActivity{
      * @param amount: Must start with $ and must be convertible to an Int.
      */
     protected void forwardAmount(String amount){
-        int dollars = Integer.parseInt(amount.substring(1));
-        newCustomer.setPreAuthTotal(dollars);
+        if(!amount.isEmpty()) {
+            int dollars = Integer.parseInt(amount.substring(1));
+            newCustomer.setPreAuthTotal(dollars);
 
-        Intent myIntent = new Intent(getBaseContext(),   ManualCardInput.class);
-        myIntent.putExtra("tableNum", tableNum);
-        myIntent.putExtra("customer", newCustomer);
-        myIntent.putExtra("preAuthAmount", dollars);
-        startActivity(myIntent);
+            Intent myIntent = new Intent(getBaseContext(), ManualCardInput.class);
+            myIntent.putExtra("tableNum", tableNum);
+            myIntent.putExtra("customer", newCustomer);
+            myIntent.putExtra("preAuthAmount", dollars);
+            startActivity(myIntent);
+        } else {
+            Toast.makeText(getApplicationContext(), "Please enter limit",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     /** Method to handle entering a custom amount for a pre-auth. */
     public void onCustomAmount(View v){
         //Begin the transaction
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.popupLayout, PreAuthAmountFragment.newInstance());
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        final PreAuthAmountFragment fragment = PreAuthAmountFragment.newInstance();
+        ft.replace(R.id.popupLayout, fragment);
         //Complete changes
         ft.commit();
         com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
         blur.setBlurRadius(6);
         blur.setAlpha(0.8f);
         blur.setOverlayColor(1);
+        blur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ft.detach(fragment);
+            }
+        });
     }
 
     /** Method for handling dollarAmount1 button's push. Will use button's text in forwardAmount. */

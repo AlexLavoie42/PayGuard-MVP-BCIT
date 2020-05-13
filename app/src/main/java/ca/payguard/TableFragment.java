@@ -1,22 +1,18 @@
 package ca.payguard;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.AttributeSet;
+import android.text.Layout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import ca.payguard.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +23,7 @@ public class TableFragment extends Fragment {
     private static final String ARG_TABLE = "table";
 
     private Table table;
+    private boolean isRight;
 
     public TableFragment() {
         // Required empty public constructor
@@ -39,10 +36,11 @@ public class TableFragment extends Fragment {
      * @param table Table Object.
      * @return A new instance of fragment TableFragment.
      */
-    public static TableFragment newInstance(Table table) {
+    public static TableFragment newInstance(Table table, boolean right) {
         TableFragment fragment = new TableFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_TABLE, table);
+        args.putBoolean("right", right);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,6 +50,7 @@ public class TableFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             table = getArguments().getParcelable(ARG_TABLE);
+            isRight = getArguments().getBoolean("right");
         }
     }
 
@@ -63,32 +62,25 @@ public class TableFragment extends Fragment {
         TextView header = root.findViewById(R.id.tv_tableHeaderText);
         header.setText(root.getResources().getString(R.string.tableHeader,
                 table.getLabel()));
+        if(isRight)
+            ((LinearLayout)container).setGravity(Gravity.END);
+        else
+            ((LinearLayout)container).setGravity(Gravity.START);
         displayCustomers(root);
         return root;
     }
 
-    public void displayCustomers(View root) {
-        View layout = root.findViewById(R.id.layout_seats);
-        ((ViewGroup) layout).removeAllViews();
+    public void displayCustomers(View root){
+        ListView listView = root.findViewById(R.id.layout_seats);
+        CustomerAdapter adapter = new CustomerAdapter(
+                table.getAllCustomers(), table, (MainActivity) getActivity(), getContext());
+        listView.setAdapter(adapter);
+    }
+
+    public void billAll(){
         if(table.getAllCustomers() != null) {
             for (Customer c : table.getAllCustomers()) {
-                View custView = LayoutInflater.from(root.getContext()).inflate(R.layout.layout_customer,
-                        (ViewGroup) layout, false);
-
-                TextView custText = custView.findViewById(R.id.tv_seatLabel);
-                custText.setText(getResources().getString(R.string.seatInfoText, c.getId(),
-                        c.getPreAuthTotal(), c.getBillTotal()));
-
-                Button addBill = custView.findViewById(R.id.btn_addBill);
-                final Customer cRef = c;
-                addBill.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((MainActivity)getActivity()).billPopup(cRef, table);
-                    }
-                });
-
-                ((ViewGroup) layout).addView(custView);
+                TransactionService.instance.completeTransaction(c.getOrderID(), "" + c.getBillTotal());
             }
         }
     }
