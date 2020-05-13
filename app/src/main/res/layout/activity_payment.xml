@@ -16,9 +16,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="181dp"
-            android:layout_height="253dp"
+            android:layout_width="334dp"
+            android:layout_height="321dp"
             android:background="@drawable/bckg_rectangle"
+            android:elevation="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,18 +32,17 @@
                 android:layout_height="wrap_content"
                 android:onClick="onAmount1"
                 android:text="@string/dollarAmount1"
-                app:layout_constraintBottom_toTopOf="@+id/dollarAmount2"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.358" />
+                app:layout_constraintVertical_bias="0.13999999" />
 
             <Button
                 android:id="@+id/dollarAmount2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:onClick="onAmount2"
                 android:text="@string/dollarAmount2"
                 app:layout_constraintStart_toStartOf="@+id/dollarAmount1"
@@ -52,7 +52,7 @@
                 android:id="@+id/dollarAmount3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:onClick="onAmount3"
                 android:text="@string/dollarAmount3"
                 app:layout_constraintStart_toStartOf="@+id/dollarAmount2"
@@ -62,7 +62,7 @@
                 android:id="@+id/customAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:onClick="onCustomAmount"
                 android:text="@string/customAmount"
                 app:layout_constraintStart_toStartOf="@+id/dollarAmount3"
@@ -102,14 +102,14 @@
         app:layout_constraintVertical_bias="0.05"
         app:srcCompat="@drawable/logo" />
 
-        <com.github.mmin18.widget.RealtimeBlurView
-            android:id="@+id/blur"
-            android:layout_width="960dp"
-            android:layout_height="600dp"
-            app:realtimeBlurRadius="0dp"
-            app:realtimeOverlayColor="#88C5FFAA" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.github.mmin18.widget.RealtimeBlurView
+        android:id="@+id/blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:realtimeBlurRadius="0dp"
+        app:realtimeOverlayColor="#88C5FFAA" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/popupLayout"
