@@ -21,8 +21,8 @@ public class ManualCardInput extends AppCompatActivity {
     public void onNext(View v){
         try{
             Customer customer = (Customer) getIntent().getParcelableExtra("customer");
-            String pan = findViewById(R.id.PAN).toString();
-            String exp = findViewById(R.id.exp_year).toString() + findViewById(R.id.exp_month).toString();
+            String pan = ((EditText)findViewById(R.id.PAN)).getText().toString();
+            String exp = ((EditText)findViewById(R.id.exp_year)).getText().toString() + ((EditText)findViewById(R.id.exp_month)).getText().toString();
             int dollars;
             String dollarAmount;
             try{
@@ -43,7 +43,6 @@ public class ManualCardInput extends AppCompatActivity {
             Intent myIntent = new Intent(getBaseContext(),   EmailConfirmation.class);
             myIntent.putExtra("customer", getIntent().getParcelableExtra("customer"));
             myIntent.putExtra("tableNum", getIntent().getStringExtra("tableNum"));
-            myIntent.putExtra("preAuthAmount", getIntent().getIntExtra("preAuthAmount", 0));
             startActivity(myIntent);
         }catch (Exception e){
             System.out.println(e.toString());

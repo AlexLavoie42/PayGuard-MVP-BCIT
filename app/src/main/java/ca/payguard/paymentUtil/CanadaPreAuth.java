@@ -132,6 +132,7 @@ public class CanadaPreAuth implements TransactionHandler
         {
             Receipt receipt = mpgReq.getReceipt();
             if(receipt.getComplete().equalsIgnoreCase("false")){
+                System.out.println(receipt.getMessage());
                 throw new PreAuthFailure("Token Failed to be created: " + receipt.getMessage());
             }
             return new AuthToken(receipt, orderId);

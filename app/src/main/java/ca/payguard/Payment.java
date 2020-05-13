@@ -37,7 +37,7 @@ public class Payment extends AppCompatActivity{
             Intent myIntent = new Intent(getBaseContext(), ManualCardInput.class);
             myIntent.putExtra("tableNum", tableNum);
             myIntent.putExtra("customer", newCustomer);
-            myIntent.putExtra("preAuthAmount", dollars);
+            myIntent.putExtra("preAuthAmount", "" + dollars);
             startActivity(myIntent);
         } else {
             Toast.makeText(getApplicationContext(), "Please enter limit",
