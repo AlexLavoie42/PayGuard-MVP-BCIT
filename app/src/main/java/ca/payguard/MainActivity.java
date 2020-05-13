@@ -165,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
         //Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //Add TableFragment to layout
-        popup = TableFragment.newInstance(table);
+        boolean right = table.getX()*getWidthRatio() < getScreenWidth()/2;
+        popup = TableFragment.newInstance(table, right);
         ft.replace(R.id.popupLayout, popup);
         //Complete changes
         ft.commit();
