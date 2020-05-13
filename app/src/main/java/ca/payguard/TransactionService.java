@@ -86,8 +86,10 @@ public class TransactionService extends Service {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
                     != PackageManager.PERMISSION_GRANTED) {
                 // Permission is not granted
+                System.out.println("Transaction: " + orderId + " would be executed for " + amount);
             }else{
                 //            transaction.executeTransaction(id, amount);
+                System.out.println("Transaction: " + orderId + " executed for " + amount);
             }
         }catch (Exception e){
             System.out.println(e.toString());

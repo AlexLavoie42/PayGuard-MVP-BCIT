@@ -101,16 +101,7 @@ public class MainActivity extends AppCompatActivity {
         editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
         disableEditMode();
-        startOrStopService();
-    }
-
-    public void startOrStopService(){
-        if( TransactionService.isRunning ){
-            // Stop service
-            Intent intent = new Intent(this, TransactionService.class);
-            stopService(intent);
-        }
-        else {
+        if( !TransactionService.isRunning ){
             // Start service
             Intent intent = new Intent(this, TransactionService.class);
             startService(intent);
