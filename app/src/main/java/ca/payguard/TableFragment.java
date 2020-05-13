@@ -87,6 +87,13 @@ public class TableFragment extends Fragment {
                         ((MainActivity)getActivity()).billPopup(cRef, table);
                     }
                 });
+                Button closeBill = custView.findViewById(R.id.btn_closeCustomer);
+                closeBill.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((MainActivity)getActivity()).billCustomer(cRef);
+                    }
+                });
 
                 ((ViewGroup) layout).addView(custView);
             }
