@@ -284,7 +284,7 @@ public class EditMode extends LinearLayout {
             allocateTable('C', 11, 12);
             allocateTable('C', 2, 14);
             allocateTable('C', 7, 14);
-            allocateTable('C', 15, 9);
+            allocateTable('R', 15, 9);
 
             sizeSelect.addSize();
             for(int i = 0; i < 3; i++)
@@ -420,6 +420,8 @@ public class EditMode extends LinearLayout {
     public void setRatios(float wRatio, float hRatio){
         this.wRatio = wRatio;
         this.hRatio = hRatio;
+
+        this.size = (int) Math.max((float) size * wRatio, (float) size * hRatio) / 6 * 5;
     }
 
     public int getSize(){

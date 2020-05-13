@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.mainLayout);
         constraintLayout.addView(editMode);
 
-        editMode.setSize((int) Math.max((TableSet.STD_WIDTH * getWidthRatio()) / 20,
-                (TableSet.STD_HEIGHT * getHeightRatio()) / 20));
+        editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
+        editMode.setRatios(getWidthRatio(), getHeightRatio());
         settingsBtn = findViewById(R.id.settings_btn);
 
         loading = findViewById(R.id.progressBar);
@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        editMode.setRatios(getWidthRatio(), getHeightRatio());
         editMode.enableExternalTools(constraintLayout, this);
         if( !TransactionService.isRunning ){
             // Start service
