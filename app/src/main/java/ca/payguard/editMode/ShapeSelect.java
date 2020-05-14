@@ -92,8 +92,7 @@ public class ShapeSelect extends LinearLayout {
         b.setHeight(dim * mod);
         b.setMinimumWidth(dim * mod);
         b.setMinimumHeight(dim * mod);
-        b.setBackgroundResource(0);
-        b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
+        b.setBackground(getResources().getDrawable(R.drawable.table));
     }
 
     public void applyCircle(Button b){
@@ -112,7 +111,7 @@ public class ShapeSelect extends LinearLayout {
         b.setHeight(dim * mod);
         b.setMinimumWidth(dim * mod);
         b.setMinimumHeight(dim * mod);
-        b.setBackground(getResources().getDrawable(R.drawable.btn_rounded));
+        b.setBackground(getResources().getDrawable(R.drawable.table_round));
     }
 
     public void applyRectangle(Button b){
@@ -131,8 +130,7 @@ public class ShapeSelect extends LinearLayout {
         b.setHeight(dim * mod);
         b.setMinimumWidth(dim * 2 * mod);
         b.setMinimumHeight(dim * mod);
-        b.setBackgroundResource(0);
-        b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
+        b.setBackground(getResources().getDrawable(R.drawable.table));
     }
 
     /* Finds the table's set shape and calls the corresponding function. */

@@ -8,6 +8,9 @@
     <color name="colorButton">#CCF0A1</color>
     <color name="colorInput">#F3FFE5</color>
     <color name="red">#FF0000</color>
+    <color name="buttonAccent">#AEC395</color>
+    <color name="buttonGradientStart">#D1E5B9</color>
+    <color name="buttonGradientEnd">#B2D28B</color>
 
     <!--PayGuard color palette-->
     <color name="darkGreen">#45592D</color>

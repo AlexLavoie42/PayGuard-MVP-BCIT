@@ -2,12 +2,10 @@ package ca.payguard.editMode;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -124,9 +122,9 @@ public class EditMode extends LinearLayout {
 
         if(this.selected != null) {
             if(this.selectedTbl.getShape() != Table.Shape.C)
-                this.selected.setBackgroundColor(getResources().getColor(R.color.brightGreen));
+                this.selected.setBackground(getResources().getDrawable(R.drawable.table_round));
             else
-                this.selected.setBackground(getResources().getDrawable(R.drawable.btn_rounded));
+                this.selected.setBackground(getResources().getDrawable(R.drawable.table));
         }
 
         for(Table t : tables){
@@ -139,7 +137,7 @@ public class EditMode extends LinearLayout {
         if(selected.getShape() != Table.Shape.C)
             b.setBackground(getResources().getDrawable(R.drawable.table_selector));
         else
-            b.setBackground(getResources().getDrawable(R.drawable.btn_rounded_selected));
+            b.setBackground(getResources().getDrawable(R.drawable.table_round_selected));
 
         if(selected != null){
             labelInput.setText(selected.getLabel());
@@ -159,9 +157,9 @@ public class EditMode extends LinearLayout {
         if(b != null){
             Table t = getSelectedTbl();
             if(t.getShape() == Table.Shape.C)
-                b.setBackground(getResources().getDrawable(R.drawable.btn_rounded));
+                b.setBackground(getResources().getDrawable(R.drawable.table_round));
             else
-                b.setBackgroundColor(getResources().getColor(R.color.brightGreen));
+                b.setBackground(getResources().getDrawable(R.drawable.table));
 
             selected = null;
             selectedTbl = null;
