@@ -390,8 +390,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setBlur(RealtimeBlurView blur){
-        blur.setBlurRadius(0.1f);
-        blur.setAlpha(0.45f);
+        blur.setDownsampleFactor(2);
+        blur.setBlurRadius(6);
+        blur.setAlpha(0.6f);
         blur.setOverlayColor(R.color.blurColor);
     }
 
