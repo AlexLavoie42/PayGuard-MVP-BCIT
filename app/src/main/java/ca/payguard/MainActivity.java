@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import com.github.mmin18.widget.RealtimeBlurView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -195,9 +196,7 @@ public class MainActivity extends AppCompatActivity {
         //Complete changes
         ft.commit();
         com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.8f);
-        blur.setOverlayColor(1);
+        setBlur(blur);
         blur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,9 +243,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-            blur.setBlurRadius(6);
-            blur.setAlpha(0.8f);
-            blur.setOverlayColor(1);
+            setBlur(blur);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -269,9 +266,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-            blur.setBlurRadius(6);
-            blur.setAlpha(0.8f);
-            blur.setOverlayColor(1);
+            setBlur(blur);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -303,9 +298,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-            blur.setBlurRadius(6);
-            blur.setAlpha(0.8f);
-            blur.setOverlayColor(1);
+            setBlur(blur);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -328,9 +321,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-            blur.setBlurRadius(6);
-            blur.setAlpha(0.8f);
-            blur.setOverlayColor(1);
+            setBlur(blur);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -372,9 +363,7 @@ public class MainActivity extends AppCompatActivity {
                 //Complete changes
                 ft.commit();
                 com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-                blur.setBlurRadius(6);
-                blur.setAlpha(0.8f);
-                blur.setOverlayColor(1);
+                setBlur(blur);
                 blur.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -398,6 +387,12 @@ public class MainActivity extends AppCompatActivity {
         } else if(keyboardCheck.isKeyboardShowing()){
             hideKeyboard(this);
         }
+    }
+
+    public void setBlur(RealtimeBlurView blur){
+        blur.setBlurRadius(0.1f);
+        blur.setAlpha(0.45f);
+        blur.setOverlayColor(R.color.blurColor);
     }
 
     public void billCustomer(Customer customer){

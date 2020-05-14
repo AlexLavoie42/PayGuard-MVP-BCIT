@@ -18,4 +18,5 @@
     <color name="lightGreen">#A7D86D</color>
     <color name="green">#80A653</color>
     <color name="blackGreen">#515947</color>
+    <color name="blurColor">#FFFFFF</color>
 </resources>
