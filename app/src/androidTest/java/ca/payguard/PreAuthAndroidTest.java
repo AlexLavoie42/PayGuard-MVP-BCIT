@@ -1,18 +1,19 @@
 package ca.payguard;
 
 import org.junit.Test;
+
 import ca.payguard.paymentUtil.CanadaPreAuth;
 import ca.payguard.paymentUtil.Transaction;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
-public class PreAuthUnitTest {
+public class PreAuthAndroidTest {
 
     @Test
     public void PreAuthFlow() {
         Transaction transaction = new Transaction();
         CanadaPreAuth preAuth = new CanadaPreAuth();
-        preAuth.setOrderId("PG-type1-00003");
+        preAuth.setOrderId("PG-type1-00005");
         preAuth.setPan("4242424242424242"); // Test Visa card
         preAuth.setExpDate("2103"); // YY/MM
         transaction.newTransaction(preAuth);
