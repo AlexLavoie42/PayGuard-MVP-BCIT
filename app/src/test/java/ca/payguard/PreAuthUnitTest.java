@@ -12,7 +12,7 @@ public class PreAuthUnitTest {
     public void PreAuthFlow() {
         Transaction transaction = new Transaction();
         CanadaPreAuth preAuth = new CanadaPreAuth();
-        preAuth.setOrderId("PG-type1-00003");
+        preAuth.setOrderId("PG-type1-00007");
         preAuth.setPan("4242424242424242"); // Test Visa card
         preAuth.setExpDate("2103"); // YY/MM
         transaction.newTransaction(preAuth);

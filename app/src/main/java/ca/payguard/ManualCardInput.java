@@ -33,11 +33,11 @@ public class ManualCardInput extends AppCompatActivity {
             }
             //TODO: Put these into transaction.
             if(TransactionService.isRunning ){
-                TransactionService.instance.executeTransaction(customer.getOrderID(), pan, exp, dollarAmount);
+                TransactionService.instance.executeTransaction(customer.getOrderID(), pan, exp, dollarAmount +".00");
             }else{
                 Intent intent = new Intent(this, TransactionService.class);
                 startService(intent);
-                TransactionService.instance.executeTransaction(customer.getOrderID(), pan, exp, dollarAmount);
+                TransactionService.instance.executeTransaction(customer.getOrderID(), pan, exp, dollarAmount + ".00");
             }
 
             Intent myIntent = new Intent(getBaseContext(),   EmailConfirmation.class);
