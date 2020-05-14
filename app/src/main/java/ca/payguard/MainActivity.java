@@ -5,12 +5,17 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
@@ -19,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.editMode.EditMode;
+import ca.payguard.miscUtil.KeyboardCheck;
 
 import java.util.ArrayList;
 
@@ -27,12 +33,13 @@ import java.util.ArrayList;
  * for PayGuard MVP.
  */
 public class MainActivity extends AppCompatActivity {
-    private final boolean DEBUG_NO_PIN = true;
+    private final boolean DEBUG_NO_PIN = false;
 
     private TableSet tableGui;
     public static ArrayList<Button> tblBtns = new ArrayList<>();
     private Fragment popup;
     private Fragment billPopup;
+    private KeyboardCheck keyboardCheck;
 
     public DatabaseController getDb() {
         return db;
@@ -107,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, TransactionService.class);
             startService(intent);
         }
+        keyboardCheck = new KeyboardCheck(constraintLayout);
     }
 
     //TODO doesn't seem to activate? supposed to function on orientation change
@@ -120,6 +128,32 @@ public class MainActivity extends AppCompatActivity {
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
 
         }*/
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View v = getCurrentFocus();
+
+        if (v != null &&
+                (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
+                v instanceof EditText &&
+                !v.getClass().getName().startsWith("android.webkit.")) {
+            int scrcoords[] = new int[2];
+            v.getLocationOnScreen(scrcoords);
+            float x = ev.getRawX() + v.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + v.getTop() - scrcoords[1];
+
+            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
+                hideKeyboard(this);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+        }
     }
 
     @Override
@@ -309,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
     /** Closes any open popups */
     private void closePopup(){
         //Detach current popup if it exists
-        if(popup != null) {
+        if(popup != null && !keyboardCheck.isKeyboardShowing()) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
             ft.detach(popup);
@@ -318,6 +352,8 @@ public class MainActivity extends AppCompatActivity {
             blur.setBlurRadius(0);
             blur.setAlpha(0);
             blur.setClickable(false);
+        } else if(keyboardCheck.isKeyboardShowing()){
+            hideKeyboard(this);
         }
     }
 
@@ -350,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void closeBillPopup(){
-        if(billPopup != null) {
+        if(billPopup != null && !keyboardCheck.isKeyboardShowing()) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
             ft.detach(billPopup);
@@ -359,6 +395,8 @@ public class MainActivity extends AppCompatActivity {
             blur.setBlurRadius(0);
             blur.setAlpha(0);
             blur.setClickable(false);
+        } else if(keyboardCheck.isKeyboardShowing()){
+            hideKeyboard(this);
         }
     }
 
