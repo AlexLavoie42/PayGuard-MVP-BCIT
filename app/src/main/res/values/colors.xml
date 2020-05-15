@@ -16,7 +16,7 @@
     <color name="green">#80A653</color>
     <color name="blackGreen">#515947</color>
     <color name="blurColor">#0000</color>
-    <color name="buttonAccent">#AEC395</color>
-    <color name="buttonGradientStart">#D1E5B9</color>
-    <color name="buttonGradientEnd">#B2D28B</color>
+    <color name="buttonAccent">#ACCC8D</color>
+    <color name="buttonGradientStart">#C6E89D</color>
+    <color name="buttonGradientEnd">#B3D38A</color>
 </resources>
