@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
                     for(Button b : tblBtns)
                         tableLayout.addView(b);
                 } else {
-                    //tableGui = new TableSet((ArrayList) documentSnapshot.getData().get("tableset"));
-                    tableGui = new TableSet();
-                    tableGui.renderStdTableSet();//TODO change back
+                    tableGui = new TableSet((ArrayList) documentSnapshot.getData().get("tableset"));
+                    /*tableGui = new TableSet();
+                    tableGui.renderStdTableSet();//TODO change back*/
 
                     tblBtns = renderTableSet(getBaseContext(), tableGui);
                     tableLayout.removeAllViews();
