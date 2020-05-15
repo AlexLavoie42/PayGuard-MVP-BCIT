@@ -76,14 +76,21 @@ public class TransactionService extends Service {
 //        thread.start();
     }
 
-    public void completeTransaction(String orderId, String amount){
+    public void completeTransaction(final String orderId, final String amount){
         //TODO: ONLY GARRETT IS ALLOWED TO UNCOMMENT THIS
-        if(transaction.completeTransaction(orderId, amount)){
-            System.out.println("Transaction completed");
-        }else{
-            System.out.println("Error in transaction");
-        }
-        System.out.println("Transaction: " + orderId + " completed for " + amount);
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                if(transaction.completeTransaction(orderId, amount)){
+                    System.out.println("Transaction completed");
+                }else{
+                    System.out.println("Error in transaction");
+                }
+                System.out.println("Transaction: " + orderId + " completed for " + amount);
+            }
+        };
+        Thread thread = new Thread(run);
+//        thread.start();
     }
 
 }
