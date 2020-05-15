@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,14 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-
 import ca.payguard.dbUtil.DatabaseController;
-import ca.payguard.editMode.EditMode;
+import ca.payguard.editMode.*;
 import ca.payguard.miscUtil.KeyboardCheck;
-
 import java.util.ArrayList;
 
 /**
@@ -37,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TableSet tableGui;
     public static ArrayList<Button> tblBtns = new ArrayList<>();
+    private int tblSize;
     private Fragment popup;
     private Fragment billPopup;
     private KeyboardCheck keyboardCheck;
@@ -52,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
 
-    static EditMode editMode;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,15 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Set the main layout on click to close any open popups.
         tableLayout = findViewById(R.id.tableLayout);
-
-        //init edit mode toolbar and add it to view
-        editMode = new EditMode(this);
-        editMode.setVisibility(View.GONE);
-        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.mainLayout);
-        constraintLayout.addView(editMode);
-
-        editMode.setSize(Math.max(TableSet.STD_WIDTH / 20, TableSet.STD_HEIGHT / 20));
-        editMode.setRatios(getWidthRatio(), getHeightRatio());
         settingsBtn = findViewById(R.id.settings_btn);
 
         loading = findViewById(R.id.progressBar);
@@ -87,13 +74,21 @@ public class MainActivity extends AppCompatActivity {
                 if(documentSnapshot.getData() == null ||
                         documentSnapshot.getData().get("tableset") == null){
                     tableGui = new TableSet();
-                    tableGui.load();
-                    enableEditMode();
-                    editMode.applyStdArrangement();
-                    disableEditMode();
+                    tableGui.renderStdTableSet();
+
+                    tblBtns = renderTableSet(getBaseContext(), tableGui);
+                    tableLayout.removeAllViews();
+                    for(Button b : tblBtns)
+                        tableLayout.addView(b);
                 } else {
-                    tableGui = new TableSet((ArrayList) documentSnapshot.getData().get("tableset"));
-                    editMode.renderTableSet(tableGui);
+                    //tableGui = new TableSet((ArrayList) documentSnapshot.getData().get("tableset"));
+                    tableGui = new TableSet();
+                    tableGui.renderStdTableSet();//TODO change back
+
+                    tblBtns = renderTableSet(getBaseContext(), tableGui);
+                    tableLayout.removeAllViews();
+                    for(Button b : tblBtns)
+                        tableLayout.addView(b);
                 }
                 loading.setVisibility(View.GONE);
 
@@ -103,18 +98,21 @@ public class MainActivity extends AppCompatActivity {
                             (Customer) getIntent().getParcelableExtra("customer"),
                             getIntent().getStringExtra("tableNum"));
                     db.updateTableSet(tableGui);
-                    editMode.renderTableSet(tableGui);
+
+                    tblBtns = renderTableSet(getBaseContext(), tableGui);
+                    tableLayout.removeAllViews();
+                    for(Button b : tblBtns)
+                        tableLayout.addView(b);
                 }
             }
         });
 
-        editMode.enableExternalTools(constraintLayout, this);
         if( !TransactionService.isRunning ){
             // Start service
             Intent intent = new Intent(this, TransactionService.class);
             startService(intent);
         }
-        keyboardCheck = new KeyboardCheck(constraintLayout);
+        keyboardCheck = new KeyboardCheck((ConstraintLayout) findViewById(R.id.mainLayout));
     }
 
     //TODO doesn't seem to activate? supposed to function on orientation change
@@ -153,16 +151,6 @@ public class MainActivity extends AppCompatActivity {
         if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
             InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-        }
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        if(editMode.getActive()) {
-            enableEditMode();
-        } else {
-            disableEditMode();
         }
     }
 
@@ -410,27 +398,62 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /** Verifies if the button is already in layout view or not. */
-    /*private void addButton(Button b){
-        //gets the layout tag from xml
-        ConstraintLayout layout = findViewById(R.id.buttonLayout);
+    /** Translates a table set to their buttons. */
+    private ArrayList<Button> renderTableSet(final Context c, TableSet tables){
+        ArrayList<Button> btns = new ArrayList<>();
+        tblSize = (int) Math.max((float) TableSet.STD_WIDTH * getWidthRatio(),
+                (float) TableSet.STD_HEIGHT * getHeightRatio()) / 20;
 
-        for(final Button layoutBtn : tblBtns){
-            //if button is already in layout, update said button
-            if(b.getId() == layoutBtn.getId()){
-                layoutBtn.setX(b.getX());
-                layoutBtn.setY(b.getY());
-                layoutBtn.setWidth(b.getWidth());
-                layoutBtn.setHeight(b.getHeight());
-                layoutBtn.setText(b.getText());
-                return;
+        for(Table t : tables)
+            btns.add(renderTblBtn(c, t));
+
+        return btns;
+    }
+
+    private Button renderTblBtn(Context c, final Table t){
+        final Button b = new Button(c);
+        b.setText(t.getLabel());
+
+        //reshape
+        if(t.getShape() == Table.Shape.C)
+            b.setBackground(getResources().getDrawable(R.drawable.table_round));
+        else
+            b.setBackground(getResources().getDrawable(R.drawable.table));
+
+        int width, height;
+
+        //resize and rotate if necessary
+        if(t.getShape() != Table.Shape.R){
+            width = tblSize * t.getSizeMod();
+            height = tblSize * t.getSizeMod();
+        } else {
+            if(t.getRotated()){
+                width = tblSize * t.getSizeMod();
+                height = tblSize * t.getSizeMod() * 2;
+            } else {
+                width = tblSize * t.getSizeMod() * 2;
+                height = tblSize * t.getSizeMod();
             }
         }
 
-        //if not found, add the button to layout
-        tblBtns.add(b);
-        layout.addView(b);
-    }*/
+        b.setMinimumWidth(width);
+        b.setMinimumHeight(height);
+        b.setWidth(width);
+        b.setHeight(height);
+
+        b.setX((float) t.getX() * getWidthRatio() + width / 2);
+        b.setY((float) t.getY() * getHeightRatio() - height / 3);
+
+        //assign listeners
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tablePopup(t);
+            }
+        });
+
+        return b;
+    }
 
     public void addCustomer(Customer customer, String tableNum){
         tableGui.addCustomer(customer, tableNum);
@@ -440,17 +463,6 @@ public class MainActivity extends AppCompatActivity {
     public void updateCustomer(Customer customer, String tableNum){
         tableGui.updateCustomer(customer, tableNum);
         db.updateTableSet(tableGui);
-    }
-
-    public void enableEditMode(){
-        editMode.enable(tableGui);
-        editMode.setVisibility(View.VISIBLE);
-        editMode.garbage.setVisibility(View.VISIBLE);
-    }
-
-    public static void disableEditMode(){
-        editMode.disable();
-        editMode.garbage.setVisibility(View.GONE);
     }
 
     private int getScreenWidth(){

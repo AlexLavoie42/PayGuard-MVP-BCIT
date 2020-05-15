@@ -8,48 +8,35 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
+import ca.payguard.EditModeActivity;
 import ca.payguard.R;
 
 public class LabelInput extends LinearLayout {
     AppCompatEditText label;
-    Button[] btns;
 
     LinearLayout r1, r3;//layout rows - r2 only has 1 element and doesn't need layout
+    Button[] btns;
 
-    EditMode EMToolbar;
+    EditModeActivity em;
 
-    public LabelInput(Context c, EditMode em){
+    public LabelInput(EditModeActivity c){
         super(c);
-        this.EMToolbar = em;
+        em = c;
 
         btns = new Button[4];
-        for(int i = 0; i < 4; i++) {
-            btns[i] = new Button(c);
-            btns[i].setText("^");
-        }
+        btns[0] = findViewById(R.id.btn1);
+        btns[1] = findViewById(R.id.btn2);
+        btns[2] = findViewById(R.id.btn3);
+        btns[3] = findViewById(R.id.btn4);
 
-        label = new AppCompatEditText(c);
-        label.setBackgroundColor(getResources().getColor(R.color.colorBackground));
-        label.setMinimumHeight(50);
-        btns[2].setRotation(180);
-        btns[3].setRotation(180);
-
-        r1 = new LinearLayout(c);
-        r3 = new LinearLayout(c);
-        r1.setOrientation(LinearLayout.HORIZONTAL);
-        r3.setOrientation(LinearLayout.HORIZONTAL);
-
-        r1.addView(btns[0]);
-        r1.addView(btns[1]);
-        r3.addView(btns[3]);
-        r3.addView(btns[2]);
-
+        label = findViewById(R.id.labelPicker);
+        label.setSingleLine(true);
         label.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
             }
-        });
+        });//disable keyboard
 
         btns[0].setOnClickListener(new OnClickListener() {
             @Override
@@ -78,11 +65,6 @@ public class LabelInput extends LinearLayout {
                 changeLabel(-10);
             }
         });
-
-        setOrientation(LinearLayout.VERTICAL);
-        addView(r1);
-        addView(label);
-        addView(r3);
     }
 
     public void changeLabel(int add){
@@ -93,12 +75,12 @@ public class LabelInput extends LinearLayout {
         String nLabel = "" + curNo;
         label.setText(nLabel);
 
-        if(EMToolbar.tables.containsLabel(nLabel) &&
-            Integer.parseInt(EMToolbar.getSelectedTbl().getLabel()) != curNo)
+        if(em.tables.containsLabel(nLabel) &&
+            Integer.parseInt(em.getSelectedTbl().getLabel()) != curNo)
             label.setBackgroundColor(getResources().getColor(R.color.red));
         else {
-            EMToolbar.getSelectedTbl().setLabel(nLabel);
-            EMToolbar.getSelected().setText(nLabel);
+            em.getSelectedTbl().setLabel(nLabel);
+            em.getSelected().setText(nLabel);
             label.setBackgroundColor(getResources().getColor(R.color.colorBackground));
         }
     }
@@ -124,9 +106,5 @@ public class LabelInput extends LinearLayout {
 
     public void setText(String s){
         label.setText(s);
-    }
-
-    public void setSingleLine(boolean val){
-        label.setSingleLine(val);
     }
 }

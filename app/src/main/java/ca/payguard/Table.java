@@ -25,7 +25,7 @@ public class Table implements Parcelable {
     private int sizeMod = sizeMods[0];
     public enum Shape { S, C, R }
     private Shape shape = Shape.R;//default shape is rectangle
-    private int angle = 0;
+    private boolean rotated;
 
     //Array of Customers at Table.
     private ArrayList<Customer> customers;
@@ -40,7 +40,7 @@ public class Table implements Parcelable {
         x = ((Long)m.get("x")).intValue();
         label = (String)m.get("label");
         sizeMod = ((Long)m.get("sizeMod")).intValue();
-        angle = ((Long)m.get("angle")).intValue();
+        rotated = (Boolean.parseBoolean((String)m.get("rotated")));
         customers = new ArrayList<>();
         for(Map map : (ArrayList<Map>)m.get("allCustomers")){
             customers.add(new Customer(map));
@@ -99,23 +99,8 @@ public class Table implements Parcelable {
         }
     }
 
-    /** Ensures that the angle is between 0-359. */
-    public static int verifyAngle(int angle){
-        int vAngle = angle;
-
-        while(vAngle < 0)
-            vAngle += 360;
-        while(vAngle > 359)
-            vAngle -= 360;
-
-        return vAngle;
-    }
-
-    public void setAngle(int angle) throws IllegalArgumentException {
-        if(angle < 0 || angle > 359)
-            throw new IllegalArgumentException("Error: angle must be 0-359");
-
-        this.angle = angle;
+    public void setRotated(boolean rotated) {
+        this.rotated = rotated;
     }
 
     public String getLabel(){
@@ -138,8 +123,8 @@ public class Table implements Parcelable {
         return y;
     }
 
-    public int getAngle(){
-        return angle;
+    public boolean getRotated(){
+        return rotated;
     }
 
     public ArrayList<Customer> getAllCustomers(){

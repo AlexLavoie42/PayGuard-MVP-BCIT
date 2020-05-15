@@ -28,7 +28,6 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        MainActivity.editMode.setActive(false);
     }
 
     public void goBack() {
@@ -45,8 +44,8 @@ public class SettingsActivity extends AppCompatActivity {
         public boolean onPreferenceTreeClick(Preference preference) {
 
             if(preference.getKey().equals("edit_mode")) {
-                MainActivity.editMode.setActive(true);
-                getActivity().finish();
+                Intent intent = new Intent(getContext(), EditModeActivity.class);
+                startActivity(intent);
             }
             else if(preference.getKey().equals("logout")) {
                 FirebaseAuth.getInstance().signOut();

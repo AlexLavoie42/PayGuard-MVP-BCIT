@@ -6,27 +6,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import ca.payguard.EditModeActivity;
+import ca.payguard.R;
 import ca.payguard.Table;
 
 public class SizeSelect extends LinearLayout {
     Button addSize, subSize;
     TextView sizeDisplay;
 
-    EditMode EMToolbar;
+    EditModeActivity em;
 
-    String size = "S";
+    public SizeSelect(EditModeActivity c) {
+        super(c);
+        em = c;
 
-    public SizeSelect(Context context, EditMode em) {
-        super(context);
-        EMToolbar = em;
-        setOrientation(LinearLayout.VERTICAL);
-
-        addSize = new Button(context);
-        addSize.setText("+");
-        sizeDisplay = new TextView(context);
-        sizeDisplay.setText(size);
-        subSize = new Button(context);
-        subSize.setText("-");
+        addSize = findViewById(R.id.add_size);
+        sizeDisplay = findViewById(R.id.size_display);
+        subSize = findViewById(R.id.sub_size);
 
         addSize.setOnClickListener(new OnClickListener() {
             @Override
@@ -41,20 +38,12 @@ public class SizeSelect extends LinearLayout {
                 subSize();
             }
         });
-
-        addView(addSize);
-        addView(sizeDisplay);
-        addView(subSize);
-    }
-
-    void load(float width, int height){
-        setMinimumWidth((int)(width * 0.125));
-        setMinimumHeight(height);
-        setGravity(Gravity.CENTER);
     }
 
     /** Loads the size when a table is selected. */
     public void selectTable(Table t){
+        String size;
+
         switch(t.getSizeMod()){
             case 1:
                 size = "S";
@@ -83,40 +72,38 @@ public class SizeSelect extends LinearLayout {
 
     public void addSize(){
         //if(EMToolbar.getSelected() != null), then EMToolbar.getSelectedTbl() also != null
-        if(EMToolbar.getSelected() != null){
+        if(em.getSelected() != null){
+            String size = sizeDisplay.getText().toString();
+
             if(size.equals("S")){
-                EMToolbar.getSelectedTbl().setSizeMod(2);
-                size = "M";
-                sizeDisplay.setText(size);
+                em.getSelectedTbl().setSizeMod(2);
+                sizeDisplay.setText("M");
                 subSize.setEnabled(true);
             } else if(size.equals("M")){
-                EMToolbar.getSelectedTbl().setSizeMod(3);
-                size = "L";
-                sizeDisplay.setText(size);
+                em.getSelectedTbl().setSizeMod(3);
+                sizeDisplay.setText("L");
                 addSize.setEnabled(false);
             }
 
-            EMToolbar.shapeSelect.transform();
-            EMToolbar.select(EMToolbar.getSelected());
+            em.shapeSelect.transform();
         }
     }
 
     public void subSize(){
-        if(EMToolbar.getSelected() != null){
+        if(em.getSelected() != null){
+            String size = sizeDisplay.getText().toString();
+
             if(size.equals("L")){
-                EMToolbar.getSelectedTbl().setSizeMod(2);
-                size = "M";
-                sizeDisplay.setText(size);
+                em.getSelectedTbl().setSizeMod(2);
+                sizeDisplay.setText("M");
                 addSize.setEnabled(true);
             } else if(size.equals("M")){
-                EMToolbar.getSelectedTbl().setSizeMod(1);
-                size = "S";
-                sizeDisplay.setText(size);
+                em.getSelectedTbl().setSizeMod(1);
+                sizeDisplay.setText("S");
                 subSize.setEnabled(false);
             }
 
-            EMToolbar.shapeSelect.transform();
-            EMToolbar.select(EMToolbar.getSelected());
+            em.shapeSelect.transform();
         }
     }
 

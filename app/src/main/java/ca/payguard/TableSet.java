@@ -23,14 +23,35 @@ public class TableSet extends ArrayList<Table> {
 
     }
 
-    /**
-     * Loads the table set setting from the app. If the user
-     * doesn't have settings stored, the tables are arranged
-     * to the standard layout.
-     */
-    public void load(){
-        //TODO load table settings from back-end => stdFormation = false
-        stdFormation = true;
+    public Table allocateTable(char shape, int pointX, int pointY) throws IllegalArgumentException {
+        if(shape != 'S' && shape != 'C' && shape != 'R')
+            throw new IllegalArgumentException("Error: Shape is not allowed.");
+
+        Table t = new Table();
+        t.setShape(shape);
+        t.setCoords(pointX, pointY);
+        t.setLabel("" + (size() + 1));
+        add(t);
+
+        return t;
+    }
+
+    public void renderStdTableSet(){
+        int segmentX = STD_WIDTH / 20, segmentY = STD_HEIGHT / 20;
+
+        allocateTable('C', 2 * segmentX, 6 * segmentY);
+        allocateTable('C', 7 * segmentX, 6 * segmentY);
+        allocateTable('C', 11 * segmentX, 8 * segmentY);
+        allocateTable('C', 2 * segmentX, 10 * segmentY);
+        allocateTable('C', 7 * segmentX, 10 * segmentY);
+        allocateTable('C', 11 * segmentX, 12 * segmentY);
+        allocateTable('C', 2 * segmentX, 14 * segmentY);
+        allocateTable('S', 7 * segmentX, 14 * segmentY);
+        allocateTable('R', 15 * segmentX, 9 * segmentY);
+
+        Table last = get(size() - 1);
+        last.setSizeMod(2);
+        last.setRotated(true);
     }
 
     public boolean isStdFormation(){
