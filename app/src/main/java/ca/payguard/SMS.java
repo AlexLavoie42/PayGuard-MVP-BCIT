@@ -10,10 +10,11 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 // Source attribute??
-// E.164 Formatting?
+// E.164 Formatting example 16041234567
 // What to do with return result or errors
 
 // TODO Add Receive Function, Send Bill w/ tip prompt, parse tip
+// ClickSend SMS API - INACTIVE
 
 public class SMS {
 
