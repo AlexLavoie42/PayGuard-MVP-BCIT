@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">www3.moneris.com</domain>
-        <domain includeSubdomains="true">esqa.moneris.com</domain>
-        <domain includeSubdomains="true">moneris.com</domain>
+    <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
+            <certificates src="system" />
             <certificates src="@raw/entrust_2048_ca" />
             <certificates src="@raw/entrust_ec1_ca" />
             <certificates src="@raw/entrust_ev_ca" />
@@ -21,8 +19,20 @@
             <certificates src="@raw/dg8" />
             <certificates src="@raw/dg9" />
             <certificates src="@raw/dg10" />
-            <certificates src="system" />
-            <certificates src="user" />
+            <certificates src="@raw/dg11" />
+            <certificates src="@raw/dg12" />
+            <certificates src="@raw/dg13" />
+            <certificates src="@raw/dg14" />
+            <certificates src="@raw/dg15" />
+            <certificates src="@raw/dg16" />
+            <certificates src="@raw/dg17" />
+            <certificates src="@raw/dg18" />
+            <certificates src="@raw/dg19" />
+            <certificates src="@raw/dg20" />
+            <certificates src="@raw/dg21" />
+            <certificates src="@raw/dg22" />
+            <certificates src="@raw/dg23" />
+            <certificates src="@raw/dg24" />
         </trust-anchors>
-    </domain-config>
+    </base-config>
 </network-security-config>
