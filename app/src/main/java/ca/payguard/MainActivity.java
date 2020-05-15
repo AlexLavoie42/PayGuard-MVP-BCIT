@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import com.github.mmin18.widget.RealtimeBlurView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import ca.payguard.dbUtil.DatabaseController;
@@ -183,9 +184,7 @@ public class MainActivity extends AppCompatActivity {
         //Complete changes
         ft.commit();
         com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.8f);
-        blur.setOverlayColor(1);
+        blur.setVisibility(View.VISIBLE);
         blur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,9 +231,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-            blur.setBlurRadius(6);
-            blur.setAlpha(0.8f);
-            blur.setOverlayColor(1);
+            blur.setVisibility(View.VISIBLE);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -257,9 +254,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-            blur.setBlurRadius(6);
-            blur.setAlpha(0.8f);
-            blur.setOverlayColor(1);
+            blur.setVisibility(View.VISIBLE);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -291,9 +286,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-            blur.setBlurRadius(6);
-            blur.setAlpha(0.8f);
-            blur.setOverlayColor(1);
+            blur.setVisibility(View.VISIBLE);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -316,9 +309,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-            blur.setBlurRadius(6);
-            blur.setAlpha(0.8f);
-            blur.setOverlayColor(1);
+            blur.setVisibility(View.VISIBLE);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -337,9 +328,7 @@ public class MainActivity extends AppCompatActivity {
             ft.detach(popup);
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-            blur.setBlurRadius(0);
-            blur.setAlpha(0);
-            blur.setClickable(false);
+            blur.setVisibility(View.GONE);
         } else if(keyboardCheck.isKeyboardShowing()){
             hideKeyboard(this);
         }
@@ -360,9 +349,7 @@ public class MainActivity extends AppCompatActivity {
                 //Complete changes
                 ft.commit();
                 com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-                blur.setBlurRadius(6);
-                blur.setAlpha(0.8f);
-                blur.setOverlayColor(1);
+                blur.setVisibility(View.VISIBLE);
                 blur.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -380,9 +367,7 @@ public class MainActivity extends AppCompatActivity {
             ft.detach(billPopup);
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-            blur.setBlurRadius(0);
-            blur.setAlpha(0);
-            blur.setClickable(false);
+            blur.setVisibility(View.GONE);
         } else if(keyboardCheck.isKeyboardShowing()){
             hideKeyboard(this);
         }

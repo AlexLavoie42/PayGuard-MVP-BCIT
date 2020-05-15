@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:state_pressed="true" >
-        <shape android:shape="rectangle"  >
-            <corners android:radius="10dp" />
-            <solid android:color="@color/colorButton"/>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape
+            android:shape="rectangle">
+            <solid android:color="@color/buttonAccent" />
+            <corners android:radius="10dp"/>
         </shape>
     </item>
-    <item >
-        <shape android:shape="rectangle"  >
-            <corners android:radius="10dp" />
-            <solid android:color="@color/colorButton"/>
+    <item android:right="1dp" android:left="1dp" android:bottom="3dp">
+        <shape
+            android:shape="rectangle">
+            <gradient android:startColor="@color/buttonGradientStart"
+                android:endColor="@color/buttonGradientEnd"
+                android:angle="270"/>
+            <corners android:radius="10dp"/>
         </shape>
     </item>
-</selector>
+</layer-list>
