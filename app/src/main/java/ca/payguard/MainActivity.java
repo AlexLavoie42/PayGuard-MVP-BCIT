@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess() {
                     Intent intent = new Intent(getBaseContext(), activity);
-                    intent.putExtra("table", table);
+                    intent.putExtra("tableNum", table.getLabel());
                     startActivity(intent);
                 }
             });
@@ -427,9 +427,7 @@ public class MainActivity extends AppCompatActivity {
             TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
         }
         table.removeCustomer(customer);
-        closeUpperPopup();
-        closePopup();
-        tablePopup(table);
+        resetTablePopup();
     }
 
     public void billAllCustomers(Table table) {
@@ -441,11 +439,10 @@ public class MainActivity extends AppCompatActivity {
                 startService(intent);
                 TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
             }
-            table.removeCustomer(customer);
-            closeUpperPopup();
-            closePopup();
-            tablePopup(table);
         }
+        table.removeAllCustomers();
+        closeUpperPopup();
+        resetTablePopup();
     }
 
     /** Translates a table set to their buttons. */

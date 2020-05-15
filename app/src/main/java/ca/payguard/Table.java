@@ -23,6 +23,11 @@ public class Table implements Parcelable {
     private int x, y;
     private final int[] sizeMods = {1, 2, 3};//float? would allow for 1.5x modifier, etc.
     private int sizeMod = sizeMods[0];
+
+    public void removeAllCustomers() {
+        customers.clear();
+    }
+
     public enum Shape { S, C, R }
     private Shape shape = Shape.R;//default shape is rectangle
     private boolean rotated;
@@ -40,7 +45,7 @@ public class Table implements Parcelable {
         x = ((Long)m.get("x")).intValue();
         label = (String)m.get("label");
         sizeMod = ((Long)m.get("sizeMod")).intValue();
-        rotated = (Boolean.parseBoolean((String)m.get("rotated")));
+        rotated = (Boolean) m.get("rotated");
         customers = new ArrayList<>();
         for(Map map : (ArrayList<Map>)m.get("allCustomers")){
             customers.add(new Customer(map));
