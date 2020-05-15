@@ -10,6 +10,17 @@
             <certificates src="@raw/entrust_ev_ca" />
             <certificates src="@raw/entrust_g2_ca" />
             <certificates src="@raw/entrust_g3_ca" />
+            <certificates src="@raw/dg0" />
+            <certificates src="@raw/dg1" />
+            <certificates src="@raw/dg2" />
+            <certificates src="@raw/dg3" />
+            <certificates src="@raw/dg4" />
+            <certificates src="@raw/dg5" />
+            <certificates src="@raw/dg6" />
+            <certificates src="@raw/dg7" />
+            <certificates src="@raw/dg8" />
+            <certificates src="@raw/dg9" />
+            <certificates src="@raw/dg10" />
             <certificates src="system" />
             <certificates src="user" />
         </trust-anchors>
