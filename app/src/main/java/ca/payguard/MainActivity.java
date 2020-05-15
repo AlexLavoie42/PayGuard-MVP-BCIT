@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         //Complete changes
         ft.commit();
         com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-        setBlur(blur);
+        blur.setVisibility(View.VISIBLE);
         blur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-            setBlur(blur);
+            blur.setVisibility(View.VISIBLE);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-            setBlur(blur);
+            blur.setVisibility(View.VISIBLE);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -298,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-            setBlur(blur);
+            blur.setVisibility(View.VISIBLE);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
             //Complete changes
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-            setBlur(blur);
+            blur.setVisibility(View.VISIBLE);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -340,9 +340,7 @@ public class MainActivity extends AppCompatActivity {
             ft.detach(popup);
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
-            blur.setBlurRadius(0);
-            blur.setAlpha(0);
-            blur.setClickable(false);
+            blur.setVisibility(View.GONE);
         } else if(keyboardCheck.isKeyboardShowing()){
             hideKeyboard(this);
         }
@@ -363,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
                 //Complete changes
                 ft.commit();
                 com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-                setBlur(blur);
+                blur.setVisibility(View.VISIBLE);
                 blur.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -381,19 +379,10 @@ public class MainActivity extends AppCompatActivity {
             ft.detach(billPopup);
             ft.commit();
             com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
-            blur.setBlurRadius(0);
-            blur.setAlpha(0);
-            blur.setClickable(false);
+            blur.setVisibility(View.GONE);
         } else if(keyboardCheck.isKeyboardShowing()){
             hideKeyboard(this);
         }
-    }
-
-    public void setBlur(RealtimeBlurView blur){
-        blur.setDownsampleFactor(2);
-        blur.setBlurRadius(6);
-        blur.setAlpha(0.6f);
-        blur.setOverlayColor(R.color.blurColor);
     }
 
     public void billCustomer(Customer customer){

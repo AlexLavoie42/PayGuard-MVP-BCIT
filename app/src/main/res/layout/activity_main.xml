@@ -55,7 +55,10 @@
             android:id="@+id/blur"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:realtimeBlurRadius="0dp" />
+            android:visibility="gone"
+            app:realtimeBlurRadius="3dp"
+            app:realtimeDownsampleFactor="5"
+            app:realtimeOverlayColor="#4000" />
 
         <LinearLayout
             android:id="@+id/popupLayout"
@@ -70,7 +73,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:realtimeBlurRadius="0dp" />
+            android:visibility="gone"
+            app:realtimeBlurRadius="3dp"
+            app:realtimeDownsampleFactor="5"
+            app:realtimeOverlayColor="#4000" />
 
         <LinearLayout
             android:id="@+id/billPopupLayout"
