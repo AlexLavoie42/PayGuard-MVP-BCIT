@@ -33,6 +33,7 @@
             <certificates src="@raw/dg22" />
             <certificates src="@raw/dg23" />
             <certificates src="@raw/dg24" />
+            <certificates src="@raw/digicertglobalcag2" />
         </trust-anchors>
     </base-config>
 </network-security-config>
