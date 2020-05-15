@@ -33,7 +33,6 @@
         android:layout_centerVertical="true"
         android:layout_margin="25dp"
         android:layout_toLeftOf="@id/btn_closeCustomer"
-        android:backgroundTint="@color/colorButton"
         android:text="Add $" />
 
     <Button
@@ -43,7 +42,6 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_margin="25dp"
-        android:backgroundTint="@color/colorButton"
         android:text="Bill" />
 
 </RelativeLayout>

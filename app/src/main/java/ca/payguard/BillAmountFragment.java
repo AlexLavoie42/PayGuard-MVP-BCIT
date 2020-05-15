@@ -74,7 +74,7 @@ public class BillAmountFragment extends Fragment {
                     cust.setBillTotal(Float.parseFloat(total.getText().toString()));
                     ((MainActivity) getActivity()).updateCustomer(cust, tableNum);
                     ((MainActivity) getActivity()).resetTablePopup();
-                    ((MainActivity) getActivity()).closeBillPopup();
+                    ((MainActivity) getActivity()).closeUpperPopup();
                 } else {
                     Toast.makeText(getContext(), "Enter new bill amount.", Toast.LENGTH_SHORT)
                             .show();

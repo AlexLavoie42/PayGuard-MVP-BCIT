@@ -1,5 +1,6 @@
 package ca.payguard;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,6 +11,8 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -62,6 +65,10 @@ import ca.payguard.dbUtil.DatabaseController;
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_employee_pin, container, false);
         final View pin = view.findViewById(R.id.et_pin);
+        pin.requestFocus();
+        InputMethodManager imm = (InputMethodManager)
+                getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         view.findViewById(R.id.btn_pinSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +81,8 @@ import ca.payguard.dbUtil.DatabaseController;
                     }, new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getContext(), "Invalid Pin", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Invalid Pin", Toast.LENGTH_SHORT)
+                                    .show();
                         }
                     });
                 }

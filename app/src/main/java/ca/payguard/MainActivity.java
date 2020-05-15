@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,11 +17,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import com.github.mmin18.widget.RealtimeBlurView;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import ca.payguard.dbUtil.DatabaseController;
-import ca.payguard.editMode.*;
 import ca.payguard.miscUtil.KeyboardCheck;
 import java.util.ArrayList;
 
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Button> tblBtns = new ArrayList<>();
     private int tblSize;
     private Fragment popup;
-    private Fragment billPopup;
+    private Fragment upperPopup;
     private KeyboardCheck keyboardCheck;
 
     public DatabaseController getDb() {
@@ -157,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(billPopup != null && !billPopup.isDetached())
-            closeBillPopup();
+        if(upperPopup != null && !upperPopup.isDetached())
+            closeUpperPopup();
         else closePopup();
     }
 
@@ -235,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    closeBillPopup();
+                    closeUpperPopup();
                 }
             });
         }
@@ -273,8 +271,8 @@ public class MainActivity extends AppCompatActivity {
             //Begin the transaction
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             //Add TableFragment to layout
-            billPopup = EmployeePinFragment.newInstance();
-            ((EmployeePinFragment) billPopup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
+            upperPopup = EmployeePinFragment.newInstance();
+            ((EmployeePinFragment) upperPopup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
                 @Override
                 public void onSuccess() {
                     Intent intent = new Intent(getBaseContext(), activity);
@@ -282,15 +280,15 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-            ft.replace(R.id.billPopupLayout, billPopup);
+            ft.replace(R.id.upperPopupLayout, upperPopup);
             //Complete changes
             ft.commit();
-            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.upperBlur);
             blur.setVisibility(View.VISIBLE);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    closeBillPopup();
+                    closeUpperPopup();
                 }
             });
         }
@@ -303,17 +301,17 @@ public class MainActivity extends AppCompatActivity {
             //Begin the transaction
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             //Add TableFragment to layout
-            billPopup = EmployeePinFragment.newInstance();
-            ((EmployeePinFragment) billPopup).setConConfirm(onConfirm);
-            ft.replace(R.id.billPopupLayout, billPopup);
+            upperPopup = EmployeePinFragment.newInstance();
+            ((EmployeePinFragment) upperPopup).setConConfirm(onConfirm);
+            ft.replace(R.id.upperPopupLayout, upperPopup);
             //Complete changes
             ft.commit();
-            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.upperBlur);
             blur.setVisibility(View.VISIBLE);
             blur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    closeBillPopup();
+                    closeUpperPopup();
                 }
             });
         }
@@ -334,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void billPopup(Customer customer, Table table){
+    public void changeBillPopup(Customer customer, Table table){
         curCust = customer;
         curTable = table;
         pinBillPopup(new EmployeePinFragment.onConfirmListener() {
@@ -344,29 +342,29 @@ public class MainActivity extends AppCompatActivity {
                 //Begin the transaction
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 //Add TableFragment to layout
-                billPopup = BillAmountFragment.newInstance(curCust, curTable.getLabel());
-                ft.replace(R.id.billPopupLayout, billPopup);
+                upperPopup = BillAmountFragment.newInstance(curCust, curTable.getLabel());
+                ft.replace(R.id.upperPopupLayout, upperPopup);
                 //Complete changes
                 ft.commit();
-                com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+                com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.upperBlur);
                 blur.setVisibility(View.VISIBLE);
                 blur.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        closeBillPopup();
+                        closeUpperPopup();
                     }
                 });
             }
         });
     }
 
-    public void closeBillPopup(){
-        if(billPopup != null && !keyboardCheck.isKeyboardShowing()) {
+    public void closeUpperPopup(){
+        if(upperPopup != null && !keyboardCheck.isKeyboardShowing()) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-            ft.detach(billPopup);
+            ft.detach(upperPopup);
             ft.commit();
-            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.billBlur);
+            com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.upperBlur);
             blur.setVisibility(View.GONE);
         } else if(keyboardCheck.isKeyboardShowing()){
             hideKeyboard(this);
