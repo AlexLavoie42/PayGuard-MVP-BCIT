@@ -1,11 +1,7 @@
 package ca.payguard.paymentUtil;
 
-import android.content.Intent;
-
 import java.security.InvalidKeyException;
 import java.util.Hashtable;
-
-import ca.payguard.Customer;
 
 public class Transaction {
     private Hashtable<String, AuthToken> tokenHash;

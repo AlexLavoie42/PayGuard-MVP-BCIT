@@ -3,37 +3,6 @@
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
             <certificates src="system" />
-            <certificates src="@raw/entrust_2048_ca" />
-            <certificates src="@raw/entrust_ec1_ca" />
-            <certificates src="@raw/entrust_ev_ca" />
-            <certificates src="@raw/entrust_g2_ca" />
-            <certificates src="@raw/entrust_g3_ca" />
-            <certificates src="@raw/dg0" />
-            <certificates src="@raw/dg1" />
-            <certificates src="@raw/dg2" />
-            <certificates src="@raw/dg3" />
-            <certificates src="@raw/dg4" />
-            <certificates src="@raw/dg5" />
-            <certificates src="@raw/dg6" />
-            <certificates src="@raw/dg7" />
-            <certificates src="@raw/dg8" />
-            <certificates src="@raw/dg9" />
-            <certificates src="@raw/dg10" />
-            <certificates src="@raw/dg11" />
-            <certificates src="@raw/dg12" />
-            <certificates src="@raw/dg13" />
-            <certificates src="@raw/dg14" />
-            <certificates src="@raw/dg15" />
-            <certificates src="@raw/dg16" />
-            <certificates src="@raw/dg17" />
-            <certificates src="@raw/dg18" />
-            <certificates src="@raw/dg19" />
-            <certificates src="@raw/dg20" />
-            <certificates src="@raw/dg21" />
-            <certificates src="@raw/dg22" />
-            <certificates src="@raw/dg23" />
-            <certificates src="@raw/dg24" />
-            <certificates src="@raw/digicertglobalcag2" />
         </trust-anchors>
     </base-config>
 </network-security-config>

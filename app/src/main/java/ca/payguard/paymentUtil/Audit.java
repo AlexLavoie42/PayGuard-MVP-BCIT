@@ -2,8 +2,6 @@ package ca.payguard.paymentUtil;
 
 import android.content.Intent;
 
-import ca.payguard.dbUtil.DatabaseController;
-
 public class Audit {
 
     private static Runnable dummyRunnable = new Runnable() {

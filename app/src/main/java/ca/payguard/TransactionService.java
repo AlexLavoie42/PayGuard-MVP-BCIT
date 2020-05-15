@@ -54,25 +54,25 @@ public class TransactionService extends Service {
         super.onDestroy();
     }
 
-    public void executeTransaction(String orderId, String pan, String exp, String amount){
-        TransactionHandler thc = new CanadaPreAuth(); //420
-        thc.setOrderId(orderId);
-        thc.setExpDate(exp);
-        thc.setPan(pan);
-        transaction.newTransaction(thc);
-        try{
-            //TODO: ONLY GARRETT IS ALLOWED TO UNCOMMENT THIS
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
-                    != PackageManager.PERMISSION_GRANTED) {
-                // Permission is not granted
-                System.out.println("Transaction: " + orderId + " would be executed for " + amount);
-            }else{
-                transaction.executeTransaction(orderId, amount);
-                System.out.println("Transaction: " + orderId + " executed for " + amount);
+    public void executeTransaction(final String orderId, final String pan, final String exp, final String amount){
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                TransactionHandler thc = new CanadaPreAuth(); //420
+                thc.setOrderId(orderId);
+                thc.setExpDate(exp);
+                thc.setPan(pan);
+                transaction.newTransaction(thc);
+                try{
+                    transaction.executeTransaction(orderId, amount);
+                    System.out.println("Transaction: " + orderId + " executed for " + amount);
+                }catch (Exception e){
+                    System.out.println(e.toString());
+                }
             }
-        }catch (Exception e){
-            System.out.println(e.toString());
-        }
+        };
+        Thread thread = new Thread(run);
+        thread.start();
     }
 
     public void completeTransaction(String orderId, String amount){
