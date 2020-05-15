@@ -1,28 +1,23 @@
 package ca.payguard;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import ca.payguard.R;
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BillConfirmFragment#newInstance} factory method to
+ * Use the {@link BillAllConfirmFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BillConfirmFragment extends Fragment {
+public class BillAllConfirmFragment extends Fragment {
 
-    private Customer customer;
     private Table table;
 
-    public BillConfirmFragment() {
+    public BillAllConfirmFragment() {
         // Required empty public constructor
     }
 
@@ -33,10 +28,9 @@ public class BillConfirmFragment extends Fragment {
      * @return A new instance of fragment BillConfirmFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BillConfirmFragment newInstance(Customer customer, Table table) {
-        BillConfirmFragment billConfirmFragment = new BillConfirmFragment();
+    public static BillAllConfirmFragment newInstance(Table table) {
+        BillAllConfirmFragment billConfirmFragment = new BillAllConfirmFragment();
         Bundle args = new Bundle();
-        args.putParcelable("customer", customer);
         args.putParcelable("table", table);
         billConfirmFragment.setArguments(args);
         return billConfirmFragment;
@@ -46,7 +40,6 @@ public class BillConfirmFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         assert getArguments() != null;
-        customer = getArguments().getParcelable("customer");
         table = getArguments().getParcelable("table");
     }
 
@@ -57,11 +50,11 @@ public class BillConfirmFragment extends Fragment {
         View inflate = inflater.inflate(R.layout.fragment_bill_confirm, container, false);
         if(getActivity() != null && getActivity().getClass().equals(MainActivity.class)){
             ((TextView)inflate.findViewById(R.id.tv_endBill)).setText(getResources()
-                    .getString(R.string.endBillConfirm, customer.getId(), customer.getBillTotal()));
+                    .getString(R.string.endBillAllConfirm, table.getLabel()));
             inflate.findViewById(R.id.btn_confirmEndBill).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((MainActivity)getActivity()).billCustomer(customer, table);
+                    ((MainActivity)getActivity()).billAllCustomers(table);
                 }
             });
             inflate.findViewById(R.id.btn_declineEndBill).setOnClickListener(new View.OnClickListener() {

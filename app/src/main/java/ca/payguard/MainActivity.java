@@ -363,11 +363,33 @@ public class MainActivity extends AppCompatActivity {
         pinTopPopup(new EmployeePinFragment.onConfirmListener() {
             @Override
             public void onSuccess() {
-                tablePopup(curTable);
                 //Begin the transaction
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 //Add TableFragment to layout
                 upperPopup = BillConfirmFragment.newInstance(curCust, table);
+                ft.replace(R.id.upperPopupLayout, upperPopup);
+                //Complete changes
+                ft.commit();
+                com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.upperBlur);
+                blur.setVisibility(View.VISIBLE);
+                blur.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeUpperPopup();
+                    }
+                });
+            }
+        });
+    }
+
+    public void billAllCustomersPopup(final Table table){
+        pinTopPopup(new EmployeePinFragment.onConfirmListener() {
+            @Override
+            public void onSuccess() {
+                //Begin the transaction
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                //Add TableFragment to layout
+                upperPopup = BillAllConfirmFragment.newInstance(table);
                 ft.replace(R.id.upperPopupLayout, upperPopup);
                 //Complete changes
                 ft.commit();
@@ -405,6 +427,25 @@ public class MainActivity extends AppCompatActivity {
             TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
         }
         table.removeCustomer(customer);
+        closeUpperPopup();
+        closePopup();
+        tablePopup(table);
+    }
+
+    public void billAllCustomers(Table table) {
+        for(Customer customer : table.getAllCustomers()) {
+            if (TransactionService.isRunning) {
+                TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
+            } else {
+                Intent intent = new Intent(this, TransactionService.class);
+                startService(intent);
+                TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
+            }
+            table.removeCustomer(customer);
+            closeUpperPopup();
+            closePopup();
+            tablePopup(table);
+        }
     }
 
     /** Translates a table set to their buttons. */

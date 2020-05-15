@@ -31,7 +31,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/closeTableButton"
+            android:id="@+id/btn_closeTable"
             android:layout_width="149dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
