@@ -72,7 +72,8 @@ public class TransactionService extends Service {
             }
         };
         Thread thread = new Thread(run);
-        thread.start();
+        //TODO: Uncomment for prod
+//        thread.start();
     }
 
     public void completeTransaction(String orderId, String amount){
