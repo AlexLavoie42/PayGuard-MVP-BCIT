@@ -61,4 +61,6 @@
     <string name="cvc">cvc</string>
     <string name="PAN">Enter CC number here</string>
     <string name="manualPayButton">Next</string>
+    <string name="endBillConfirm">Are you sure you want to bill %s $%0.2f?</string>
+    <string name="send_bill">Send Bill</string>
 </resources>

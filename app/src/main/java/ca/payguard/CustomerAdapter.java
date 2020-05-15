@@ -48,7 +48,7 @@ public class CustomerAdapter extends ArrayAdapter<Customer> {
             closeBill.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mainActivity.billCustomer(cRef);
+                    mainActivity.billCustomerPopup(cRef, table);
                 }
             });
 

@@ -148,6 +148,18 @@ public class Table implements Parcelable {
         }
     }
 
+    public void removeCustomer(Customer customer){
+        Customer cust = null;
+        for(Customer c : customers){
+            if(c.getId() == customer.getId()){
+                cust = c;
+            }
+        }
+        if(cust != null) {
+            customers.remove(cust);
+        }
+    }
+
     //TODO: Add error handling.
     public Customer getCustomerByID(int id){
         return customers.get(id);

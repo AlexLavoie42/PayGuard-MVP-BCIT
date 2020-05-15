@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.btn_addCustomer).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        pinBillPopup(Payment.class, table);
+                        pinTopPopup(Payment.class, table);
                     }
                 });
             }
@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void pinBillPopup(final Class<? extends AppCompatActivity> activity, final Table table){
+    public void pinTopPopup(final Class<? extends AppCompatActivity> activity, final Table table){
         if(DEBUG_NO_PIN){
             Intent intent = new Intent(getBaseContext(), activity);
             intent.putExtra("table", table);
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void pinBillPopup(EmployeePinFragment.onConfirmListener onConfirm){
+    public void pinTopPopup(EmployeePinFragment.onConfirmListener onConfirm){
         if(DEBUG_NO_PIN)
             onConfirm.onSuccess();
         else {
@@ -335,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
     public void changeBillPopup(Customer customer, Table table){
         curCust = customer;
         curTable = table;
-        pinBillPopup(new EmployeePinFragment.onConfirmListener() {
+        pinTopPopup(new EmployeePinFragment.onConfirmListener() {
             @Override
             public void onSuccess() {
                 tablePopup(curTable);
@@ -343,6 +343,31 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 //Add TableFragment to layout
                 upperPopup = BillAmountFragment.newInstance(curCust, curTable.getLabel());
+                ft.replace(R.id.upperPopupLayout, upperPopup);
+                //Complete changes
+                ft.commit();
+                com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.upperBlur);
+                blur.setVisibility(View.VISIBLE);
+                blur.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeUpperPopup();
+                    }
+                });
+            }
+        });
+    }
+
+    public void billCustomerPopup(Customer customer, final Table table){
+        curCust = customer;
+        pinTopPopup(new EmployeePinFragment.onConfirmListener() {
+            @Override
+            public void onSuccess() {
+                tablePopup(curTable);
+                //Begin the transaction
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                //Add TableFragment to layout
+                upperPopup = BillConfirmFragment.newInstance(curCust, table);
                 ft.replace(R.id.upperPopupLayout, upperPopup);
                 //Complete changes
                 ft.commit();
@@ -371,7 +396,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void billCustomer(Customer customer){
+    public void billCustomer(Customer customer, Table table){
         if(TransactionService.isRunning ){
             TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
         }else{
@@ -379,6 +404,7 @@ public class MainActivity extends AppCompatActivity {
             startService(intent);
             TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
         }
+        table.removeCustomer(customer);
     }
 
     /** Translates a table set to their buttons. */
