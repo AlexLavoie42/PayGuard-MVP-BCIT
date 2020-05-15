@@ -10,9 +10,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import ca.payguard.paymentUtil.CanadaPreAuth;
+import ca.payguard.paymentUtil.Transaction;
 
 public class ManualCardInput extends AppCompatActivity {
 
@@ -51,8 +51,8 @@ public class ManualCardInput extends AppCompatActivity {
     public void onNext(View v){
         try{
             Customer customer = (Customer) getIntent().getParcelableExtra("customer");
-            String pan = findViewById(R.id.PAN).toString();
-            String exp = findViewById(R.id.exp_year).toString() + findViewById(R.id.exp_month).toString();
+            String pan = ((EditText)findViewById(R.id.PAN)).getText().toString();
+            String exp = ((EditText)findViewById(R.id.exp_year)).getText().toString() + ((EditText)findViewById(R.id.exp_month)).getText().toString();
             int dollars;
             String dollarAmount;
             try{
@@ -63,17 +63,26 @@ public class ManualCardInput extends AppCompatActivity {
             }
             //TODO: Put these into transaction.
             if(TransactionService.isRunning ){
-                TransactionService.instance.executeTransaction(customer.getOrderID(), pan, exp, dollarAmount);
+                TransactionService.instance.executeTransaction(customer.getOrderID(), pan, exp, dollarAmount +".00");
             }else{
                 Intent intent = new Intent(this, TransactionService.class);
                 startService(intent);
-                TransactionService.instance.executeTransaction(customer.getOrderID(), pan, exp, dollarAmount);
+                TransactionService.instance.executeTransaction(customer.getOrderID(), pan, exp, dollarAmount + ".00");
             }
+////
+//            Transaction transaction = new Transaction();
+//            CanadaPreAuth preAuth = new CanadaPreAuth();
+//            preAuth.setOrderId("PG-type1-00009");
+//            preAuth.setPan("4242424242424242"); // Test Visa card
+//            preAuth.setExpDate("2103"); // YY/MM
+//            transaction.newTransaction(preAuth);
+//            try{
+//                if(!transaction.executeTransaction("1", "5.00")) throw new Exception(); // DO NOT TOUCH AMOUNT
+//                if(!transaction.completeTransaction("1", "4.00")) throw new Exception(); //DO NOT TOUCH AMOUNT
 
             Intent myIntent = new Intent(getBaseContext(),   EmailConfirmation.class);
             myIntent.putExtra("customer", getIntent().getParcelableExtra("customer"));
             myIntent.putExtra("tableNum", getIntent().getStringExtra("tableNum"));
-            myIntent.putExtra("preAuthAmount", getIntent().getIntExtra("preAuthAmount", 0));
             startActivity(myIntent);
         }catch (Exception e){
             System.out.println(e.toString());
