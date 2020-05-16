@@ -27,6 +27,11 @@ public class EmailConfirmation extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View v = getCurrentFocus();
 

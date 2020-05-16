@@ -9,6 +9,7 @@
         android:layout_width="495dp"
         android:layout_height="264dp"
         android:background="@color/colorBackground"
+        android:clickable="true"
         android:elevation="20dp">
 
         <!-- TODO: Update blank fragment layout -->
@@ -32,7 +33,7 @@
             android:layout_marginTop="28dp"
             android:ems="10"
             android:hint="Amount"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"

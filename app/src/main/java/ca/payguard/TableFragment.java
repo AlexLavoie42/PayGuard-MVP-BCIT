@@ -68,6 +68,8 @@ public class TableFragment extends Fragment {
                 ((MainActivity)getActivity()).billAllCustomersPopup(table);
             }
         });
+        if(table.getAllCustomers().isEmpty())
+            ((Button)root.findViewById(R.id.btn_closeTable)).setEnabled(false);
         header.setText(root.getResources().getString(R.string.tableHeader,
                 table.getLabel()));
         if(isRight)
@@ -83,5 +85,11 @@ public class TableFragment extends Fragment {
         CustomerAdapter adapter = new CustomerAdapter(
                 table.getAllCustomers(), table, (MainActivity) getActivity(), getContext());
         listView.setAdapter(adapter);
+    }
+
+    public void update(){
+        displayCustomers(getView());
+        if(table.getAllCustomers().isEmpty())
+            ((Button)getView().findViewById(R.id.btn_closeTable)).setEnabled(false);
     }
 }

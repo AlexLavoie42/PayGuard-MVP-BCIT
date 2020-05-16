@@ -1,5 +1,6 @@
 package ca.payguard;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -47,9 +49,15 @@ public class PreAuthAmountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Payment paymentView = (Payment)getActivity();
-                paymentView.forwardAmount(((EditText)paymentView.findViewById(R.id.et_customAmount)).getText().toString());
+                paymentView.forwardAmount("$"
+                        +((EditText)paymentView.findViewById(R.id.et_customAmount))
+                        .getText().toString());
             }
         });
+        ((EditText)view.findViewById(R.id.et_customAmount)).requestFocus();
+        InputMethodManager imm = (InputMethodManager)
+                getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         return view;
     }
 }
