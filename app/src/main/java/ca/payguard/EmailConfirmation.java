@@ -61,11 +61,21 @@ public class EmailConfirmation extends AppCompatActivity {
         Customer c = getIntent().getParcelableExtra("customer");
         if(((EditText)findViewById(R.id.phone_num)).getText().toString().matches(
                 "^\\D?(\\d{3})\\D?\\D?(\\d{3})\\D?(\\d{4})$"))
-            c.setPhoneNum(Integer.parseInt(
+            c.setPhoneNum(formatNumber(
                     ((EditText)findViewById(R.id.phone_num)).getText().toString()));
         Intent myIntent = new Intent(getBaseContext(),   MainActivity.class);
         myIntent.putExtra("customer", c);
         myIntent.putExtra("tableNum", getIntent().getStringExtra("tableNum"));
         startActivity(myIntent);
+    }
+
+    private int formatNumber(String num){
+        num = num.replace("-", "");
+        num = num.replace(")", "");
+        num = num.replace("(", "");
+        num = num.replace(" ", "");
+        num = "1"+num;
+
+        return Integer.parseInt(num);
     }
 }
