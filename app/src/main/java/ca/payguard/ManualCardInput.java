@@ -41,6 +41,11 @@ public class ManualCardInput extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
     public static void hideKeyboard(Activity activity) {
         if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
             InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);

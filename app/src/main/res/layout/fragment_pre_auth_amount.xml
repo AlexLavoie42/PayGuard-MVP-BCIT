@@ -9,6 +9,7 @@
         android:layout_width="495dp"
         android:layout_height="264dp"
         android:background="@color/colorBackground"
+        android:clickable="true"
         android:elevation="20dp">
 
         <!-- TODO: Update blank fragment layout -->

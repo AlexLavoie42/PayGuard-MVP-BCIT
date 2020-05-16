@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             //Add TableFragment to layout
             popup = EmployeePinFragment.newInstance();
-            ((EmployeePinFragment) popup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
+            ((EmployeePinFragment) popup).setOnConfirm(new EmployeePinFragment.onConfirmListener() {
                 @Override
                 public void onSuccess() {
                     Intent intent = new Intent(getBaseContext(), activity);
@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             //Add TableFragment to layout
             popup = EmployeePinFragment.newInstance();
-            ((EmployeePinFragment) popup).setConConfirm(onConfirm);
+            ((EmployeePinFragment) popup).setOnConfirm(onConfirm);
             ft.replace(R.id.popupLayout, popup);
             //Complete changes
             ft.commit();
@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             //Add TableFragment to layout
             upperPopup = EmployeePinFragment.newInstance();
-            ((EmployeePinFragment) upperPopup).setConConfirm(new EmployeePinFragment.onConfirmListener() {
+            ((EmployeePinFragment) upperPopup).setOnConfirm(new EmployeePinFragment.onConfirmListener() {
                 @Override
                 public void onSuccess() {
                     Intent intent = new Intent(getBaseContext(), activity);
@@ -317,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             //Add TableFragment to layout
             upperPopup = EmployeePinFragment.newInstance();
-            ((EmployeePinFragment) upperPopup).setConConfirm(onConfirm);
+            ((EmployeePinFragment) upperPopup).setOnConfirm(onConfirm);
             ft.replace(R.id.upperPopupLayout, upperPopup);
             //Complete changes
             ft.commit();
