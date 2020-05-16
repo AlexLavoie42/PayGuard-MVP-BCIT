@@ -22,7 +22,7 @@ public class EditModeActivity extends AppCompatActivity {
     public static TableSet tables;
     static Table selectedTbl;
     static Button selected;
-    private int tblSize;
+    private static int tblSize;
 
     public static ConstraintLayout tableLayout;
     public static ArrayList<Button> tblBtns;
@@ -58,24 +58,39 @@ public class EditModeActivity extends AppCompatActivity {
     /** Translates a table set to their buttons. */
     private ArrayList<Button> renderTableSet(final Context c, ArrayList<Table> tables){
         ArrayList<Button> btns = new ArrayList<>();
+        tblSize = (int) Math.max((float) TableSet.STD_WIDTH * getWidthRatio(),
+                (float) TableSet.STD_HEIGHT * getHeightRatio()) / 20;
+
+        for(Table t : tables)
+            btns.add(renderTblBtn(c, t));
 
         return btns;
     }
 
     private Button renderTblBtn(Context c, final Table t){
         final Button b = new Button(c);
+        b.setX(t.getX() * getWidthRatio());
+        b.setY(t.getY() * getHeightRatio());
+        b.setText(t.getLabel());
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //select(b);
+            }
+        });
 
         return b;
     }
 
-    /*public static void select(final Button b){
+    public void select(final Button b){
         Table selectedTbl = null;
 
-        if(this.selected != null) {
-            if(this.selectedTbl.getShape() != Table.Shape.C)
-                this.selected.setBackground(getResources().getDrawable(R.drawable.table));
+        if(selected != null) {
+            if(selectedTbl.getShape() != Table.Shape.C)
+                selected.setBackground(getResources().getDrawable(R.drawable.table));
             else
-                this.selected.setBackground(getResources().getDrawable(R.drawable.table_round));
+                selected.setBackground(getResources().getDrawable(R.drawable.table_round));
         }
 
         for(Table t : tables){
@@ -94,16 +109,16 @@ public class EditModeActivity extends AppCompatActivity {
             label.setText(selectedTbl.getLabel());
             sizeSelect.selectTable(selectedTbl);
 
-            rotateTool.rotate.setEnabled(true);
-            label.enable();
+            rotateTool.setEnabled(true);
+            label.setEnabled(true);
 
             garbage.setEnabled(true);
-            this.selectedTbl = selectedTbl;
-            this.selected = b;
+            EditModeActivity.selectedTbl = selectedTbl;
+            selected = b;
         }
     }
 
-    private static void deselect(){
+    private void deselect(){
         Button b = getSelected();
         if(b != null){
             Table t = getSelectedTbl();
@@ -116,13 +131,13 @@ public class EditModeActivity extends AppCompatActivity {
             selectedTbl = null;
             label.clear();
 
-            rotateTool.rotate.setEnabled(false);
-            sizeSelect.disable();
-            label.disable();
+            rotateTool.setEnabled(false);
+            sizeSelect.setEnabled(false);
+            label.setEnabled(false);
         }
 
         garbage.setEnabled(false);
-    }*/
+    }
 
     public void dispose(View v){
 
@@ -133,7 +148,7 @@ public class EditModeActivity extends AppCompatActivity {
 
     }
 
-    public int getSize(){ return tblSize; }
+    public static int getSize(){ return tblSize; }
 
     public static Button getSelected(){
         return selected;

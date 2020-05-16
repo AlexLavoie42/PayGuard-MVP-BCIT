@@ -7,37 +7,43 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import ca.payguard.EditModeActivity;
 import ca.payguard.R;
 import ca.payguard.Table;
 
-public class SizeSelect extends LinearLayout {
-    Button addSize, subSize;
+public class SizeSelect extends Tool {
     TextView sizeDisplay;
 
-    EditModeActivity em;
+    public SizeSelect(Context c, View ... views) {
+        super(c, views);
+        sizeDisplay = ((TextView) views[1]);
+    }
 
-    public SizeSelect(EditModeActivity c) {
-        super(c);
-        em = c;
-
-        addSize = findViewById(R.id.add_size);
-        sizeDisplay = findViewById(R.id.size_display);
-        subSize = findViewById(R.id.sub_size);
-
-        addSize.setOnClickListener(new OnClickListener() {
+    @Override
+    public void addListeners(){
+        ((Button) views[0]).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addSize();
+                applyTransformation(0);
             }
         });
 
-        subSize.setOnClickListener(new OnClickListener() {
+        ((Button) views[2]).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subSize();
+                applyTransformation(2);
             }
         });
+    }
+
+    @Override
+    public void applyTransformation(int btnNo){
+        if(btnNo == 0)
+            addSize();
+        else
+            subSize();
     }
 
     /** Loads the size when a table is selected. */
@@ -57,14 +63,13 @@ public class SizeSelect extends LinearLayout {
         }
 
         if(size.equals("S")){
-            subSize.setEnabled(false);
-            addSize.setEnabled(true);
+            views[2].setEnabled(false);
+            views[0].setEnabled(true);
         } else if(size.equals("M")){
-            subSize.setEnabled(true);
-            addSize.setEnabled(true);
+            setEnabled(true);
         } else{
-            subSize.setEnabled(true);
-            addSize.setEnabled(false);
+            views[2].setEnabled(true);
+            views[0].setEnabled(false);
         }
 
         sizeDisplay.setText(size);
@@ -72,43 +77,38 @@ public class SizeSelect extends LinearLayout {
 
     public void addSize(){
         //if(EMToolbar.getSelected() != null), then EMToolbar.getSelectedTbl() also != null
-        if(em.getSelected() != null){
-            String size = sizeDisplay.getText().toString();
+        if(EditModeActivity.getSelected() != null){
+            String size = ((TextView) views[1]).getText().toString();
 
             if(size.equals("S")){
-                em.getSelectedTbl().setSizeMod(2);
+                EditModeActivity.getSelectedTbl().setSizeMod(2);
                 sizeDisplay.setText("M");
-                subSize.setEnabled(true);
+                views[2].setEnabled(true);
             } else if(size.equals("M")){
-                em.getSelectedTbl().setSizeMod(3);
+                EditModeActivity.getSelectedTbl().setSizeMod(3);
                 sizeDisplay.setText("L");
-                addSize.setEnabled(false);
+                views[0].setEnabled(false);
             }
 
-            em.shapeSelect.transform();
+            ((EditModeActivity) context).shapeSelect.transform();
         }
     }
 
     public void subSize(){
-        if(em.getSelected() != null){
+        if(EditModeActivity.getSelected() != null){
             String size = sizeDisplay.getText().toString();
 
             if(size.equals("L")){
-                em.getSelectedTbl().setSizeMod(2);
+                EditModeActivity.getSelectedTbl().setSizeMod(2);
                 sizeDisplay.setText("M");
-                addSize.setEnabled(true);
+                views[0].setEnabled(true);
             } else if(size.equals("M")){
-                em.getSelectedTbl().setSizeMod(1);
+                EditModeActivity.getSelectedTbl().setSizeMod(1);
                 sizeDisplay.setText("S");
-                subSize.setEnabled(false);
+                views[2].setEnabled(false);
             }
 
-            em.shapeSelect.transform();
+            ((EditModeActivity) context).shapeSelect.transform();
         }
-    }
-
-    public void disable(){
-        subSize.setEnabled(false);
-        addSize.setEnabled(false);
     }
 }

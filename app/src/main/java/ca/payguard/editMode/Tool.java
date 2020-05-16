@@ -18,6 +18,8 @@ public abstract class Tool {
 
     public abstract void addListeners();
 
+    public abstract void applyTransformation(int btnNo);
+
     public void setEnabled(boolean val){
         for(View v : views)
             v.setEnabled(val);

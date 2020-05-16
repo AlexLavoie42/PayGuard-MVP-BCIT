@@ -10,62 +10,66 @@ import ca.payguard.MainActivity;
 import ca.payguard.R;
 import ca.payguard.Table;
 
-public class ShapeSelect extends LinearLayout {
-    Button squareTool, circleTool, rectangleTool;
-    EditModeActivity em;
+public class ShapeSelect extends Tool {
+    Button[] btns = new Button[3];
 
-    public ShapeSelect(EditModeActivity c) {
-        super(c);
-        em = c;
+    public ShapeSelect(Context context, View ... views) {
+        super(context, views);
 
-        squareTool = findViewById(R.id.squareTool);
-        circleTool = findViewById(R.id.circleTool);
-        rectangleTool = findViewById(R.id.rectangleTool);
+        for(int i = 0; i < views.length; i++)
+            btns[i] = (Button) views[i];
+    }
 
-        squareTool.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(em.getSelected() == null){
-                    em.addTable('S');
-                } else {
-                    applySquare(em.getSelected());
+    @Override
+    public void addListeners(){
+        for(int i = 0; i < btns.length; i++) {
+            final int num = i;
+            btns[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    applyTransformation(num);
                 }
-            }
-        });
+            });
+        }
+    }
 
-        circleTool.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(em.getSelected() == null){
-                    em.addTable('C');
+    @Override
+    public void applyTransformation(int btnNo){
+        switch(btnNo){
+            case 0:
+                if(EditModeActivity.getSelected() == null){
+                    ((EditModeActivity) context).addTable('S');
                 } else {
-                    applyCircle(em.getSelected());
+                    applySquare(EditModeActivity.getSelected());
                 }
-            }
-        });
-
-        rectangleTool.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(em.getSelected() == null){
-                    em.addTable('R');
+                break;
+            case 1:
+                if(EditModeActivity.getSelected() == null){
+                    ((EditModeActivity) context).addTable('C');
                 } else {
-                    applyRectangle(em.getSelected());
+                    applyCircle(EditModeActivity.getSelected());
                 }
-            }
-        });
+                break;
+            case 3:
+                if(EditModeActivity.getSelected() == null){
+                    ((EditModeActivity) context).addTable('R');
+                } else {
+                    applyRectangle(EditModeActivity.getSelected());
+                }
+                break;
+        }
     }
 
     public void applySquare(Button b){
-        int dim = em.getSize();
+        int dim = EditModeActivity.getSize();
 
         //get the size modification from size selection
         int mod;
-        if(em.getSelectedTbl() == null)
+        if(EditModeActivity.getSelectedTbl() == null)
             mod = 1;
         else {
-            mod = em.getSelectedTbl().getSizeMod();
-            em.getSelectedTbl().setShape('S');
+            mod = EditModeActivity.getSelectedTbl().getSizeMod();
+            EditModeActivity.getSelectedTbl().setShape('S');
         }
 
         b.setWidth(dim * mod);
@@ -73,19 +77,19 @@ public class ShapeSelect extends LinearLayout {
         b.setMinimumWidth(dim * mod);
         b.setMinimumHeight(dim * mod);
         //TODO verify whether shape is selected
-        b.setBackground(getResources().getDrawable(R.drawable.table));
+        b.setBackground(context.getResources().getDrawable(R.drawable.table));
     }
 
     public void applyCircle(Button b){
-        int dim = em.getSize();
+        int dim = EditModeActivity.getSize();
 
         //get the size modification from size selection
         int mod;
-        if(em.getSelectedTbl() == null)
+        if(EditModeActivity.getSelectedTbl() == null)
             mod = 1;
         else {
-            mod = em.getSelectedTbl().getSizeMod();
-            em.getSelectedTbl().setShape('C');
+            mod = EditModeActivity.getSelectedTbl().getSizeMod();
+            EditModeActivity.getSelectedTbl().setShape('C');
         }
 
         b.setWidth(dim * mod);
@@ -93,19 +97,20 @@ public class ShapeSelect extends LinearLayout {
         b.setMinimumWidth(dim * mod);
         b.setMinimumHeight(dim * mod);
         //TODO verify whether shape is selected
-        b.setBackground(getResources().getDrawable(R.drawable.table_round));
+        b.setBackground(context.getResources()
+                .getDrawable(R.drawable.table_round));
     }
 
     public void applyRectangle(Button b){
-        int dim = em.getSize();
+        int dim = EditModeActivity.getSize();
 
         //get the size modification from size selection
         int mod;
-        if(em.getSelectedTbl() == null)
+        if(EditModeActivity.getSelectedTbl() == null)
             mod = 1;
         else {
-            mod = em.getSelectedTbl().getSizeMod();
-            em.getSelectedTbl().setShape('R');
+            mod = EditModeActivity.getSelectedTbl().getSizeMod();
+            EditModeActivity.getSelectedTbl().setShape('R');
         }
 
         b.setWidth(dim * 2 * mod);
@@ -113,17 +118,17 @@ public class ShapeSelect extends LinearLayout {
         b.setMinimumWidth(dim * 2 * mod);
         b.setMinimumHeight(dim * mod);
         //TODO verify whether shape is selected
-        b.setBackground(getResources().getDrawable(R.drawable.table));
+        b.setBackground(context.getResources().getDrawable(R.drawable.table));
     }
 
     /* Finds the table's set shape and calls the corresponding function. */
     public void transform(){
-        Table.Shape shape = em.getSelectedTbl().getShape();
+        Table.Shape shape = EditModeActivity.getSelectedTbl().getShape();
         if(shape == Table.Shape.S)
-            applySquare(em.getSelected());
+            applySquare(EditModeActivity.getSelected());
         else if(shape == Table.Shape.C)
-            applyCircle(em.getSelected());
+            applyCircle(EditModeActivity.getSelected());
         else
-            applyRectangle(em.getSelected());
+            applyRectangle(EditModeActivity.getSelected());
     }
 }
