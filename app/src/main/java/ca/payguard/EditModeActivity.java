@@ -71,7 +71,7 @@ public class EditModeActivity extends AppCompatActivity {
                 findViewById(R.id.sub_size)
         );
 
-        ArrayList<Table> tables = (ArrayList<Table>) getIntent().getSerializableExtra("tables");
+        TableSet tables = (TableSet) getIntent().getExtras().getSerializable("tables");
         tblBtns = renderTableSet(getBaseContext(), tables);
         tableLayout.removeAllViews();
         for(Button b : tblBtns)
@@ -79,7 +79,7 @@ public class EditModeActivity extends AppCompatActivity {
     }
 
     /** Translates a table set to their buttons. */
-    private ArrayList<Button> renderTableSet(final Context c, ArrayList<Table> tables){
+    private ArrayList<Button> renderTableSet(final Context c, TableSet tables){
         ArrayList<Button> btns = new ArrayList<>();
         tblSize = (int) Math.max((float) TableSet.STD_WIDTH * getWidthRatio(),
                 (float) TableSet.STD_HEIGHT * getHeightRatio()) / 20;
