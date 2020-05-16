@@ -16,45 +16,47 @@ public class LabelInput extends Tool {
 
     public LabelInput(Context c, View ... views){
         super(c, views);
-        addListeners();
     }
 
     @Override
     public void addListeners(){
-        ((Button) views[0]).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        for(int i = 0; i < views.length; i++){
+            if(i == 2)
+                continue;
 
+            final int num = i;//function argument must be final
+            views[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    applyTransformation(num);
+                }
+            });
+        }
+
+        ((AppCompatEditText) views[2]).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
             }
         });
+    }
 
-        ((Button) views[1]).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        ((AppCompatEditText) views[2]).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        ((Button) views[3]).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        ((Button) views[4]).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+    @Override
+    public void applyTransformation(int btnNo){
+        switch(btnNo){
+            case 0:
+                changeLabel(10);
+                break;
+            case 1:
+                changeLabel(1);
+                break;
+            case 3:
+                changeLabel(-1);
+                break;
+            case 4:
+                changeLabel(-10);
+                break;
+        }
     }
 
     public void changeLabel(int add){
