@@ -1,6 +1,7 @@
 package ca.payguard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,10 +19,13 @@ public class EditModeActivity extends AppCompatActivity {
     SizeSelect sizeSelect;
     Button garbage;
 
-    public TableSet tables;
-    Table selectedTbl;
-    Button selected;
+    public static TableSet tables;
+    static Table selectedTbl;
+    static Button selected;
     private int tblSize;
+
+    public static ConstraintLayout tableLayout;
+    public static ArrayList<Button> tblBtns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,8 @@ public class EditModeActivity extends AppCompatActivity {
         garbage = findViewById(R.id.garbage);
         garbage.setX(getScreenWidth() - 50);
         garbage.setY(getScreenHeight() - 50);
+
+        tableLayout = findViewById(R.id.tableLayout);
     }
 
     @Override
@@ -43,67 +49,26 @@ public class EditModeActivity extends AppCompatActivity {
         super.onStart();
 
         ArrayList<Table> tables = (ArrayList<Table>) getIntent().getSerializableExtra("tables");
-        //tblBtns = renderTableSet(getBaseContext(), tables);
+        tblBtns = renderTableSet(getBaseContext(), tables);
+        tableLayout.removeAllViews();
+        for(Button b : tblBtns)
+            tableLayout.addView(b);
     }
 
     /** Translates a table set to their buttons. */
     private ArrayList<Button> renderTableSet(final Context c, ArrayList<Table> tables){
         ArrayList<Button> btns = new ArrayList<>();
-        tblSize = (int) Math.max((float) TableSet.STD_WIDTH * getWidthRatio(),
-                (float) TableSet.STD_HEIGHT * getHeightRatio()) / 20;
-
-        for(Table t : tables)
-            btns.add(renderTblBtn(c, t));
 
         return btns;
     }
 
     private Button renderTblBtn(Context c, final Table t){
         final Button b = new Button(c);
-        b.setText(t.getLabel());
-
-        //reshape
-        if(t.getShape() == Table.Shape.C)
-            b.setBackground(getResources().getDrawable(R.drawable.table_round));
-        else
-            b.setBackground(getResources().getDrawable(R.drawable.table));
-
-        int width, height;
-
-        //resize and rotate if necessary
-        if(t.getShape() != Table.Shape.R){
-            width = tblSize * t.getSizeMod();
-            height = tblSize * t.getSizeMod();
-        } else {
-            if(t.getRotated()){
-                width = tblSize * t.getSizeMod();
-                height = tblSize * t.getSizeMod() * 2;
-            } else {
-                width = tblSize * t.getSizeMod() * 2;
-                height = tblSize * t.getSizeMod();
-            }
-        }
-
-        b.setMinimumWidth(width);
-        b.setMinimumHeight(height);
-        b.setWidth(width);
-        b.setHeight(height);
-
-        b.setX((float) t.getX() * getWidthRatio() + width / 2);
-        b.setY((float) t.getY() * getHeightRatio() - height / 3);
-
-        //assign listeners
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //select(b);
-            }
-        });
 
         return b;
     }
 
-    /*public void select(final Button b){
+    /*public static void select(final Button b){
         Table selectedTbl = null;
 
         if(this.selected != null) {
@@ -138,7 +103,7 @@ public class EditModeActivity extends AppCompatActivity {
         }
     }
 
-    private void deselect(){
+    private static void deselect(){
         Button b = getSelected();
         if(b != null){
             Table t = getSelectedTbl();
@@ -170,11 +135,11 @@ public class EditModeActivity extends AppCompatActivity {
 
     public int getSize(){ return tblSize; }
 
-    public Button getSelected(){
+    public static Button getSelected(){
         return selected;
     }
 
-    public Table getSelectedTbl(){
+    public static Table getSelectedTbl(){
         return selectedTbl;
     }
 

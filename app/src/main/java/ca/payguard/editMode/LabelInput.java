@@ -11,58 +11,48 @@ import androidx.appcompat.widget.AppCompatEditText;
 import ca.payguard.EditModeActivity;
 import ca.payguard.R;
 
-public class LabelInput extends LinearLayout {
+public class LabelInput extends Tool {
     AppCompatEditText label;
 
-    LinearLayout r1, r3;//layout rows - r2 only has 1 element and doesn't need layout
-    Button[] btns;
+    public LabelInput(Context c, View ... views){
+        super(c, views);
+        addListeners();
+    }
 
-    EditModeActivity em;
-
-    public LabelInput(EditModeActivity c){
-        super(c);
-        em = c;
-
-        btns = new Button[4];
-        btns[0] = findViewById(R.id.btn1);
-        btns[1] = findViewById(R.id.btn2);
-        btns[2] = findViewById(R.id.btn3);
-        btns[3] = findViewById(R.id.btn4);
-
-        label = findViewById(R.id.labelPicker);
-        label.setSingleLine(true);
-        label.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });//disable keyboard
-
-        btns[0].setOnClickListener(new OnClickListener() {
+    @Override
+    public void addListeners(){
+        ((Button) views[0]).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeLabel(10);
+
             }
         });
 
-        btns[1].setOnClickListener(new OnClickListener() {
+        ((Button) views[1]).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeLabel(1);
+
             }
         });
 
-        btns[2].setOnClickListener(new OnClickListener() {
+        ((AppCompatEditText) views[2]).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeLabel(-1);
+
             }
         });
 
-        btns[3].setOnClickListener(new OnClickListener() {
+        ((Button) views[3]).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeLabel(-10);
+
+            }
+        });
+
+        ((Button) views[4]).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -75,33 +65,19 @@ public class LabelInput extends LinearLayout {
         String nLabel = "" + curNo;
         label.setText(nLabel);
 
-        if(em.tables.containsLabel(nLabel) &&
-            Integer.parseInt(em.getSelectedTbl().getLabel()) != curNo)
-            label.setBackgroundColor(getResources().getColor(R.color.red));
+        if(EditModeActivity.tables.containsLabel(nLabel) &&
+            Integer.parseInt(EditModeActivity.getSelectedTbl().getLabel()) != curNo)
+            label.setBackgroundColor(context.getResources().getColor(R.color.red));
         else {
-            em.getSelectedTbl().setLabel(nLabel);
-            em.getSelected().setText(nLabel);
-            label.setBackgroundColor(getResources().getColor(R.color.colorBackground));
+            EditModeActivity.getSelectedTbl().setLabel(nLabel);
+            EditModeActivity.getSelected().setText(nLabel);
+            label.setBackgroundColor(context.getResources().getColor(R.color.colorBackground));
         }
-    }
-
-    public void enable(){
-        for(int i = 0; i < 4; i++)
-            btns[i].setEnabled(true);
-
-        label.setEnabled(true);
-    }
-
-    public void disable(){
-        for(int i = 0; i < 4; i++)
-            btns[i].setEnabled(false);
-
-        label.setEnabled(false);
     }
 
     public void clear(){
         label.setText("Table Name");
-        label.setBackgroundColor(getResources().getColor(R.color.colorBackground));
+        label.setBackgroundColor(context.getResources().getColor(R.color.colorBackground));
     }
 
     public void setText(String s){

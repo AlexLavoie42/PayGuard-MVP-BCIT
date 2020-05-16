@@ -9,16 +9,15 @@ import ca.payguard.EditModeActivity;
 import ca.payguard.R;
 import ca.payguard.Table;
 
-public class RotateTool extends LinearLayout {
-    public Button rotate;
-    EditModeActivity em;
+public class RotateTool extends Tool {
+    public RotateTool(Context c, View ... views){
+        super(c, views);
+        addListeners();
+    }
 
-    public RotateTool(EditModeActivity c){
-        super(c);
-        em = c;
-
-        rotate = findViewById(R.id.rotate);
-        rotate.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void addListeners(){
+        ((Button) views[0]).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 rotate();
@@ -33,8 +32,8 @@ public class RotateTool extends LinearLayout {
      * @throws UnsupportedOperationException
      */
     public void rotate() throws UnsupportedOperationException {
-        Table t = em.getSelectedTbl();
-        Button b = em.getSelected();
+        Table t = EditModeActivity.getSelectedTbl();
+        Button b = EditModeActivity.getSelected();
 
         if(t == null)
             throw new UnsupportedOperationException("Error: a shape must be selected to " +
