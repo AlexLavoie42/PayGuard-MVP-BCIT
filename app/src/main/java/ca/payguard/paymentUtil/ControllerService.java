@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;

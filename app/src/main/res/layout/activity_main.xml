@@ -69,7 +69,7 @@
         </LinearLayout>
 
         <com.github.mmin18.widget.RealtimeBlurView
-            android:id="@+id/billBlur"
+            android:id="@+id/upperBlur"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -79,7 +79,7 @@
             app:realtimeOverlayColor="#4000" />
 
         <LinearLayout
-            android:id="@+id/billPopupLayout"
+            android:id="@+id/upperPopupLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="end"

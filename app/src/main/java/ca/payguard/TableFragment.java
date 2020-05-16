@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -60,6 +61,13 @@ public class TableFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_table, container, false);
         TextView header = root.findViewById(R.id.tv_tableHeaderText);
+        ((Button)root.findViewById(R.id.btn_closeTable))
+                .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).billAllCustomersPopup(table);
+            }
+        });
         header.setText(root.getResources().getString(R.string.tableHeader,
                 table.getLabel()));
         if(isRight)
@@ -75,13 +83,5 @@ public class TableFragment extends Fragment {
         CustomerAdapter adapter = new CustomerAdapter(
                 table.getAllCustomers(), table, (MainActivity) getActivity(), getContext());
         listView.setAdapter(adapter);
-    }
-
-    public void billAll(){
-        if(table.getAllCustomers() != null) {
-            for (Customer c : table.getAllCustomers()) {
-                TransactionService.instance.completeTransaction(c.getOrderID(), "" + c.getBillTotal());
-            }
-        }
     }
 }

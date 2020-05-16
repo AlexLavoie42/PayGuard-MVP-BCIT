@@ -1,17 +1,14 @@
 package ca.payguard;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomerAdapter extends ArrayAdapter<Customer> {
     private Table table;
@@ -44,14 +41,14 @@ public class CustomerAdapter extends ArrayAdapter<Customer> {
             addBill.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mainActivity.billPopup(cRef, table);
+                    mainActivity.changeBillPopup(cRef, table);
                 }
             });
             Button closeBill = custView.findViewById(R.id.btn_closeCustomer);
             closeBill.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mainActivity.billCustomer(cRef);
+                    mainActivity.billCustomerPopup(cRef, table);
                 }
             });
 
