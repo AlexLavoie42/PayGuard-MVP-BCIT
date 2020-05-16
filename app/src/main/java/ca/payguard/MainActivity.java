@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * for PayGuard MVP.
  */
 public class MainActivity extends AppCompatActivity {
-    private final boolean DEBUG_NO_PIN = true;
+    private final boolean DEBUG_NO_PIN = false;
 
     private TableSet tableGui;
     public static ArrayList<Button> tblBtns = new ArrayList<>();
@@ -227,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("table", table);
             startActivity(intent);
         } else {
-
             //Begin the transaction
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             //Add TableFragment to layout

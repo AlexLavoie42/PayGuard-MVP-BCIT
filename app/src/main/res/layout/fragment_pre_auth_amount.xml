@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     android:gravity="center"
     tools:context="ca.payguard.PreAuthAmountFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="495dp"
         android:layout_height="264dp"
-        android:background="@color/colorBackground"
+        android:background="@drawable/bckg_rectangle_light"
         android:clickable="true"
         android:elevation="20dp">
 
