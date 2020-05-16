@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
 
+    static boolean queryEditMode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +116,17 @@ public class MainActivity extends AppCompatActivity {
             startService(intent);
         }
         keyboardCheck = new KeyboardCheck((ConstraintLayout) findViewById(R.id.mainLayout));
+    }
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+
+        if(queryEditMode){
+            Intent i = new Intent(getBaseContext(), EditModeActivity.class);
+            i.putExtra("tables", tableGui);
+            startActivity(i);
+        }
     }
 
     //TODO doesn't seem to activate? supposed to function on orientation change

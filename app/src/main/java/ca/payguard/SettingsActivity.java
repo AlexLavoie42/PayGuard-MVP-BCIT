@@ -44,8 +44,8 @@ public class SettingsActivity extends AppCompatActivity {
         public boolean onPreferenceTreeClick(Preference preference) {
 
             if(preference.getKey().equals("edit_mode")) {
-                Intent intent = new Intent(getContext(), EditModeActivity.class);
-                startActivity(intent);
+                MainActivity.queryEditMode = true;
+                getActivity().finish();
             }
             else if(preference.getKey().equals("logout")) {
                 FirebaseAuth.getInstance().signOut();
