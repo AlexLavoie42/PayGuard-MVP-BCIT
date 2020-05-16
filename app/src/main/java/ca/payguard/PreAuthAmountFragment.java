@@ -49,7 +49,9 @@ public class PreAuthAmountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Payment paymentView = (Payment)getActivity();
-                paymentView.forwardAmount(((EditText)paymentView.findViewById(R.id.et_customAmount)).getText().toString());
+                paymentView.forwardAmount("$"
+                        +((EditText)paymentView.findViewById(R.id.et_customAmount))
+                        .getText().toString());
             }
         });
         ((EditText)view.findViewById(R.id.et_customAmount)).requestFocus();

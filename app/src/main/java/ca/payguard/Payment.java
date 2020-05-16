@@ -62,7 +62,7 @@ public class Payment extends AppCompatActivity{
      */
     protected void forwardAmount(String amount){
         if(!amount.isEmpty()) {
-            int dollars = Integer.parseInt(amount.substring(1));
+            float dollars = Float.parseFloat(amount.substring(1));
             newCustomer.setPreAuthTotal(dollars);
 
             Intent myIntent = new Intent(getBaseContext(), ManualCardInput.class);
