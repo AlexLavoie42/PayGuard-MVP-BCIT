@@ -2,6 +2,7 @@ package ca.payguard;
 
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import java.util.Map;
  * TableSet contains the tables used within the GUI.
  * It uses the screen size to arrange the tables.
  */
-public class TableSet extends ArrayList<Table> {
+public class TableSet extends ArrayList<Table> implements Serializable {
     public static final int STD_WIDTH = 1440, STD_HEIGHT = 2560;//standard android screen size
     private boolean stdFormation;
 
