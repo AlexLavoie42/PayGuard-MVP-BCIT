@@ -20,7 +20,7 @@ public class EditModeActivity extends AppCompatActivity {
     Button garbage;
 
     public static TableSet tables;
-    static Table selectedTbl;
+    public static Table selectedTbl;
     static Button selected;
     private static int tblSize;
 
@@ -32,11 +32,6 @@ public class EditModeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_mode);
 
-        /*label = new LabelInput(this);
-        rotateTool = new RotateTool(this);
-        shapeSelect = new ShapeSelect(this);
-        sizeSelect = new SizeSelect(this);*/
-
         garbage = findViewById(R.id.garbage);
         garbage.setX(getScreenWidth() - 50);
         garbage.setY(getScreenHeight() - 50);
@@ -47,6 +42,34 @@ public class EditModeActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+
+        label = new LabelInput(
+                this,
+                findViewById(R.id.label_btn1),
+                findViewById(R.id.label_btn2),
+                findViewById(R.id.label_picker),
+                findViewById(R.id.label_btn3),
+                findViewById(R.id.label_btn4)
+        );
+
+        rotateTool = new RotateTool(
+                this,
+                findViewById(R.id.rotate_btn)
+        );
+
+        shapeSelect = new ShapeSelect(
+                this,
+                findViewById(R.id.square_tool),
+                findViewById(R.id.circle_tool),
+                findViewById(R.id.rectangle_tool)
+        );
+
+        sizeSelect = new SizeSelect(
+                this,
+                findViewById(R.id.add_size),
+                findViewById(R.id.size_display),
+                findViewById(R.id.sub_size)
+        );
 
         ArrayList<Table> tables = (ArrayList<Table>) getIntent().getSerializableExtra("tables");
         tblBtns = renderTableSet(getBaseContext(), tables);
@@ -64,6 +87,8 @@ public class EditModeActivity extends AppCompatActivity {
         for(Table t : tables)
             btns.add(renderTblBtn(c, t));
 
+        deselect();
+
         return btns;
     }
 
@@ -76,9 +101,11 @@ public class EditModeActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //select(b);
+                select(b);
             }
         });
+
+        shapeSelect.transform(b, t);
 
         return b;
     }

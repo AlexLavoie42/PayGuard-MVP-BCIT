@@ -1,6 +1,7 @@
 package ca.payguard.editMode;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -11,20 +12,15 @@ import ca.payguard.R;
 import ca.payguard.Table;
 
 public class ShapeSelect extends Tool {
-    Button[] btns = new Button[3];
-
     public ShapeSelect(Context context, View ... views) {
         super(context, views);
-
-        for(int i = 0; i < views.length; i++)
-            btns[i] = (Button) views[i];
     }
 
     @Override
     public void addListeners(){
-        for(int i = 0; i < btns.length; i++) {
+        for(int i = 0; i < 3; i++) {
             final int num = i;
-            btns[i].setOnClickListener(new View.OnClickListener() {
+            views[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     applyTransformation(num);
@@ -130,5 +126,18 @@ public class ShapeSelect extends Tool {
             applyCircle(EditModeActivity.getSelected());
         else
             applyRectangle(EditModeActivity.getSelected());
+    }
+
+    public void transform(Button b, Table t){
+        EditModeActivity.selectedTbl = t;
+        Table.Shape shape = t.getShape();
+        Log.i("EditModeActivity", "Table #" + t.getLabel() + ": " + t.getSizeMod());
+
+        if(shape == Table.Shape.S)
+            applySquare(b);
+        else if(shape == Table.Shape.C)
+            applyCircle(b);
+        else
+            applyRectangle(b);
     }
 }
