@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar loading;
     private Customer curCust;
     private Table curTable;
+    private VonageSMS sms;
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
 
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sms = new VonageSMS();
 
         try{
             db = new DatabaseController();
@@ -95,10 +98,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if(getIntent().getParcelableExtra("customer") != null
                         && getIntent().getStringExtra("tableNum") != null){
-                    tableGui.addCustomer(
+                    addCustomer(
                             (Customer) getIntent().getParcelableExtra("customer"),
                             getIntent().getStringExtra("tableNum"));
-                    db.updateTableSet(tableGui);
 
                     tblBtns = renderTableSet(getBaseContext(), tableGui);
                     tableLayout.removeAllViews();
@@ -216,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void resetTablePopup(){
-        ((TableFragment)popup).displayCustomers(findViewById(R.id.tableFragment));
+        ((TableFragment)popup).update();
     }
 
     public void pinPopup(final Class<? extends AppCompatActivity> activity, final Table table){
@@ -440,6 +442,8 @@ public class MainActivity extends AppCompatActivity {
             TransactionService.instance.completeTransaction(customer.getOrderID(), "" + customer.getBillTotal());
         }
         table.removeCustomer(customer);
+        db.updateTableSet(tableGui);
+        closeUpperPopup();
         resetTablePopup();
     }
 
@@ -454,6 +458,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         table.removeAllCustomers();
+        db.updateTableSet(tableGui);
         closeUpperPopup();
         resetTablePopup();
     }
@@ -518,6 +523,9 @@ public class MainActivity extends AppCompatActivity {
     public void addCustomer(Customer customer, String tableNum){
         tableGui.addCustomer(customer, tableNum);
         db.updateTableSet(tableGui);
+        // ENABLE ONLY FOR TESTING
+        //sms.sendTestSMS("Yo Zach Customer #" + customer.getId()
+        //       + " was added to Table #" + tableNum +". Hope these aren't annoying :P");
     }
 
     public void updateCustomer(Customer customer, String tableNum){
