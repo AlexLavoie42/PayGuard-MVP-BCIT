@@ -24,20 +24,20 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn1"
+                    android:id="@+id/label_btn1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="^" />
 
                 <Button
-                    android:id="@+id/btn2"
+                    android:id="@+id/label_btn2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="^" />
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/labelPicker"
+                android:id="@+id/label_picker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/table_label" />
@@ -48,14 +48,14 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn4"
+                    android:id="@+id/label_btn4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:rotation="180"
                     android:text="^" />
 
                 <Button
-                    android:id="@+id/btn3"
+                    android:id="@+id/label_btn3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:rotation="180"
@@ -70,19 +70,19 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/squareTool"
+                android:id="@+id/square_tool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="S" />
 
             <Button
-                android:id="@+id/circleTool"
+                android:id="@+id/circle_tool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="C" />
 
             <Button
-                android:id="@+id/rectangleTool"
+                android:id="@+id/rectangle_tool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="R" />
@@ -122,18 +122,12 @@
 
     </LinearLayout>
 
-    <!--Rotation tool-->
-    <LinearLayout
+    <Button
+        android:id="@+id/rotate_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/rotate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rotate" />
-    </LinearLayout>
+        android:visibility="gone"
+        android:text="Rot" />
 
     <!--Garbage tool-->
     <Button
@@ -153,5 +147,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
