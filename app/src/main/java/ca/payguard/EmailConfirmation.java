@@ -23,7 +23,7 @@ public class EmailConfirmation extends AppCompatActivity {
 
         ((TextView)findViewById(R.id.ConfirmationMessage)).setText(getResources().getString(
                 R.string.confirmation_message,
-                getIntent().getIntExtra("preAuthAmount", 0)));
+                ((Customer)getIntent().getParcelableExtra("customer")).getPreAuthTotal()));
     }
 
     @Override

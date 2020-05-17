@@ -1,6 +1,7 @@
 package ca.payguard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ca.payguard.R;
+import ca.payguard.miscUtil.KeyboardCheck;
 
 public class Payment extends AppCompatActivity{
 
@@ -68,7 +70,6 @@ public class Payment extends AppCompatActivity{
             Intent myIntent = new Intent(getBaseContext(), ManualCardInput.class);
             myIntent.putExtra("tableNum", tableNum);
             myIntent.putExtra("customer", newCustomer);
-            myIntent.putExtra("preAuthAmount", "" + dollars);
             startActivity(myIntent);
         } else {
             Toast.makeText(getApplicationContext(), "Please enter limit",
@@ -86,13 +87,19 @@ public class Payment extends AppCompatActivity{
         ft.commit();
         final com.github.mmin18.widget.RealtimeBlurView blur = findViewById(R.id.blur);
         blur.setVisibility(View.VISIBLE);
+        final Activity ref = this;
+        final KeyboardCheck kb = new KeyboardCheck(findViewById(R.id.paymentLayout));
         blur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.detach(fragment);
-                ft.commit();
-                blur.setVisibility(View.GONE);
+                if(kb.isKeyboardShowing())
+                    hideKeyboard(ref);
+                else {
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.detach(fragment);
+                    ft.commit();
+                    blur.setVisibility(View.GONE);
+                }
             }
         });
     }

@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, TransactionService.class);
             startService(intent);
         }
-        keyboardCheck = new KeyboardCheck((ConstraintLayout) findViewById(R.id.mainLayout));
+        keyboardCheck = new KeyboardCheck(  findViewById(R.id.mainLayout));
     }
 
     @Override
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
     public void pinPopup(final Class<? extends AppCompatActivity> activity, final Table table){
         if(DEBUG_NO_PIN){
             Intent intent = new Intent(getBaseContext(), activity);
-            intent.putExtra("table", table);
+            intent.putExtra("tableNum", table.getLabel());
             startActivity(intent);
         } else {
             //Begin the transaction
@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess() {
                     Intent intent = new Intent(getBaseContext(), activity);
-                    intent.putExtra("table", table);
+                    intent.putExtra("tableNum", table.getLabel());
                     startActivity(intent);
                 }
             });
@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
     public void pinTopPopup(final Class<? extends AppCompatActivity> activity, final Table table){
         if(DEBUG_NO_PIN){
             Intent intent = new Intent(getBaseContext(), activity);
-            intent.putExtra("table", table);
+            intent.putExtra("tableNum", table.getLabel());
             startActivity(intent);
         } else {
             //Begin the transaction
