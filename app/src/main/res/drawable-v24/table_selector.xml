@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/listview_background_shape">
-    <stroke android:width="2dp" android:color="@color/blackGreen" />
-    <padding android:left="2dp"
-        android:top="2dp"
-        android:right="2dp"
-        android:bottom="2dp" />
-    <corners android:radius="5dp" />
-    <solid android:color="@color/brightGreen" />
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape
+            android:shape="rectangle">
+            <solid android:color="@color/blackGreen" />
+            <corners android:radius="5dp"/>
+        </shape>
+    </item>
+    <item android:right="2dp" android:left="2dp" android:bottom="2dp" android:top="2dp">
+        <shape
+            android:shape="rectangle">
+            <gradient android:startColor="@color/buttonGradientStart"
+                android:endColor="@color/buttonGradientEnd"
+                android:angle="270"/>
+            <corners android:radius="5dp"/>
+        </shape>
+    </item>
+</layer-list>

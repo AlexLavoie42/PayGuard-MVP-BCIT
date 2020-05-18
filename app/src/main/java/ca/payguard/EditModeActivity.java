@@ -113,14 +113,14 @@ public class EditModeActivity extends AppCompatActivity {
     }
 
     public void select(final Button b){
-        Table selectedTbl = null;
-
-        if(selected != null) {
+        if(selected  != null) {
             if(selectedTbl.getShape() != Table.Shape.C)
                 selected.setBackground(getResources().getDrawable(R.drawable.table));
             else
                 selected.setBackground(getResources().getDrawable(R.drawable.table_round));
         }
+
+        Table selectedTbl = null;
 
         for(Table t : tables){
             if(t.getLabel().equals(b.getText())){
