@@ -74,6 +74,7 @@ public class EditModeActivity extends AppCompatActivity {
         /* TableSet tables = (TableSet) getIntent().getExtras().getSerializable("tables");*/
         TableSet tables = MainActivity.getTables();
         tblBtns = renderTableSet(getBaseContext(), tables);
+        EditModeActivity.tables = tables;
         tableLayout.removeAllViews();
         for(Button b : tblBtns)
             tableLayout.addView(b);

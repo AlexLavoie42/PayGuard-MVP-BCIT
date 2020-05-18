@@ -14,10 +14,12 @@ import ca.payguard.R;
 import ca.payguard.Table;
 
 public class SizeSelect extends Tool {
-    TextView sizeDisplay;
+    private TextView sizeDisplay;
 
     public SizeSelect(Context c, View ... views) {
         super(c, views);
+
+        sizeDisplay = (TextView) views[1];
     }
 
     @Override

@@ -16,6 +16,8 @@ public class LabelInput extends Tool {
 
     public LabelInput(Context c, View ... views){
         super(c, views);
+
+        label = (AppCompatEditText) views[2];
     }
 
     @Override
