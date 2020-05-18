@@ -17,19 +17,6 @@ public class ShapeSelect extends Tool {
     }
 
     @Override
-    public void addListeners(){
-        for(int i = 0; i < 3; i++) {
-            final int num = i;
-            views[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    applyTransformation(num);
-                }
-            });
-        }
-    }
-
-    @Override
     public void applyTransformation(int btnNo){
         switch(btnNo){
             case 0:
@@ -46,7 +33,7 @@ public class ShapeSelect extends Tool {
                     applyCircle(EditModeActivity.getSelected());
                 }
                 break;
-            case 3:
+            case 2:
                 if(EditModeActivity.getSelected() == null){
                     ((EditModeActivity) context).addTable('R');
                 } else {

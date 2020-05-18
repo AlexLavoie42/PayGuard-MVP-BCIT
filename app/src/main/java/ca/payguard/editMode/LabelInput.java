@@ -20,18 +20,7 @@ public class LabelInput extends Tool {
 
     @Override
     public void addListeners(){
-        for(int i = 0; i < views.length; i++){
-            if(i == 2)
-                continue;
-
-            final int num = i;//function argument must be final
-            views[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    applyTransformation(num);
-                }
-            });
-        }
+        super.addListeners();
 
         ((AppCompatEditText) views[2]).setOnTouchListener(new View.OnTouchListener() {
             @Override

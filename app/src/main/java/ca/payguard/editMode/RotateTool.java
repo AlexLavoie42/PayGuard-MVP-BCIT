@@ -15,16 +15,6 @@ public class RotateTool extends Tool {
     }
 
     @Override
-    public void addListeners(){
-        ((Button) views[0]).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                applyTransformation(0);
-            }
-        });
-    }
-
-    @Override
     public void applyTransformation(int btnNo){
         Table t = EditModeActivity.getSelectedTbl();
         Button b = EditModeActivity.getSelected();

@@ -16,7 +16,17 @@ public abstract class Tool {
         addListeners();
     }
 
-    public abstract void addListeners();
+    public void addListeners(){
+        for(int i = 0; i < views.length; i++) {
+            final int num = i;
+            views[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    applyTransformation(num);
+                }
+            });
+        }
+    }
 
     public abstract void applyTransformation(int btnNo);
 

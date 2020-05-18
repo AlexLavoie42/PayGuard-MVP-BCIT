@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private final boolean DEBUG_NO_PIN = true;
 
-    private TableSet tableGui;
+    private static TableSet tableGui;
     public static ArrayList<Button> tblBtns = new ArrayList<>();
     private int tblSize;
     private Fragment popup;
@@ -532,6 +532,10 @@ public class MainActivity extends AppCompatActivity {
     public void updateCustomer(Customer customer, String tableNum){
         tableGui.updateCustomer(customer, tableNum);
         db.updateTableSet(tableGui);
+    }
+
+    public static TableSet getTables(){
+        return tableGui;
     }
 
     private int getScreenWidth(){

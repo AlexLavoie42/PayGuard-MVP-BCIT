@@ -18,31 +18,13 @@ public class SizeSelect extends Tool {
 
     public SizeSelect(Context c, View ... views) {
         super(c, views);
-        sizeDisplay = ((TextView) views[1]);
-    }
-
-    @Override
-    public void addListeners(){
-        ((Button) views[0]).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                applyTransformation(0);
-            }
-        });
-
-        ((Button) views[2]).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                applyTransformation(2);
-            }
-        });
     }
 
     @Override
     public void applyTransformation(int btnNo){
         if(btnNo == 0)
             addSize();
-        else
+        else if(btnNo == 2)
             subSize();
     }
 
