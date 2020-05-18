@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.editMode.*;
 import java.util.ArrayList;
 
@@ -23,6 +26,7 @@ public class EditModeActivity extends AppCompatActivity {
     public static Table selectedTbl;
     static Button selected;
     private static int tblSize;
+    private DatabaseController db;
 
     public static ConstraintLayout tableLayout;
     public static ArrayList<Button> tblBtns;
@@ -31,6 +35,12 @@ public class EditModeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_mode);
+
+        try{
+            db = new DatabaseController();
+        } catch (DatabaseController.AuthNotFoundError e) {
+            startActivity(new Intent(getBaseContext(), LoginActivity.class));
+        }
 
         garbage = findViewById(R.id.garbage);
         garbage.setX(getScreenWidth() - 50);
@@ -175,6 +185,11 @@ public class EditModeActivity extends AppCompatActivity {
     /** TODO add table to edit mode activity. */
     public void addTable(char shape){
 
+    }
+
+    public void exit(View view){
+        db.updateTableSet(tables);
+        startActivity(new Intent(getBaseContext(), MainActivity.class));
     }
 
     public static int getSize(){ return tblSize; }
