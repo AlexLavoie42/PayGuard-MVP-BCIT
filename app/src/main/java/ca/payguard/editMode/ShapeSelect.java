@@ -111,8 +111,10 @@ public class ShapeSelect extends Tool {
             applySquare(EditModeActivity.getSelected());
         else if(shape == Table.Shape.C)
             applyCircle(EditModeActivity.getSelected());
-        else
+        else {
             applyRectangle(EditModeActivity.getSelected());
+            EditModeActivity.rotateTool.display(EditModeActivity.getSelectedTbl());
+        }
     }
 
     public void transform(Button b, Table t){
