@@ -23,19 +23,23 @@ public class RotateTool extends Tool {
             throw new UnsupportedOperationException("Error: a shape must be selected to " +
                     "apply rotation.");*/
 
-        boolean nRotate = !t.getRotated();
-        t.setRotated(nRotate);
+        t.setRotated(!t.getRotated());
+        verifyRotation(t, b);
+    }
 
-        if(nRotate){
-            b.setMinimumWidth(EditModeActivity.getSize() * t.getSizeMod());
-            b.setMinimumHeight(EditModeActivity.getSize() * t.getSizeMod() * 2);
-            b.setWidth(EditModeActivity.getSize() * t.getSizeMod());
-            b.setHeight(EditModeActivity.getSize() * t.getSizeMod() * 2);
-        } else {
-            b.setMinimumWidth(EditModeActivity.getSize() * t.getSizeMod() * 2);// * 2
-            b.setMinimumHeight(EditModeActivity.getSize() * t.getSizeMod());
-            b.setWidth(EditModeActivity.getSize() * t.getSizeMod() * 2);// * 2
-            b.setHeight(EditModeActivity.getSize() * t.getSizeMod());
+    public static void verifyRotation(Table t, Button b){
+        if(t.getShape() == Table.Shape.R){
+            if(t.getRotated()){
+                b.setMinimumWidth(EditModeActivity.getSize() * t.getSizeMod());
+                b.setMinimumHeight(EditModeActivity.getSize() * t.getSizeMod() * 2);
+                b.setWidth(EditModeActivity.getSize() * t.getSizeMod());
+                b.setHeight(EditModeActivity.getSize() * t.getSizeMod() * 2);
+            } else {
+                b.setMinimumWidth(EditModeActivity.getSize() * t.getSizeMod() * 2);// * 2
+                b.setMinimumHeight(EditModeActivity.getSize() * t.getSizeMod());
+                b.setWidth(EditModeActivity.getSize() * t.getSizeMod() * 2);// * 2
+                b.setHeight(EditModeActivity.getSize() * t.getSizeMod());
+            }
         }
     }
 

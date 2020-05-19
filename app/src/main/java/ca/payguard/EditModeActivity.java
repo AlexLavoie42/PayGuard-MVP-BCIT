@@ -99,6 +99,12 @@ public class EditModeActivity extends AppCompatActivity {
             tableLayout.addView(b);
     }
 
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        this.onStart();
+    }
+
     /** Translates a table set to their buttons. */
     private ArrayList<Button> renderTableSet(final Context c, TableSet tables){
         ArrayList<Button> btns = new ArrayList<>();
@@ -161,6 +167,7 @@ public class EditModeActivity extends AppCompatActivity {
         });
 
         shapeSelect.transform(b, t);
+        RotateTool.verifyRotation(t, b);
 
         return b;
     }

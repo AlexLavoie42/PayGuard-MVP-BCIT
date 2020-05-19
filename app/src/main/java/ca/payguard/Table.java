@@ -53,11 +53,22 @@ public class Table implements Parcelable {
     }
 
     protected Table(Parcel in) {
+        /*
+        dest.writeString(label);
+        dest.writeInt(x);
+        dest.writeInt(y);
+        dest.writeSerializable(shape);
+        dest.writeInt(sizeMod);
+        dest.writeInt((rotated) ? 1 : 0);
+         */
+
         label = in.readString();
         x = in.readInt();
         y = in.readInt();
+        shape = (Table.Shape) in.readSerializable();
+        sizeMod = in.readInt();
+        rotated = (in.readInt() == 1);
         customers = new ArrayList<Customer>();
-        //TODO read size, shape, and angle
     }
 
     public static final Creator<Table> CREATOR = new Creator<Table>() {
@@ -180,7 +191,8 @@ public class Table implements Parcelable {
         dest.writeString(label);
         dest.writeInt(x);
         dest.writeInt(y);
-        //dest.write(shape);
-        //TODO write size, shape, and angle
+        dest.writeSerializable(shape);
+        dest.writeInt(sizeMod);
+        dest.writeInt((rotated) ? 1 : 0);
     }
 }
