@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.payguard.EditModeActivity">
+    tools:context="ca.payguard.EditModeActivity"
+    android:onClick="activityClicked">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:background="@color/brightGreen"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/edit_mode_toolbar">
 
         <!--Table label picker-->
         <LinearLayout

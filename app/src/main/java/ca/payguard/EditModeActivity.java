@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -30,6 +31,9 @@ public class EditModeActivity extends AppCompatActivity {
 
     public static ConstraintLayout tableLayout;
     public static ArrayList<Button> tblBtns;
+
+    //used for moving btns
+    float btnX, btnY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +118,40 @@ public class EditModeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 select(b);
+            }
+        });
+
+        b.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        if(getSelected() != null){
+                            btnX = event.getRawX();
+                            btnY = event.getRawY();
+                        }
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if(getSelected() != null){
+                            v.setX(event.getRawX() - b.getWidth() / 2);
+                            v.setY(event.getRawY() - b.getHeight() / 2);
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if(getSelected() != null){
+                            float x = event.getRawX() - b.getWidth() / 2;
+                            float y = event.getRawY() - b.getHeight() / 2;
+
+                            v.setX(x);
+                            v.setY(y);
+
+                            getSelectedTbl().setCoords((int)(x / getWidthRatio()),
+                                    (int)(y / getHeightRatio()));
+                        }
+                        break;
+                }
+
+                return false;
             }
         });
 
@@ -220,5 +258,10 @@ public class EditModeActivity extends AppCompatActivity {
 
     public float getHeightRatio(){
         return (float) getScreenHeight() / (float) TableSet.STD_HEIGHT;
+    }
+
+    public void activityClicked(View v){
+        if(!(v instanceof Button))
+            deselect();
     }
 }

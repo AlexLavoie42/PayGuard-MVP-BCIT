@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 
+import ca.payguard.EditModeActivity;
+
 public abstract class Tool {
     protected View[] views;
     Context context;
@@ -22,7 +24,8 @@ public abstract class Tool {
             views[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    applyTransformation(num);
+                    if(EditModeActivity.selectedTbl != null)
+                        applyTransformation(num);
                 }
             });
         }
