@@ -19,7 +19,7 @@ public class SMSTextMagic {
 
     private static RestClient client;
 
-    private static DecimalFormat formatter = new DecimalFormat("#.##");
+    private static DecimalFormat formatter = new DecimalFormat("#.00");
 
 
     public SMSTextMagic() {
