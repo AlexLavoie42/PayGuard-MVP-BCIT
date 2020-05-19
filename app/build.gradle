@@ -1,6 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
+// For TextMagic
+repositories {
+    mavenCentral()
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -56,4 +61,10 @@ dependencies {
     implementation files('libs/JavaAPI.jar')
     implementation 'com.github.clicksend:clicksend-java-client:1.0.0' // ClickSend SMS API
     implementation 'com.nexmo:client:2.0.1' // Vonage SMS API
+    implementation 'com.textmagic.sdk:textmagic-java-sdk:1.2.0' // TextMagic SMS API
 }
+
+
+
+
+
