@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * for PayGuard MVP.
  */
 public class MainActivity extends AppCompatActivity {
-    private final boolean DEBUG_NO_PIN = true;
+    private final boolean DEBUG_NO_PIN = false;
 
     private static TableSet tableGui;
     public static ArrayList<Button> tblBtns = new ArrayList<>();
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar loading;
     private Customer curCust;
     private Table curTable;
-    private VonageSMS sms;
+    private SMSTextMagic sms;
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sms = new VonageSMS();
+        sms = new SMSTextMagic();
 
         try{
             db = new DatabaseController();
@@ -521,12 +521,18 @@ public class MainActivity extends AppCompatActivity {
         return b;
     }
 
-    public void addCustomer(Customer customer, String tableNum){
+    public void addCustomer(final Customer customer, final String tableNum){
         tableGui.addCustomer(customer, tableNum);
         db.updateTableSet(tableGui);
         // ENABLE ONLY FOR TESTING
-        //sms.sendTestSMS("Yo Zach Customer #" + customer.getId()
-        //       + " was added to Table #" + tableNum +". Hope these aren't annoying :P");
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sms.sendAuthConfirmedSMS(Long.toString(customer.getPhoneNum()), customer.getPreAuthTotal(),
+                        "Demo Restaurant");
+            }
+        });
+        thread.start();
     }
 
     public void updateCustomer(Customer customer, String tableNum){

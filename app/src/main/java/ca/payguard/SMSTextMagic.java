@@ -13,9 +13,9 @@ import java.util.Collections;
 
 public class SMSTextMagic {
 
-    private static final String USERNAME = "";
-    private static final String API_KEY = "";
-    private static final String TEST_NUM = "";
+    private static final String USERNAME = "alexlavoie";
+    private static final String API_KEY = "cj8PSX8Mcao7QFraqwCJouS6STPdeE";
+    private static final String TEST_NUM = "16048322275";
 
     private static RestClient client;
 
@@ -54,7 +54,7 @@ public class SMSTextMagic {
             message.send();
         }
         catch (final RestException e) {
-            System.out.println(e.getErrors());
+            System.out.println(e.getErrorCode() + e.getErrorMessage());
         }
         System.out.println(message.getId());
     }
