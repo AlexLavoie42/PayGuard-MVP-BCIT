@@ -27,9 +27,13 @@ public class RotateTool extends Tool {
         t.setRotated(nRotate);
 
         if(nRotate){
+            b.setMinimumWidth(EditModeActivity.getSize() * t.getSizeMod());
+            b.setMinimumHeight(EditModeActivity.getSize() * t.getSizeMod() * 2);
             b.setWidth(EditModeActivity.getSize() * t.getSizeMod());
             b.setHeight(EditModeActivity.getSize() * t.getSizeMod() * 2);
         } else {
+            b.setMinimumWidth(EditModeActivity.getSize() * t.getSizeMod() * 2);// * 2
+            b.setMinimumHeight(EditModeActivity.getSize() * t.getSizeMod());
             b.setWidth(EditModeActivity.getSize() * t.getSizeMod() * 2);// * 2
             b.setHeight(EditModeActivity.getSize() * t.getSizeMod());
         }
