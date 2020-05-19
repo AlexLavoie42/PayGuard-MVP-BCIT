@@ -1,4 +1,4 @@
-package ca.payguard;
+package ca.payguard.smsUtil;
 
 import ClickSend.Api.SmsApi;
 import ClickSend.ApiClient;
@@ -13,10 +13,9 @@ import java.util.ArrayList;
 // E.164 Formatting example 16041234567
 // What to do with return result or errors
 
-// TODO Add Receive Function, Send Bill w/ tip prompt, parse tip
 // ClickSend SMS API - INACTIVE
 
-public class SMS {
+public class ClicksendSMS implements ISMS {
 
     private static final String USERNAME = "zachary@payguard.ca";
     private static final String API_KEY = "36373A4E-3864-A80C-0BA2-1B1553A134DF";
@@ -28,7 +27,7 @@ public class SMS {
 
     private static DecimalFormat formatter = new DecimalFormat("#.##");
 
-    public SMS() {
+    public ClicksendSMS() {
 
         api  = new ApiClient();
         api.setUsername(USERNAME);
@@ -40,7 +39,7 @@ public class SMS {
 
     // Add initial SMS showing confirmed pre-auth to
     // Assume phone number is pre-formatted in E.164 format
-    public void addAuthConfirmedSMS(String toNum, double authLimit, String restaurantName) {
+    public void sendAuthConfirmedSMS(String toNum, double authLimit, String restaurantName) {
 
         SmsMessage message = new SmsMessage();
         message.body("Thank you for using PayGuard at " + restaurantName
@@ -50,6 +49,7 @@ public class SMS {
         message.source(SOURCE);
 
         messageQueue.add(message);
+        sendAll();
     }
 
     // Send all messages in queue

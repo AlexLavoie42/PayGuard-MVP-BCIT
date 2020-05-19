@@ -1,4 +1,4 @@
-package ca.payguard;
+package ca.payguard.smsUtil;
 
 import com.nexmo.client.NexmoClient;
 import com.nexmo.client.NexmoClientException;
@@ -16,7 +16,7 @@ import java.text.DecimalFormat;
 // TODO Add Receive Function, Send Bill w/ tip prompt, parse tip
 // TODO String result currently SOP
 
-public class VonageSMS {
+public class VonageSMS implements ISMS{
 
     private static final String KEY = "f88badc2";
     private static final String SECRET = "lDHAl35PoS7nplHG";
@@ -37,7 +37,7 @@ public class VonageSMS {
     // Add initial SMS showing confirmed pre-auth to
     // Assume phone number is pre-formatted in E.164 format
     // E.164 Formatting example 16041234567
-    public void sendAuthConfirmedSMS(String toNum, double authLimit, String restaurantName) throws IOException, NexmoClientException {
+    public void sendAuthConfirmedSMS(String toNum, double authLimit, String restaurantName) {
 
         String authBody = "Thank you for using PayGuard at " + restaurantName
                 + ". Your pre-authorization of $" + formatter.format(authLimit) + " has been received. " +
@@ -47,7 +47,7 @@ public class VonageSMS {
         try {
             SmsSubmissionResult result = client.getSmsClient().submitMessage(message)[0];
             System.out.println(result);
-        } catch (NexmoClientException e) {
+        } catch (NexmoClientException | IOException e) {
             System.err.println("Exception when calling API");
             e.printStackTrace();
         }

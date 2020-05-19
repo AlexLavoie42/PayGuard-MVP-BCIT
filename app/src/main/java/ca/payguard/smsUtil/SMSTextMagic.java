@@ -1,4 +1,4 @@
-package ca.payguard;
+package ca.payguard.smsUtil;
 
 
 import com.textmagic.sdk.RestClient;
@@ -6,12 +6,11 @@ import com.textmagic.sdk.RestException;
 import com.textmagic.sdk.resource.instance.TMNewMessage;
 
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.Collections;
 
 // TextMagic Trial Account. Expires June 4, 2020
 
-public class SMSTextMagic {
+public class SMSTextMagic implements ISMS{
 
     private static final String USERNAME = "alexlavoie";
     private static final String API_KEY = "cj8PSX8Mcao7QFraqwCJouS6STPdeE";

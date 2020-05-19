@@ -22,6 +22,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.miscUtil.KeyboardCheck;
+import ca.payguard.smsUtil.ISMS;
+import ca.payguard.smsUtil.SMSTextMagic;
+
 import java.util.ArrayList;
 
 /**
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar loading;
     private Customer curCust;
     private Table curTable;
-    private SMSTextMagic sms;
+    private ISMS sms;
     public static ConstraintLayout tableLayout;
     public static ImageButton settingsBtn;
 
