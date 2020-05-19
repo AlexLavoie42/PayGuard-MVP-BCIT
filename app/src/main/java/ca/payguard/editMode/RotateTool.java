@@ -23,10 +23,34 @@ public class RotateTool extends Tool {
             throw new UnsupportedOperationException("Error: a shape must be selected to " +
                     "apply rotation.");*/
 
-        t.setRotated(!t.getRotated());
-        //swap dimensions
-        int width = b.getHeight(), height = b.getWidth();
-        b.setWidth(width);
-        b.setHeight(height);
+        boolean nRotate = !t.getRotated();
+        t.setRotated(nRotate);
+
+        if(nRotate){
+            b.setWidth(EditModeActivity.getSize() * t.getSizeMod());
+            b.setHeight(EditModeActivity.getSize() * t.getSizeMod() * 2);
+        } else {
+            b.setWidth(EditModeActivity.getSize() * t.getSizeMod() * 2);// * 2
+            b.setHeight(EditModeActivity.getSize() * t.getSizeMod());
+        }
+    }
+
+    private void setCoords(float x, float y){
+        views[0].setEnabled(true);
+        views[0].setVisibility(View.VISIBLE);
+
+        views[0].setX(x);
+        views[0].setY(y - 100);
+    }
+
+    /** Displays the rotate tool above the selected table. */
+    public void display(Table t){
+        if(t.getShape() == Table.Shape.R)
+            setCoords(t.getX() * EditModeActivity.wRatio, t.getY() * EditModeActivity.hRatio);
+    }
+
+    public void hide(){
+        views[0].setEnabled(false);
+        views[0].setVisibility(View.GONE);
     }
 }

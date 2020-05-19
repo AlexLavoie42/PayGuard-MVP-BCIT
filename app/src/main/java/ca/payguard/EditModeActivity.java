@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class EditModeActivity extends AppCompatActivity {
     LabelInput label;
-    RotateTool rotateTool;
+    public static RotateTool rotateTool;
     public ShapeSelect shapeSelect;
     SizeSelect sizeSelect;
     Button garbage;
@@ -31,6 +31,8 @@ public class EditModeActivity extends AppCompatActivity {
 
     public static ConstraintLayout tableLayout;
     public static ArrayList<Button> tblBtns;
+
+    public static float wRatio, hRatio;
 
     //used for moving btns
     float btnX, btnY;
@@ -56,6 +58,9 @@ public class EditModeActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+
+        wRatio = getWidthRatio();
+        hRatio = getHeightRatio();
 
         label = new LabelInput(
                 this,
@@ -97,8 +102,8 @@ public class EditModeActivity extends AppCompatActivity {
     /** Translates a table set to their buttons. */
     private ArrayList<Button> renderTableSet(final Context c, TableSet tables){
         ArrayList<Button> btns = new ArrayList<>();
-        tblSize = (int) Math.max((float) TableSet.STD_WIDTH * getWidthRatio(),
-                (float) TableSet.STD_HEIGHT * getHeightRatio()) / 20;
+        tblSize = (int) Math.max((float) TableSet.STD_WIDTH * wRatio,
+                (float) TableSet.STD_HEIGHT * hRatio) / 20;
 
         for(Table t : tables)
             btns.add(renderTblBtn(c, t));
@@ -110,8 +115,8 @@ public class EditModeActivity extends AppCompatActivity {
 
     private Button renderTblBtn(Context c, final Table t){
         final Button b = new Button(c);
-        b.setX(t.getX() * getWidthRatio());
-        b.setY(t.getY() * getHeightRatio());
+        b.setX(t.getX() * wRatio);
+        b.setY(t.getY() * hRatio);
         b.setText(t.getLabel());
 
         b.setOnClickListener(new View.OnClickListener() {
@@ -145,8 +150,8 @@ public class EditModeActivity extends AppCompatActivity {
                             v.setX(x);
                             v.setY(y);
 
-                            getSelectedTbl().setCoords((int)(x / getWidthRatio()),
-                                    (int)(y / getHeightRatio()));
+                            getSelectedTbl().setCoords((int)(x / wRatio),
+                                    (int)(y / hRatio));
                         }
                         break;
                 }
@@ -188,8 +193,10 @@ public class EditModeActivity extends AppCompatActivity {
 
             rotateTool.setEnabled(true);
             label.setEnabled(true);
-
             garbage.setEnabled(true);
+
+            rotateTool.display(selectedTbl);
+
             EditModeActivity.selectedTbl = selectedTbl;
             selected = b;
         }
@@ -214,6 +221,7 @@ public class EditModeActivity extends AppCompatActivity {
         }
 
         garbage.setEnabled(false);
+        rotateTool.hide();
     }
 
     public void dispose(View v){
