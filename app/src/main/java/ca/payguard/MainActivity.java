@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * for PayGuard MVP.
  */
 public class MainActivity extends AppCompatActivity {
-    private final boolean DEBUG_NO_PIN = false;
+    private final boolean DEBUG_NO_PIN = true;
 
     private static TableSet tableGui;
     public static ArrayList<Button> tblBtns = new ArrayList<>();

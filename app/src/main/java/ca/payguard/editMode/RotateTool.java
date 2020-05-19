@@ -27,7 +27,7 @@ public class RotateTool extends Tool {
         t.setRotated(nRotate);
 
         if(nRotate){
-            b.setWidth(EditModeActivity.getSize() * t.getSizeMod());
+            b.setWidth(EditModeActivity.getSize() * t.getSizeMod() / 4);
             b.setHeight(EditModeActivity.getSize() * t.getSizeMod() * 2);
         } else {
             b.setWidth(EditModeActivity.getSize() * t.getSizeMod() * 2);// * 2

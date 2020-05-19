@@ -69,13 +69,14 @@ public class EmailConfirmation extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    private int formatNumber(String num){
+    private long formatNumber(String num){
         num = num.replace("-", "");
         num = num.replace(")", "");
         num = num.replace("(", "");
         num = num.replace(" ", "");
-        num = "1"+num;
+        if(num.charAt(0) != '1')
+            num = "1"+num;
 
-        return Integer.parseInt(num);
+        return Long.parseLong(num);
     }
 }
