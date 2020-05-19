@@ -60,7 +60,7 @@ public class EmailConfirmation extends AppCompatActivity {
     public void onButtonClick(View v){
         Customer c = getIntent().getParcelableExtra("customer");
         if(((EditText)findViewById(R.id.phone_num)).getText().toString().matches(
-                "^\\D?(\\d{3})\\D?\\D?(\\d{3})\\D?(\\d{4})$"))
+                "^\\D?(\\d{3,4})\\D?\\D?(\\d{3})\\D?(\\d{4})$"))
             c.setPhoneNum(formatNumber(
                     ((EditText)findViewById(R.id.phone_num)).getText().toString()));
         Intent myIntent = new Intent(getBaseContext(),   MainActivity.class);
@@ -76,6 +76,7 @@ public class EmailConfirmation extends AppCompatActivity {
         num = num.replace(" ", "");
         if(num.charAt(0) != '1')
             num = "1"+num;
+        System.out.println(num);
 
         return Long.parseLong(num);
     }

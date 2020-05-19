@@ -34,12 +34,12 @@ public class SMSTextMagic {
         message.setText("Thank you for using PayGuard at " + restaurantName
                 + ". Your pre-authorization of $" + formatter.format(authLimit) + " has been received. " +
                 "Please reply DONE to receive your bill.");
-        message.setPhones(Arrays.asList(new String[] {toNum}));
+        message.setPhones(Collections.singletonList(toNum));
         try {
             message.send();
         }
         catch (final RestException e) {
-            System.out.println(e.getErrors());
+            System.out.println(e.getErrorCode() + " " + e.getErrorMessage() + " Num: " + toNum);
         }
         System.out.println(message.getId());
 
