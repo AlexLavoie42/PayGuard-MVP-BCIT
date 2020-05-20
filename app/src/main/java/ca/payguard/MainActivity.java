@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * for PayGuard MVP.
  */
 public class MainActivity extends AppCompatActivity {
-    private final boolean DEBUG_NO_PIN = false;
+    private final boolean DEBUG_NO_PIN = true;
 
     private static TableSet tableGui;
     public static ArrayList<Button> tblBtns = new ArrayList<>();
@@ -489,20 +489,12 @@ public class MainActivity extends AppCompatActivity {
         else
             b.setBackground(getResources().getDrawable(R.drawable.table));
 
-        int width, height;
-
-        //resize and rotate if necessary
-        if(t.getShape() != Table.Shape.R){
-            width = tblSize * t.getSizeMod();
-            height = tblSize * t.getSizeMod();
-        } else {
-            if(t.getRotated()){
-                width = tblSize * t.getSizeMod();
-                height = tblSize * t.getSizeMod() * 2;
-            } else {
-                width = tblSize * t.getSizeMod() * 2;
-                height = tblSize * t.getSizeMod();
-            }
+        int width = tblSize * t.getSizeMod(), height = width;
+        if(t.getShape() == Table.Shape.R){
+            if(t.getRotated())
+                height *= 2;
+            else
+                width *= 2;
         }
 
         b.setMinimumWidth(width);
@@ -510,8 +502,10 @@ public class MainActivity extends AppCompatActivity {
         b.setWidth(width);
         b.setHeight(height);
 
-        b.setX((float) t.getX() * getWidthRatio() + width / 2);
-        b.setY((float) t.getY() * getHeightRatio() - height / 3);
+        //+ (float) width / 2
+        b.setX((float) t.getX() * getWidthRatio());
+        //- (float) height / 2
+        b.setY((float) t.getY() * getHeightRatio());
 
         //assign listeners
         b.setOnClickListener(new View.OnClickListener() {

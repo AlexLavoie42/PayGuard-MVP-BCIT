@@ -58,7 +58,6 @@ public class RotateTool extends Tool {
     }
 
     public void hide(){
-        views[0].setEnabled(false);
         views[0].setVisibility(View.GONE);
     }
 }

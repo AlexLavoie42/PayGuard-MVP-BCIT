@@ -7,6 +7,13 @@
     tools:context="ca.payguard.EditModeActivity"
     android:onClick="activityClicked">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="170dp"
@@ -148,28 +155,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="307dp"
-        android:layout_marginLeft="307dp"
-        android:layout_marginTop="667dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
         android:text="Garb"
         android:id="@+id/garbage"
         android:enabled="false"
-        android:onClick="dispose"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:onClick="dispose"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
