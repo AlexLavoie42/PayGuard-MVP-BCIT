@@ -26,16 +26,12 @@ public class ShapeSelect extends Tool {
                     em.addTable('S');
                 else
                     applySquare(EditModeActivity.getSelected());
-
-                EditModeActivity.rotateTool.hide();
                 break;
             case 1:
                 if(EditModeActivity.getSelected() == null)
                     em.addTable('C');
                 else
                     applyCircle(EditModeActivity.getSelected());
-
-                EditModeActivity.rotateTool.hide();
                 break;
             case 2:
                 if(EditModeActivity.getSelected() == null)
@@ -44,8 +40,6 @@ public class ShapeSelect extends Tool {
                     applyRectangle(EditModeActivity.getSelected());
                 break;
         }
-
-        em.select(EditModeActivity.getSelected());
     }
 
     public void applySquare(Button b){

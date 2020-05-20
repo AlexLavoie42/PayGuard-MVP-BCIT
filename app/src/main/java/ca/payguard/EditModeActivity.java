@@ -256,6 +256,8 @@ public class EditModeActivity extends AppCompatActivity {
         tables.add(t);
 
         postTableSet();
+
+        select(tblBtns.get(tblBtns.size() - 1));
     }
 
     public void exit(View view){
