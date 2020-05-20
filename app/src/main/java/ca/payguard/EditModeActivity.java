@@ -116,6 +116,11 @@ public class EditModeActivity extends AppCompatActivity {
         this.onStart();
     }
 
+    @Override
+    public void onBackPressed() {
+        exit(null);
+    }
+
     /** Translates a table set to their buttons. */
     public ArrayList<Button> renderTableSet(final Context c, TableSet tables){
         ArrayList<Button> btns = new ArrayList<>();
