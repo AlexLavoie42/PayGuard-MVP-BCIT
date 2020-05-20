@@ -12,7 +12,8 @@
         android:id="@+id/tableHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:gravity="fill">
 
         <TextView
             android:id="@+id/tv_tableHeaderText"
@@ -30,10 +31,10 @@
             android:textSize="30dp"
             android:textStyle="bold" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_closeTable"
-            android:layout_width="149dp"
-            android:layout_height="wrap_content"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
             android:layout_alignParentRight="true"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
@@ -41,7 +42,8 @@
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginBottom="25dp"
-            android:text="@string/closeTableButton" />
+            android:background="@drawable/button"
+            android:src="@drawable/sendallbill" />
 
     </RelativeLayout>
 
