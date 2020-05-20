@@ -18,29 +18,34 @@ public class ShapeSelect extends Tool {
 
     @Override
     public void applyTransformation(int btnNo){
+        EditModeActivity em = ((EditModeActivity) context);
+
         switch(btnNo){
             case 0:
-                if(EditModeActivity.getSelected() == null){
-                    ((EditModeActivity) context).addTable('S');
-                } else {
+                if(EditModeActivity.getSelected() == null)
+                    em.addTable('S');
+                else
                     applySquare(EditModeActivity.getSelected());
-                }
+
+                EditModeActivity.rotateTool.hide();
                 break;
             case 1:
-                if(EditModeActivity.getSelected() == null){
-                    ((EditModeActivity) context).addTable('C');
-                } else {
+                if(EditModeActivity.getSelected() == null)
+                    em.addTable('C');
+                else
                     applyCircle(EditModeActivity.getSelected());
-                }
+
+                EditModeActivity.rotateTool.hide();
                 break;
             case 2:
-                if(EditModeActivity.getSelected() == null){
-                    ((EditModeActivity) context).addTable('R');
-                } else {
+                if(EditModeActivity.getSelected() == null)
+                    em.addTable('R');
+                else
                     applyRectangle(EditModeActivity.getSelected());
-                }
                 break;
         }
+
+        em.select(EditModeActivity.getSelected());
     }
 
     public void applySquare(Button b){

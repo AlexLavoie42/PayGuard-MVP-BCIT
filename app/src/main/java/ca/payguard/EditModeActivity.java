@@ -49,8 +49,8 @@ public class EditModeActivity extends AppCompatActivity {
         }
 
         garbage = findViewById(R.id.garbage);
-        garbage.setX(getScreenWidth() - 50);
-        garbage.setY(getScreenHeight() - 50);
+        garbage.setX(getScreenWidth() - 300);
+        garbage.setY(getScreenHeight() - 275);
 
         tableLayout = findViewById(R.id.tableLayout);
     }
@@ -90,10 +90,19 @@ public class EditModeActivity extends AppCompatActivity {
                 findViewById(R.id.sub_size)
         );
 
-        /* TableSet tables = (TableSet) getIntent().getExtras().getSerializable("tables");*/
-        TableSet tables = MainActivity.getTables();
+        postTableSet(MainActivity.getTables());
+    }
+
+    public void postTableSet(TableSet tables){
         tblBtns = renderTableSet(getBaseContext(), tables);
         EditModeActivity.tables = tables;
+        tableLayout.removeAllViews();
+        for(Button b : tblBtns)
+            tableLayout.addView(b);
+    }
+
+    public void postTableSet(){
+        tblBtns = renderTableSet(getBaseContext(), tables);
         tableLayout.removeAllViews();
         for(Button b : tblBtns)
             tableLayout.addView(b);
@@ -106,7 +115,7 @@ public class EditModeActivity extends AppCompatActivity {
     }
 
     /** Translates a table set to their buttons. */
-    private ArrayList<Button> renderTableSet(final Context c, TableSet tables){
+    public ArrayList<Button> renderTableSet(final Context c, TableSet tables){
         ArrayList<Button> btns = new ArrayList<>();
         tblSize = (int) Math.max((float) TableSet.STD_WIDTH * wRatio,
                 (float) TableSet.STD_HEIGHT * hRatio) / 20;
@@ -232,17 +241,27 @@ public class EditModeActivity extends AppCompatActivity {
     }
 
     public void dispose(View v){
+        tables.remove(getSelectedTbl());
+        deselect();
 
+        postTableSet();
     }
 
-    /** TODO add table to edit mode activity. */
-    public void addTable(char shape){
+    public void addTable(char shape) throws IllegalArgumentException {
+        Table t = new Table();
+        t.setShape(shape);
+        t.setSizeMod(1);
+        t.setCoords((int)(getScreenWidth() / wRatio / 2), (int)(getScreenHeight() / hRatio / 2));
+        t.setLabel("" + (tables.size() + 1));
+        tables.add(t);
 
+        postTableSet();
     }
 
     public void exit(View view){
         db.updateTableSet(tables);
         startActivity(new Intent(getBaseContext(), MainActivity.class));
+        //TODO change to finish(), update mainactivity in its onRestart method
     }
 
     public static int getSize(){ return tblSize; }
