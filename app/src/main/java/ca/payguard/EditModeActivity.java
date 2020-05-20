@@ -130,8 +130,6 @@ public class EditModeActivity extends AppCompatActivity {
 
     private Button renderTblBtn(Context c, final Table t){
         final Button b = new Button(c);
-        b.setX(t.getX() * wRatio);
-        b.setY(t.getY() * hRatio);
         b.setText(t.getLabel());
 
         b.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +175,18 @@ public class EditModeActivity extends AppCompatActivity {
 
         shapeSelect.transform(b, t);
         RotateTool.verifyRotation(t, b);
+
+        /*int width = getSize() * t.getSizeMod(), height = width;
+        if(t.getShape() == Table.Shape.R){
+            if(t.getRotated())
+                height *= 2;
+            else
+                width *= 2;
+        }*/
+        //+ (float) width / 2
+        b.setX(t.getX() * wRatio);
+        //+ (float) height / 2
+        b.setY(t.getY() * hRatio);
 
         return b;
     }
