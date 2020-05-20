@@ -36,6 +36,8 @@ public class EditModeActivity extends AppCompatActivity {
 
     //used for moving btns
     float btnX, btnY;
+    final int MOVE_TIME = 5;
+    int moveCount = MOVE_TIME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,10 +152,16 @@ public class EditModeActivity extends AppCompatActivity {
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        if(getSelected() != null){
-                            v.setX(event.getRawX() - b.getWidth() / 2);
-                            v.setY(event.getRawY() - b.getHeight() / 2);
+                        if(moveCount == MOVE_TIME){
+                            if(getSelected() != null){
+                                v.setX(event.getRawX() - b.getWidth() / 2);
+                                v.setY(event.getRawY() - b.getHeight() / 2);
+                            }
+
+                            moveCount = 0;
                         }
+
+                        moveCount++;
                         break;
                     case MotionEvent.ACTION_UP:
                         if(getSelected() != null){
@@ -166,6 +174,8 @@ public class EditModeActivity extends AppCompatActivity {
                             getSelectedTbl().setCoords((int)(x / wRatio),
                                     (int)(y / hRatio));
                         }
+
+                        moveCount = MOVE_TIME;
                         break;
                 }
 
