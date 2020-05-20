@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:drawable="@drawable/editlimiticon2"
+        android:width="@dimen/icon_size"
+        android:height="47dp"
+        />
+
+</layer-list >

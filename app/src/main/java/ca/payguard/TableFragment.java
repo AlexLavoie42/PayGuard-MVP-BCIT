@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -61,7 +62,7 @@ public class TableFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_table, container, false);
         TextView header = root.findViewById(R.id.tv_tableHeaderText);
-        ((Button)root.findViewById(R.id.btn_closeTable))
+        ((ImageButton)root.findViewById(R.id.btn_closeTable))
                 .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +70,7 @@ public class TableFragment extends Fragment {
             }
         });
         if(table.getAllCustomers().isEmpty())
-            ((Button)root.findViewById(R.id.btn_closeTable)).setEnabled(false);
+            ((ImageButton)root.findViewById(R.id.btn_closeTable)).setEnabled(false);
         header.setText(root.getResources().getString(R.string.tableHeader,
                 table.getLabel()));
         if(isRight)
@@ -90,6 +91,6 @@ public class TableFragment extends Fragment {
     public void update(){
         displayCustomers(getView());
         if(table.getAllCustomers().isEmpty())
-            ((Button)getView().findViewById(R.id.btn_closeTable)).setEnabled(false);
+            ((ImageButton)getView().findViewById(R.id.btn_closeTable)).setEnabled(false);
     }
 }
