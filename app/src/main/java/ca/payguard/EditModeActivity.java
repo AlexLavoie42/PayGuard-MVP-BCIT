@@ -5,12 +5,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import ca.payguard.dbUtil.DatabaseController;
 import ca.payguard.editMode.*;
@@ -21,7 +23,7 @@ public class EditModeActivity extends AppCompatActivity {
     public static RotateTool rotateTool;
     public ShapeSelect shapeSelect;
     SizeSelect sizeSelect;
-    Button garbage;
+    ImageButton garbage;
 
     public static TableSet tables;
     public static Table selectedTbl;

@@ -69,7 +69,7 @@ public class LabelInput extends Tool {
     }
 
     public void clear(){
-        label.setText("Table Name");
+        label.setText("");
         label.setBackgroundColor(context.getResources().getColor(R.color.colorBackground));
     }
 
