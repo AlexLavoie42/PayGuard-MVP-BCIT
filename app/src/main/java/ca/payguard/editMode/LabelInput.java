@@ -18,6 +18,7 @@ public class LabelInput extends Tool {
         super(c, views);
 
         label = (AppCompatEditText) views[2];
+        setEnabled(false);
     }
 
     @Override
