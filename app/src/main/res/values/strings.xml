@@ -44,24 +44,24 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="table_label">Table Name</string>
-    <string name="tableHeader">Table #%s</string>
+    <string name="tableHeader">Table %s</string>
     <string name="closeTableButton">Process Table</string>
     <string name="addSeatButton">Add Seat</string>
-    <string name="seatInfoText">Seat #%d\nLimit: $%.2f\nBill: $%.2f</string>
+    <string name="seatInfoText">Seat %d\nLimit: $%.2f\nBill: $%.2f</string>
     <string name="settings_logout">Logout</string>
     <string name="settings_edit_logout">Logout from PayGuard</string>
     <string name="EditValue1">+$25</string>
     <string name="editAmount2">+$50</string>
     <string name="editAmount3">+$100</string>
     <string name="bill_limit">Limit: %.2f</string>
-    <string name="bill_table_num">Table #%s</string>
+    <string name="bill_table_num">Table %s</string>
     <string name="update_bill">Update Bill</string>
     <string name="expMonth">mm</string>
     <string name="expYear">yy</string>
     <string name="cvc">cvc</string>
     <string name="PAN">Enter CC number here</string>
     <string name="manualPayButton">Next</string>
-    <string name="endBillConfirm">Are you sure you want to bill customer #%d $%.2f?</string>
-    <string name="endBillAllConfirm">Are you sure you want to bill all customers at table #%s?</string>
+    <string name="endBillConfirm">Are you sure you want to bill customer %d $%.2f?</string>
+    <string name="endBillAllConfirm">Are you sure you want to bill all customers at table %s?</string>
     <string name="send_bill">Send Bill</string>
 </resources>

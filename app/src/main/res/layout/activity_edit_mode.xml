@@ -66,14 +66,14 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/label_btn3"
+                    android:id="@+id/label_btn4"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button"
                     android:src="@drawable/arrow" />
 
                 <ImageButton
-                    android:id="@+id/label_btn4"
+                    android:id="@+id/label_btn3"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button"
