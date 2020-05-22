@@ -22,6 +22,8 @@
         android:id="@+id/exp_year"
         android:layout_width="116dp"
         android:layout_height="27dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginRight="108dp"
         android:ems="10"
         android:hint="@string/expYear"
         android:inputType="number"
@@ -32,6 +34,8 @@
         android:id="@+id/exp_month"
         android:layout_width="116dp"
         android:layout_height="27dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:ems="10"
         android:hint="@string/expMonth"
         android:inputType="number"
@@ -42,9 +46,24 @@
         android:id="@+id/next"
         android:layout_width="473dp"
         android:layout_height="40dp"
+        android:layout_marginTop="24dp"
         android:onClick="onNext"
         android:text="@string/manualPayButton"
-        app:layout_constraintEnd_toEndOf="@+id/exp_year"
+        app:layout_constraintEnd_toEndOf="@+id/PAN"
         app:layout_constraintTop_toBottomOf="@+id/exp_month" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Credit Card Info"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/PAN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.923" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
